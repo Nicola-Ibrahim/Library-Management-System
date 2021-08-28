@@ -1606,7 +1606,7 @@ QPushButton:disabled{
                </widget>
               </item>
               <item>
-               <spacer name="verticalSpacer_22">
+               <spacer name="verticalSpacer_9">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -1624,19 +1624,6 @@ QPushButton:disabled{
           </layout>
          </widget>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <widget class="QPushButton" name="logout_btn">
