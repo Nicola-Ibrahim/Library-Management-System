@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIRKiZiK.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIflfpqG.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -762,25 +762,25 @@ class Ui_MainWindow(object):
         self.panel_title_lbl.setAlignment(QtCore.Qt.AlignCenter)
         self.panel_title_lbl.setObjectName("panel_title_lbl")
         self.gridLayout.addWidget(self.panel_title_lbl, 0, 1, 1, 1)
-        self.frame_5 = QtWidgets.QFrame(self.centralwidget)
+        self.main_buttons_frame = QtWidgets.QFrame(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_5.sizePolicy().hasHeightForWidth())
-        self.frame_5.setSizePolicy(sizePolicy)
-        self.frame_5.setMinimumSize(QtCore.QSize(0, 0))
-        self.frame_5.setMaximumSize(QtCore.QSize(0, 16777215))
-        self.frame_5.setMouseTracking(True)
-        self.frame_5.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.frame_5.setStyleSheet("")
-        self.frame_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_5.setObjectName("frame_5")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame_5)
+        sizePolicy.setHeightForWidth(self.main_buttons_frame.sizePolicy().hasHeightForWidth())
+        self.main_buttons_frame.setSizePolicy(sizePolicy)
+        self.main_buttons_frame.setMinimumSize(QtCore.QSize(0, 0))
+        self.main_buttons_frame.setMaximumSize(QtCore.QSize(0, 16777215))
+        self.main_buttons_frame.setMouseTracking(True)
+        self.main_buttons_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.main_buttons_frame.setStyleSheet("")
+        self.main_buttons_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.main_buttons_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.main_buttons_frame.setObjectName("main_buttons_frame")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.main_buttons_frame)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setSpacing(4)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.menu_btn = QtWidgets.QPushButton(self.frame_5)
+        self.menu_btn = QtWidgets.QPushButton(self.main_buttons_frame)
         self.menu_btn.setMinimumSize(QtCore.QSize(50, 50))
         self.menu_btn.setStyleSheet("QPushButton{\n"
 "    border-style: solid;\n"
@@ -802,9 +802,8 @@ class Ui_MainWindow(object):
         self.menu_btn.setText("")
         self.menu_btn.setObjectName("menu_btn")
         self.verticalLayout_2.addWidget(self.menu_btn)
-        self.buttons_stackedWidget = QtWidgets.QStackedWidget(self.frame_5)
+        self.buttons_stackedWidget = QtWidgets.QStackedWidget(self.main_buttons_frame)
         self.buttons_stackedWidget.setMinimumSize(QtCore.QSize(0, 0))
-        self.buttons_stackedWidget.setMaximumSize(QtCore.QSize(0, 16777215))
         self.buttons_stackedWidget.setStyleSheet("#buttons_stackedWidget{\n"
 "background-color: rgba(255, 255, 255, 0);\n"
 "border-style: solid;\n"
@@ -838,31 +837,30 @@ class Ui_MainWindow(object):
         self.daily_customers_btn.setSizePolicy(sizePolicy)
         self.daily_customers_btn.setMinimumSize(QtCore.QSize(70, 70))
         self.daily_customers_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
 "    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image: url(:/icons/icons/customer1.svg);\n"
+"    padding-right:60px;\n"
+"\n"
+"    background-color:  none;\n"
+"    background-image: url(:/icons/icons/customer1.png);\n"
+"    background-repeat:none;\n"
 "}\n"
 "\n"
 "\n"
 "QPushButton:hover{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/customer2.svg);\n"
+"    background-image: url(:/icons/icons/customer2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "QPushButton:pressed{\n"
-"border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/customer2.svg);\n"
+"    background-image: url(:/icons/icons/customer2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "\n"
 "QPushButton:focus{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/customer2.svg);\n"
+"    background-image: url(:/icons/icons/customer2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "\n"
 "\n"
@@ -878,7 +876,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.daily_customers_btn.setText("")
         self.daily_customers_btn.setObjectName("daily_customers_btn")
         self.verticalLayout_6.addWidget(self.daily_customers_btn)
         self.monthly_subscrib_btn = QtWidgets.QPushButton(self.frame_4)
@@ -890,57 +887,30 @@ class Ui_MainWindow(object):
         self.monthly_subscrib_btn.setMinimumSize(QtCore.QSize(70, 70))
         self.monthly_subscrib_btn.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.monthly_subscrib_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-right-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image: url(:/icons/icons/annual1.svg);\n"
+"\n"
+"    padding-right:60px;\n"
+"    background-color:  none;\n"
+"    background-image: url(:/icons/icons/annual1.svg);\n"
+"    background-repeat:none;\n"
 "\n"
 "}\n"
 "\n"
 "\n"
 "QPushButton:hover{\n"
-"    border-style: solid;\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(255, 255, 255, 0);\n"
-"\n"
-"    image: url(:/icons/icons/annual2.svg);\n"
+"    background-image: url(:/icons/icons/annual2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "QPushButton:pressed{\n"
-"    border-style: solid;\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:10px;\n"
-"    \n"
-"\n"
-"    background-color:  rgba(255, 255, 255, 0);\n"
-"\n"
-"    image: url(:/icons/icons/annual2.svg);\n"
+"    background-image: url(:/icons/icons/annual2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "\n"
 "QPushButton:focus{\n"
-"    border-style: solid;\n"
-"    \n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    padding:10px;\n"
-"    \n"
-"    background-color:  rgba(255, 255, 255, 0);\n"
-"\n"
-"    image: url(:/icons/icons/annual2.svg);\n"
+"    background-image: url(:/icons/icons/annual2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "\n"
 "\n"
@@ -956,7 +926,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.monthly_subscrib_btn.setText("")
         self.monthly_subscrib_btn.setObjectName("monthly_subscrib_btn")
         self.verticalLayout_6.addWidget(self.monthly_subscrib_btn)
         self.orders_btn = QtWidgets.QPushButton(self.frame_4)
@@ -967,31 +936,30 @@ class Ui_MainWindow(object):
         self.orders_btn.setSizePolicy(sizePolicy)
         self.orders_btn.setMinimumSize(QtCore.QSize(70, 70))
         self.orders_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-right-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image:url(:/icons/icons/order1.svg);\n"
+"\n"
+"    padding-right:60px;\n"
+"    background-color:  none;\n"
+"    background-image: url(:/icons/icons/order1.svg);\n"
+"    background-repeat:none;\n"
+"\n"
 "}\n"
 "\n"
 "\n"
 "QPushButton:hover{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/order2.svg);\n"
+"    background-image: url(:/icons/icons/order2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "QPushButton:pressed{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/order2.svg);\n"
+"    background-image: url(:/icons/icons/order2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "\n"
 "QPushButton:focus{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/order2.svg);\n"
+"    background-image: url(:/icons/icons/order2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
 "}\n"
 "\n"
 "\n"
@@ -1007,7 +975,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.orders_btn.setText("")
         self.orders_btn.setObjectName("orders_btn")
         self.verticalLayout_6.addWidget(self.orders_btn)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -1078,7 +1045,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.warehouse_btn.setText("")
         self.warehouse_btn.setObjectName("warehouse_btn")
         self.verticalLayout_26.addWidget(self.warehouse_btn)
         self.reports_btn = QtWidgets.QPushButton(self.frame_18)
@@ -1130,7 +1096,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.reports_btn.setText("")
         self.reports_btn.setObjectName("reports_btn")
         self.verticalLayout_26.addWidget(self.reports_btn)
         self.supervisors_btn = QtWidgets.QPushButton(self.frame_18)
@@ -1182,7 +1147,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.supervisors_btn.setText("")
         self.supervisors_btn.setObjectName("supervisors_btn")
         self.verticalLayout_26.addWidget(self.supervisors_btn)
         self.offers_btn = QtWidgets.QPushButton(self.frame_18)
@@ -1229,7 +1193,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.offers_btn.setText("")
         self.offers_btn.setObjectName("offers_btn")
         self.verticalLayout_26.addWidget(self.offers_btn)
         self.shifts_btn = QtWidgets.QPushButton(self.frame_18)
@@ -1277,7 +1240,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.shifts_btn.setText("")
         self.shifts_btn.setObjectName("shifts_btn")
         self.verticalLayout_26.addWidget(self.shifts_btn)
         self.copy_delete_btn = QtWidgets.QPushButton(self.frame_18)
@@ -1324,7 +1286,6 @@ class Ui_MainWindow(object):
 "    padding-right: 2px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
-        self.copy_delete_btn.setText("")
         self.copy_delete_btn.setObjectName("copy_delete_btn")
         self.verticalLayout_26.addWidget(self.copy_delete_btn)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -1332,9 +1293,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_23.addWidget(self.frame_18)
         self.buttons_stackedWidget.addWidget(self.settings_buttons_tab)
         self.verticalLayout_2.addWidget(self.buttons_stackedWidget)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem2)
-        self.logout_btn = QtWidgets.QPushButton(self.frame_5)
+        self.logout_btn = QtWidgets.QPushButton(self.main_buttons_frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1377,7 +1336,7 @@ class Ui_MainWindow(object):
 "")
         self.logout_btn.setObjectName("logout_btn")
         self.verticalLayout_2.addWidget(self.logout_btn)
-        self.gridLayout.addWidget(self.frame_5, 0, 0, 2, 1)
+        self.gridLayout.addWidget(self.main_buttons_frame, 0, 0, 2, 1)
         self.frame_29 = QtWidgets.QFrame(self.centralwidget)
         self.frame_29.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_29.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -1398,8 +1357,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_7.setSpacing(2)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        spacerItem3 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_7.addItem(spacerItem3)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_7.addItem(spacerItem2)
         self.frame_10 = QtWidgets.QFrame(self.daily_customers_properties_panel)
         self.frame_10.setAutoFillBackground(False)
         self.frame_10.setStyleSheet("")
@@ -1716,8 +1675,8 @@ class Ui_MainWindow(object):
         self.daily_customer_edit_price_btn.raise_()
         self.daily_customer_search_btn.raise_()
         self.verticalLayout_7.addWidget(self.frame_10)
-        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(spacerItem4)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem3)
         self.stackedWidget.addWidget(self.daily_customers_properties_panel)
         self.orders_properties_panel = QtWidgets.QWidget()
         self.orders_properties_panel.setStyleSheet("")
@@ -1726,8 +1685,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_28.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_28.setSpacing(2)
         self.verticalLayout_28.setObjectName("verticalLayout_28")
-        spacerItem5 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_28.addItem(spacerItem5)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_28.addItem(spacerItem4)
         self.frame_17 = QtWidgets.QFrame(self.orders_properties_panel)
         self.frame_17.setAutoFillBackground(False)
         self.frame_17.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -1932,8 +1891,8 @@ class Ui_MainWindow(object):
         self.order_export_btn.setObjectName("order_export_btn")
         self.verticalLayout_9.addWidget(self.order_export_btn)
         self.verticalLayout_28.addWidget(self.frame_17)
-        spacerItem6 = QtWidgets.QSpacerItem(20, 253, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_28.addItem(spacerItem6)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 253, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_28.addItem(spacerItem5)
         self.stackedWidget.addWidget(self.orders_properties_panel)
         self.monthly_customers_properties_panel = QtWidgets.QWidget()
         self.monthly_customers_properties_panel.setObjectName("monthly_customers_properties_panel")
@@ -1941,8 +1900,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_30.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_30.setSpacing(2)
         self.verticalLayout_30.setObjectName("verticalLayout_30")
-        spacerItem7 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_30.addItem(spacerItem7)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_30.addItem(spacerItem6)
         self.frame_20 = QtWidgets.QFrame(self.monthly_customers_properties_panel)
         self.frame_20.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.frame_20.setAutoFillBackground(False)
@@ -2251,8 +2210,8 @@ class Ui_MainWindow(object):
         self.monthly_customer_edit_cost_btn.setObjectName("monthly_customer_edit_cost_btn")
         self.verticalLayout.addWidget(self.monthly_customer_edit_cost_btn)
         self.verticalLayout_30.addWidget(self.frame_20)
-        spacerItem8 = QtWidgets.QSpacerItem(20, 253, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_30.addItem(spacerItem8)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 253, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_30.addItem(spacerItem7)
         self.stackedWidget.addWidget(self.monthly_customers_properties_panel)
         self.warehouse_properties_panel = QtWidgets.QWidget()
         self.warehouse_properties_panel.setObjectName("warehouse_properties_panel")
@@ -2260,8 +2219,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_37.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_37.setSpacing(2)
         self.verticalLayout_37.setObjectName("verticalLayout_37")
-        spacerItem9 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_37.addItem(spacerItem9)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_37.addItem(spacerItem8)
         self.frame_7 = QtWidgets.QFrame(self.warehouse_properties_panel)
         self.frame_7.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_7.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -2368,8 +2327,8 @@ class Ui_MainWindow(object):
         self.warehouse_item_remove_btn.setObjectName("warehouse_item_remove_btn")
         self.verticalLayout_15.addWidget(self.warehouse_item_remove_btn)
         self.verticalLayout_37.addWidget(self.frame_7)
-        spacerItem10 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_37.addItem(spacerItem10)
+        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_37.addItem(spacerItem9)
         self.stackedWidget.addWidget(self.warehouse_properties_panel)
         self.reports_properties_panel = QtWidgets.QWidget()
         self.reports_properties_panel.setObjectName("reports_properties_panel")
@@ -2531,8 +2490,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_49.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_49.setSpacing(2)
         self.verticalLayout_49.setObjectName("verticalLayout_49")
-        spacerItem11 = QtWidgets.QSpacerItem(20, 220, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_49.addItem(spacerItem11)
+        spacerItem10 = QtWidgets.QSpacerItem(20, 220, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_49.addItem(spacerItem10)
         self.frame_2 = QtWidgets.QFrame(self.supervisors_properties_panel)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -2620,8 +2579,8 @@ class Ui_MainWindow(object):
         self.supervisor_remove_btn.setObjectName("supervisor_remove_btn")
         self.verticalLayout_13.addWidget(self.supervisor_remove_btn)
         self.verticalLayout_49.addWidget(self.frame_2)
-        spacerItem12 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_49.addItem(spacerItem12)
+        spacerItem11 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_49.addItem(spacerItem11)
         self.stackedWidget.addWidget(self.supervisors_properties_panel)
         self.shifts_properties_panel = QtWidgets.QWidget()
         self.shifts_properties_panel.setObjectName("shifts_properties_panel")
@@ -2629,8 +2588,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_69.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_69.setSpacing(2)
         self.verticalLayout_69.setObjectName("verticalLayout_69")
-        spacerItem13 = QtWidgets.QSpacerItem(20, 220, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_69.addItem(spacerItem13)
+        spacerItem12 = QtWidgets.QSpacerItem(20, 220, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_69.addItem(spacerItem12)
         self.frame_54 = QtWidgets.QFrame(self.shifts_properties_panel)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -2787,15 +2746,15 @@ class Ui_MainWindow(object):
         self.shift_stop_btn.setObjectName("shift_stop_btn")
         self.verticalLayout_58.addWidget(self.shift_stop_btn)
         self.verticalLayout_69.addWidget(self.frame_54)
-        spacerItem14 = QtWidgets.QSpacerItem(20, 539, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_69.addItem(spacerItem14)
+        spacerItem13 = QtWidgets.QSpacerItem(20, 539, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_69.addItem(spacerItem13)
         self.stackedWidget.addWidget(self.shifts_properties_panel)
         self.offers_properties_panel = QtWidgets.QWidget()
         self.offers_properties_panel.setObjectName("offers_properties_panel")
         self.verticalLayout_53 = QtWidgets.QVBoxLayout(self.offers_properties_panel)
         self.verticalLayout_53.setObjectName("verticalLayout_53")
-        spacerItem15 = QtWidgets.QSpacerItem(20, 220, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_53.addItem(spacerItem15)
+        spacerItem14 = QtWidgets.QSpacerItem(20, 220, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_53.addItem(spacerItem14)
         self.frame_55 = QtWidgets.QFrame(self.offers_properties_panel)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -2878,8 +2837,8 @@ class Ui_MainWindow(object):
         self.offer_remove_btn.setObjectName("offer_remove_btn")
         self.verticalLayout_65.addWidget(self.offer_remove_btn)
         self.verticalLayout_53.addWidget(self.frame_55)
-        spacerItem16 = QtWidgets.QSpacerItem(20, 585, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_53.addItem(spacerItem16)
+        spacerItem15 = QtWidgets.QSpacerItem(20, 585, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_53.addItem(spacerItem15)
         self.stackedWidget.addWidget(self.offers_properties_panel)
         self.horizontalLayout_33.addWidget(self.stackedWidget)
         self.date_treeview_panel = QtWidgets.QFrame(self.frame_29)
@@ -2892,8 +2851,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_31.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName("verticalLayout_31")
-        spacerItem17 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_31.addItem(spacerItem17)
+        spacerItem16 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_31.addItem(spacerItem16)
         self.date_treeView = QtWidgets.QTreeView(self.date_treeview_panel)
         self.date_treeView.setMinimumSize(QtCore.QSize(200, 620))
         self.date_treeView.setLayoutDirection(QtCore.Qt.RightToLeft)
@@ -3245,8 +3204,8 @@ class Ui_MainWindow(object):
         self.daily_customer_monthID_txt.setMaximumSize(QtCore.QSize(100, 16777215))
         self.daily_customer_monthID_txt.setObjectName("daily_customer_monthID_txt")
         self.horizontalLayout_10.addWidget(self.daily_customer_monthID_txt)
-        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem18)
+        spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem17)
         self.verticalLayout_5.addLayout(self.horizontalLayout_10)
         self.horizontalLayout_30 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_30.setObjectName("horizontalLayout_30")
@@ -3402,8 +3361,8 @@ class Ui_MainWindow(object):
         self.daily_customer_clear_btn.setMinimumSize(QtCore.QSize(100, 40))
         self.daily_customer_clear_btn.setObjectName("daily_customer_clear_btn")
         self.horizontalLayout_18.addWidget(self.daily_customer_clear_btn, 0, QtCore.Qt.AlignBottom)
-        spacerItem19 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_18.addItem(spacerItem19)
+        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_18.addItem(spacerItem18)
         self.verticalLayout_19.addWidget(self.frame_26)
         self.verticalLayout_25.addWidget(self.frame_14)
         self.daily_customers_tableView = QtWidgets.QTableView(self.frame_3)
@@ -3416,8 +3375,8 @@ class Ui_MainWindow(object):
         self.daily_customers_tableView.verticalHeader().setMinimumSectionSize(40)
         self.verticalLayout_25.addWidget(self.daily_customers_tableView)
         self.gridLayout_3.addWidget(self.frame_3, 2, 4, 2, 1)
-        spacerItem20 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_3.addItem(spacerItem20, 3, 2, 1, 1)
+        spacerItem19 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_3.addItem(spacerItem19, 3, 2, 1, 1)
         self.tabWidget.addTab(self.daily_customers_tab, "")
         self.orders_tab = QtWidgets.QWidget()
         self.orders_tab.setObjectName("orders_tab")
@@ -3556,8 +3515,8 @@ class Ui_MainWindow(object):
         self.plus_order_btn.setIconSize(QtCore.QSize(50, 50))
         self.plus_order_btn.setObjectName("plus_order_btn")
         self.horizontalLayout_2.addWidget(self.plus_order_btn)
-        spacerItem21 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem21)
+        spacerItem20 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem20)
         self.verticalLayout_16.addLayout(self.horizontalLayout_2)
         self.scrollArea = QtWidgets.QScrollArea(self.frame_11)
         self.scrollArea.setMinimumSize(QtCore.QSize(0, 500))
@@ -3578,8 +3537,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_70.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_70.setObjectName("verticalLayout_70")
         self.verticalLayout_8.addWidget(self.orders_items_frame)
-        spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem22)
+        spacerItem21 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem21)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_16.addWidget(self.scrollArea)
         self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
@@ -3612,8 +3571,8 @@ class Ui_MainWindow(object):
         self.order_add_btn.setObjectName("order_add_btn")
         self.verticalLayout_16.addWidget(self.order_add_btn)
         self.gridLayout_8.addWidget(self.frame_11, 1, 0, 1, 1, QtCore.Qt.AlignTop)
-        spacerItem23 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_8.addItem(spacerItem23, 2, 0, 1, 1)
+        spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_8.addItem(spacerItem22, 2, 0, 1, 1)
         self.frame_12 = QtWidgets.QFrame(self.orders_tab)
         self.frame_12.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.frame_12.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3723,8 +3682,8 @@ class Ui_MainWindow(object):
         self.order_clear_btn.setMinimumSize(QtCore.QSize(100, 40))
         self.order_clear_btn.setObjectName("order_clear_btn")
         self.horizontalLayout_12.addWidget(self.order_clear_btn, 0, QtCore.Qt.AlignBottom)
-        spacerItem24 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_12.addItem(spacerItem24)
+        spacerItem23 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_12.addItem(spacerItem23)
         self.verticalLayout_34.addWidget(self.frame_36)
         self.verticalLayout_20.addWidget(self.frame_35)
         self.orders_tableView = QtWidgets.QTableView(self.frame_12)
@@ -3847,8 +3806,8 @@ class Ui_MainWindow(object):
         self.monthly_customer_clear_btn.setMinimumSize(QtCore.QSize(100, 40))
         self.monthly_customer_clear_btn.setObjectName("monthly_customer_clear_btn")
         self.horizontalLayout_26.addWidget(self.monthly_customer_clear_btn, 0, QtCore.Qt.AlignBottom)
-        spacerItem25 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_26.addItem(spacerItem25)
+        spacerItem24 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_26.addItem(spacerItem24)
         self.verticalLayout_21.addWidget(self.frame_28)
         self.verticalLayout_24.addWidget(self.frame_27)
         self.monthly_customers_tableView = QtWidgets.QTableView(self.frame_15)
@@ -3974,8 +3933,8 @@ class Ui_MainWindow(object):
         self.label_10.setAlignment(QtCore.Qt.AlignCenter)
         self.label_10.setObjectName("label_10")
         self.gridLayout_18.addWidget(self.label_10, 0, 1, 1, 1)
-        spacerItem26 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_18.addItem(spacerItem26, 2, 0, 1, 1)
+        spacerItem25 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_18.addItem(spacerItem25, 2, 0, 1, 1)
         self.tabWidget.addTab(self.monthly_tab, "")
         self.warehouse_tab = QtWidgets.QWidget()
         self.warehouse_tab.setObjectName("warehouse_tab")
@@ -4069,8 +4028,8 @@ class Ui_MainWindow(object):
         self.warehouse_clear_btn.setMinimumSize(QtCore.QSize(100, 40))
         self.warehouse_clear_btn.setObjectName("warehouse_clear_btn")
         self.horizontalLayout_7.addWidget(self.warehouse_clear_btn, 0, QtCore.Qt.AlignBottom)
-        spacerItem27 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem27)
+        spacerItem26 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem26)
         self.verticalLayout_32.addWidget(self.frame_32)
         self.verticalLayout_36.addWidget(self.frame_31)
         self.warehouse_tableView = QtWidgets.QTableView(self.frame_16)
@@ -4091,8 +4050,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.frame_24)
         self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
-        spacerItem28 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_11.addItem(spacerItem28)
+        spacerItem27 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_11.addItem(spacerItem27)
         self.label_23 = QtWidgets.QLabel(self.frame_24)
         self.label_23.setMinimumSize(QtCore.QSize(0, 0))
         self.label_23.setStyleSheet("QLabel{\n"
@@ -4263,8 +4222,8 @@ class Ui_MainWindow(object):
         self.report_clear_btn.setMinimumSize(QtCore.QSize(100, 40))
         self.report_clear_btn.setObjectName("report_clear_btn")
         self.horizontalLayout_31.addWidget(self.report_clear_btn, 0, QtCore.Qt.AlignBottom)
-        spacerItem29 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_31.addItem(spacerItem29)
+        spacerItem28 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_31.addItem(spacerItem28)
         self.verticalLayout_40.addWidget(self.frame_37)
         self.verticalLayout_42.addWidget(self.frame_34)
         self.reports_tableView = QtWidgets.QTableView(self.frame_13)
@@ -4414,8 +4373,8 @@ class Ui_MainWindow(object):
 "}")
         self.supervisor_add_btn.setObjectName("supervisor_add_btn")
         self.verticalLayout_4.addWidget(self.supervisor_add_btn)
-        spacerItem30 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem30)
+        spacerItem29 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem29)
         self.gridLayout_4.addWidget(self.frame_22, 0, 0, 1, 1)
         self.frame_23 = QtWidgets.QFrame(self.supervisors_tab)
         self.frame_23.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -4517,8 +4476,8 @@ class Ui_MainWindow(object):
         self.supervisors_clear_btn.setMinimumSize(QtCore.QSize(100, 40))
         self.supervisors_clear_btn.setObjectName("supervisors_clear_btn")
         self.horizontalLayout_37.addWidget(self.supervisors_clear_btn, 0, QtCore.Qt.AlignBottom)
-        spacerItem31 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_37.addItem(spacerItem31)
+        spacerItem30 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_37.addItem(spacerItem30)
         self.verticalLayout_50.addWidget(self.frame_38)
         self.verticalLayout_68.addWidget(self.frame_30)
         self.supervisors_tableView = QtWidgets.QTableView(self.frame_23)
@@ -4535,8 +4494,8 @@ class Ui_MainWindow(object):
         self.offers_tab.setObjectName("offers_tab")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.offers_tab)
         self.gridLayout_6.setObjectName("gridLayout_6")
-        spacerItem32 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem32, 1, 0, 1, 1)
+        spacerItem31 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem31, 1, 0, 1, 1)
         self.frame_33 = QtWidgets.QFrame(self.offers_tab)
         self.frame_33.setMaximumSize(QtCore.QSize(0, 16777215))
         self.frame_33.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -4588,8 +4547,8 @@ class Ui_MainWindow(object):
         self.offer_price_txt.setMaximumSize(QtCore.QSize(100, 40))
         self.offer_price_txt.setObjectName("offer_price_txt")
         self.horizontalLayout_35.addWidget(self.offer_price_txt)
-        spacerItem33 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_35.addItem(spacerItem33)
+        spacerItem32 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_35.addItem(spacerItem32)
         self.verticalLayout_46.addLayout(self.horizontalLayout_35)
         self.horizontalLayout_36 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_36.setSpacing(10)
@@ -4655,8 +4614,8 @@ class Ui_MainWindow(object):
         self.plus_item_btn.setIconSize(QtCore.QSize(50, 50))
         self.plus_item_btn.setObjectName("plus_item_btn")
         self.horizontalLayout_36.addWidget(self.plus_item_btn)
-        spacerItem34 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_36.addItem(spacerItem34)
+        spacerItem33 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_36.addItem(spacerItem33)
         self.verticalLayout_46.addLayout(self.horizontalLayout_36)
         self.scrollArea_2 = QtWidgets.QScrollArea(self.frame_33)
         self.scrollArea_2.setMinimumSize(QtCore.QSize(0, 500))
@@ -4680,8 +4639,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_45.setSpacing(0)
         self.verticalLayout_45.setObjectName("verticalLayout_45")
         self.verticalLayout_41.addWidget(self.offers_items_frame)
-        spacerItem35 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_41.addItem(spacerItem35)
+        spacerItem34 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_41.addItem(spacerItem34)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout_46.addWidget(self.scrollArea_2)
         self.offer_add_btn = QtWidgets.QPushButton(self.frame_33)
@@ -4783,10 +4742,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_48 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_48.setSpacing(4)
         self.horizontalLayout_48.setObjectName("horizontalLayout_48")
-        self.offers_name_filter_txt = QtWidgets.QLineEdit(self.frame_48)
-        self.offers_name_filter_txt.setMaximumSize(QtCore.QSize(300, 40))
-        self.offers_name_filter_txt.setObjectName("offers_name_filter_txt")
-        self.horizontalLayout_48.addWidget(self.offers_name_filter_txt)
+        self.offers_item_name_filter_txt = QtWidgets.QLineEdit(self.frame_48)
+        self.offers_item_name_filter_txt.setMaximumSize(QtCore.QSize(300, 40))
+        self.offers_item_name_filter_txt.setObjectName("offers_item_name_filter_txt")
+        self.horizontalLayout_48.addWidget(self.offers_item_name_filter_txt)
         self.verticalLayout_62.addLayout(self.horizontalLayout_48)
         self.horizontalLayout_46.addLayout(self.verticalLayout_62)
         self.verticalLayout_61 = QtWidgets.QVBoxLayout()
@@ -4812,8 +4771,8 @@ class Ui_MainWindow(object):
         self.offers_clear_btn.setMinimumSize(QtCore.QSize(100, 40))
         self.offers_clear_btn.setObjectName("offers_clear_btn")
         self.horizontalLayout_46.addWidget(self.offers_clear_btn, 0, QtCore.Qt.AlignBottom)
-        spacerItem36 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_46.addItem(spacerItem36)
+        spacerItem35 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_46.addItem(spacerItem35)
         self.verticalLayout_60.addWidget(self.frame_48)
         self.verticalLayout_59.addWidget(self.frame_47)
         self.offers_tableView = QtWidgets.QTableView(self.frame_46)
@@ -4919,8 +4878,8 @@ class Ui_MainWindow(object):
         self.plus_employee_btn.setIconSize(QtCore.QSize(50, 50))
         self.plus_employee_btn.setObjectName("plus_employee_btn")
         self.horizontalLayout_52.addWidget(self.plus_employee_btn)
-        spacerItem37 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_52.addItem(spacerItem37)
+        spacerItem36 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_52.addItem(spacerItem36)
         self.verticalLayout_67.addLayout(self.horizontalLayout_52)
         self.frame_70 = QtWidgets.QFrame(self.frame_69)
         self.frame_70.setMinimumSize(QtCore.QSize(450, 0))
@@ -5025,8 +4984,8 @@ class Ui_MainWindow(object):
         self.shifts_clear_btn.setMinimumSize(QtCore.QSize(100, 40))
         self.shifts_clear_btn.setObjectName("shifts_clear_btn")
         self.horizontalLayout_49.addWidget(self.shifts_clear_btn, 0, QtCore.Qt.AlignBottom)
-        spacerItem38 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_49.addItem(spacerItem38)
+        spacerItem37 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_49.addItem(spacerItem37)
         self.verticalLayout_64.addWidget(self.frame_53)
         self.verticalLayout_63.addWidget(self.frame_52)
         self.shifts_tableView = QtWidgets.QTableView(self.frame_51)
@@ -5077,8 +5036,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_102.addWidget(self.shifts_supervisors_treeView)
         self.verticalLayout_101.addWidget(self.frame_43)
         self.gridLayout_7.addWidget(self.frame_72, 0, 2, 2, 1)
-        spacerItem39 = QtWidgets.QSpacerItem(20, 731, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_7.addItem(spacerItem39, 1, 0, 1, 1)
+        spacerItem38 = QtWidgets.QSpacerItem(20, 731, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_7.addItem(spacerItem38, 1, 0, 1, 1)
         self.tabWidget.addTab(self.shifts_tab, "")
         self.horizontalLayout_33.addWidget(self.tabWidget)
         self.gridLayout.addWidget(self.frame_29, 1, 1, 1, 1)
@@ -5089,7 +5048,7 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(MainWindow)
-        self.buttons_stackedWidget.setCurrentIndex(1)
+        self.buttons_stackedWidget.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(7)
         self.tabWidget.setCurrentIndex(7)
         self.logout_btn.clicked['bool'].connect(self.daily_btn.setDisabled)
@@ -5102,14 +5061,23 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Study Zone"))
         self.daily_customers_btn.setToolTip(_translate("MainWindow", "Daily customers"))
+        self.daily_customers_btn.setText(_translate("MainWindow", "Daily Customers"))
         self.monthly_subscrib_btn.setToolTip(_translate("MainWindow", "Monthly customers"))
+        self.monthly_subscrib_btn.setText(_translate("MainWindow", "Monthly Customers"))
         self.orders_btn.setToolTip(_translate("MainWindow", "Orders"))
+        self.orders_btn.setText(_translate("MainWindow", "Orders"))
         self.warehouse_btn.setToolTip(_translate("MainWindow", "Warehouse"))
+        self.warehouse_btn.setText(_translate("MainWindow", "Warehouse"))
         self.reports_btn.setToolTip(_translate("MainWindow", "Reports"))
+        self.reports_btn.setText(_translate("MainWindow", "Reports"))
         self.supervisors_btn.setToolTip(_translate("MainWindow", "Supervisors"))
+        self.supervisors_btn.setText(_translate("MainWindow", "Supervisors"))
         self.offers_btn.setToolTip(_translate("MainWindow", "Offers"))
+        self.offers_btn.setText(_translate("MainWindow", "Offers"))
         self.shifts_btn.setToolTip(_translate("MainWindow", "Shifts"))
+        self.shifts_btn.setText(_translate("MainWindow", "Shifts"))
         self.copy_delete_btn.setToolTip(_translate("MainWindow", "Copy and Delete"))
+        self.copy_delete_btn.setText(_translate("MainWindow", "To Archive"))
         self.daily_customer_add_btn2.setToolTip(_translate("MainWindow", "Add customer"))
         self.daily_customer_remove_btn.setToolTip(_translate("MainWindow", "Remove customer"))
         self.daily_customer_add_order.setToolTip(_translate("MainWindow", "Add order"))
@@ -5256,7 +5224,7 @@ class Ui_MainWindow(object):
         self.label_63.setText(_translate("MainWindow", "SHIFTS"))
         self.label_64.setText(_translate("MainWindow", "Search and Filter"))
         self.label_66.setText(_translate("MainWindow", "By Date"))
-        self.shifts_date_filter_dateEdit1.setDisplayFormat(_translate("MainWindow", "yyyy-MM-dd"))
+        self.shifts_date_filter_dateEdit1.setDisplayFormat(_translate("MainWindow", "dd/MM/yyyy"))
         self.shifts_clear_btn.setText(_translate("MainWindow", "Clear"))
         self.label_68.setText(_translate("MainWindow", "SHIFT EMPLOYEES"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.shifts_tab), _translate("MainWindow", "Shifts"))

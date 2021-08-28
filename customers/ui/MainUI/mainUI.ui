@@ -793,7 +793,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
      </widget>
     </item>
     <item row="0" column="0" rowspan="2">
-     <widget class="QFrame" name="frame_5">
+     <widget class="QFrame" name="main_buttons_frame">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -808,7 +808,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       </property>
       <property name="maximumSize">
        <size>
-        <width>300</width>
+        <width>0</width>
         <height>16777215</height>
        </size>
       </property>
@@ -962,31 +962,30 @@ border-color: rgb(244, 154, 32);
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
 	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image: url(:/icons/icons/customer1.svg);
+	padding-right:60px;
+
+	background-color:  none;
+	background-image: url(:/icons/icons/customer1.png);
+	background-repeat:none;
 }
 
 
 QPushButton:hover{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/customer2.svg);
+	background-image: url(:/icons/icons/customer2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/customer2.svg);
+	background-image: url(:/icons/icons/customer2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/customer2.svg);
+	background-image: url(:/icons/icons/customer2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -1004,7 +1003,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>Daily Customers</string>
                 </property>
                </widget>
               </item>
@@ -1030,57 +1029,30 @@ QPushButton:disabled{
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-right-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
-	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image: url(:/icons/icons/annual1.svg);
+
+	padding-right:60px;
+	background-color:  none;
+	background-image: url(:/icons/icons/annual1.svg);
+	background-repeat:none;
 
 }
 
 
 QPushButton:hover{
-	border-style: solid;
-	border-color:  rgb(244, 154, 32);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
-	
-	padding:5px;
-	
-	background-color:  rgba(255, 255, 255, 0);
-
-	image: url(:/icons/icons/annual2.svg);
+	background-image: url(:/icons/icons/annual2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-	border-style: solid;
-	border-color:  rgb(244, 154, 32);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
-	
-	padding:10px;
-	
-
-	background-color:  rgba(255, 255, 255, 0);
-
-	image: url(:/icons/icons/annual2.svg);
+	background-image: url(:/icons/icons/annual2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	border-style: solid;
-	
-	border-color:  rgb(244, 154, 32);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
-	padding:10px;
-	
-	background-color:  rgba(255, 255, 255, 0);
-
-	image: url(:/icons/icons/annual2.svg);
+	background-image: url(:/icons/icons/annual2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -1098,7 +1070,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>Monthly Customers</string>
                 </property>
                </widget>
               </item>
@@ -1121,31 +1093,30 @@ QPushButton:disabled{
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-right-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
-	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image:url(:/icons/icons/order1.svg);
+
+	padding-right:60px;
+	background-color:  none;
+	background-image: url(:/icons/icons/order1.svg);
+	background-repeat:none;
+
 }
 
 
 QPushButton:hover{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/order2.svg);
+	background-image: url(:/icons/icons/order2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/order2.svg);
+	background-image: url(:/icons/icons/order2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/order2.svg);
+	background-image: url(:/icons/icons/order2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -1163,7 +1134,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>Orders</string>
                 </property>
                </widget>
               </item>
@@ -1288,7 +1259,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>Warehouse</string>
                 </property>
                </widget>
               </item>
@@ -1354,7 +1325,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>Reports</string>
                 </property>
                </widget>
               </item>
@@ -1420,7 +1391,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>Supervisors</string>
                 </property>
                </widget>
               </item>
@@ -1480,7 +1451,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>Offers</string>
                 </property>
                </widget>
               </item>
@@ -1541,7 +1512,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>Shifts</string>
                 </property>
                </widget>
               </item>
@@ -1601,7 +1572,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>To Archive</string>
                 </property>
                </widget>
               </item>
@@ -4201,7 +4172,7 @@ QPushButton:pressed{
           <locale language="English" country="UnitedStates"/>
          </property>
          <property name="currentIndex">
-          <number>8</number>
+          <number>7</number>
          </property>
          <property name="elideMode">
           <enum>Qt::ElideLeft</enum>
@@ -8429,7 +8400,7 @@ background-color: rgb(244, 154, 32);
                          <number>4</number>
                         </property>
                         <item>
-                         <widget class="QLineEdit" name="offers_name_filter_txt">
+                         <widget class="QLineEdit" name="offers_item_name_filter_txt">
                           <property name="maximumSize">
                            <size>
                             <width>300</width>
@@ -8952,7 +8923,7 @@ background-color: rgb(244, 154, 32);
                               <enum>QAbstractSpinBox::UpDownArrows</enum>
                              </property>
                              <property name="displayFormat">
-                              <string>yyyy-MM-dd</string>
+                              <string>dd/MM/yyyy</string>
                              </property>
                              <property name="calendarPopup">
                               <bool>true</bool>

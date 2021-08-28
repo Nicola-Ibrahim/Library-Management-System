@@ -284,11 +284,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.daily_btn.clicked.connect(self.dailyPanel)
         self.settings_btn.clicked.connect(self.settingsPanel)
 
-        self.logout_btn.clicked.connect(self.Logout)
+        self.logout_btn.clicked.connect(self.BackToMain)
         self.exit_btn.clicked.connect(self.close)
 
-        self.menu_btn.clicked.connect(lambda : self.toggleStackWidget(0,True))
-        self.menu_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.buttons_stackedWidget,100,True))
+        self.menu_btn.clicked.connect(lambda : self.toggleMainButtonsMenu(self.main_buttons_frame,300,True))
 
         # tabWidget buttons
         self.daily_customers_btn.clicked.connect(self.showDailyCustomers)
@@ -383,8 +382,11 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Offers tab buttons
         self.offer_add_btn2.clicked.connect(lambda: self.toggleMenuMaxWidth(self.frame_33,500,True))
         self.offer_add_btn.clicked.connect(self.addOffer)
-        # self.offer_remove_btn.connect(self.removeOffer())
+        # self.offer_remove_btn.connect(self.removeOffer)
         self.plus_item_btn.clicked.connect(self.plusOffer)
+        self.offers_item_name_filter_txt.textChanged['QString'].connect(lambda date : self.offers_sort_model.setItemNameFilter(date))
+        self.offers_date_filter_dateEdit1.dateChanged['QDate'].connect(lambda date : self.offers_sort_model.setDateFilter(date))
+        self.offers_clear_btn.clicked.connect(self.clearOffersFitlers)
 
         # Copy button
         self.copy_delete_btn.clicked.connect(self.copyAndDelete)
@@ -392,7 +394,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     ##################
     # Toggling Forms #
     ##################
-
     def toggleStackWidget(self, maxWidth, enable):
         if enable:
     
@@ -404,37 +405,39 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
             # width ANIMATION
-            animation = QtCore.QPropertyAnimation(self.stackedWidget, b"maximumWidth")
-            animation.setDuration(400)
-            animation.setStartValue(width)
-            animation.setEndValue(widthExtended)
-            animation.setEasingCurve(QtCore.QEasingCurve.OutQuad)
-
-            group = QtCore.QSequentialAnimationGroup(self)
-            group.addAnimation(animation)
-            group.start()
-    
-    def toggleMenu(self, frame, maxWidth, enable):
+            self.animation = QtCore.QPropertyAnimation(self.stackedWidget, b"maximumWidth")
+            self.animation.setDuration(400)
+            self.animation.setStartValue(width)
+            self.animation.setEndValue(widthExtended)
+            self.animation.setEasingCurve(QtCore.QEasingCurve.OutQuad)
+  
+    def toggleMainButtonsMenu(self, frame, maxWidth, enable):
         if enable:
     
             # GET WIDTH
             width = frame.width()
+            standard_width = 80
 
             # SET MAX WIDTH
-            widthExtended = maxWidth
+            if width == 80:
+                widthExtended = maxWidth
 
+            elif(maxWidth == 0):
+                widthExtended = 0
+
+            else:
+                widthExtended = standard_width
+            
+            print(widthExtended)
 
             # width ANIMATION
-            animation = QtCore.QPropertyAnimation(self.stackedWidget, b"maximumWidth")
-            animation.setDuration(400)
-            animation.setStartValue(width)
-            animation.setEndValue(widthExtended)
-            animation.setEasingCurve(QtCore.QEasingCurve.OutQuad)
-
-            group = QtCore.QSequentialAnimationGroup(self)
-            group.addAnimation(animation)
-            group.start()
-    
+            self.animation = QtCore.QPropertyAnimation(frame, b"maximumWidth")
+            self.animation.setDuration(400)
+            self.animation.setStartValue(width)
+            self.animation.setEndValue(widthExtended)
+            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuint)
+            self.animation.start()
+            
     def toggleMenuMaxWidth(self, frame, maxWidth, enable):
         if enable:
     
@@ -449,42 +452,12 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 widthExtended = standard_width
 
-
             # width ANIMATION
-            animation = QtCore.QPropertyAnimation(frame, b"maximumWidth")
-            animation.setDuration(400)
-            animation.setStartValue(width)
-            animation.setEndValue(widthExtended)
-            animation.setEasingCurve(QtCore.QEasingCurve.InOutQuint)
-        
-            group = QtCore.QSequentialAnimationGroup(self)
-            group.addAnimation(animation)
-            group.start()
-    
-    def toggleMenuMaxHeight(self, frame, maxHeight, enable):
-        if enable:
-    
-            # GET WIDTH
-            height = frame.height()
-            standard_height = 0
-
-            # SET MAX WIDTH
-            if height == 0:
-                heightExtended = maxHeight
-            else:
-                heightExtended = standard_height
-
-            #  height ANIMATION
-            animation = QtCore.QPropertyAnimation(frame, b"maximumHeight")
-            animation.setDuration(400)
-            animation.setStartValue(height)
-            animation.setEndValue(heightExtended)
-            animation.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
-            animation.start()
-
-            group = QtCore.QSequentialAnimationGroup(self)
-            group.addAnimation(animation)
-            group.start()
+            self.animation = QtCore.QPropertyAnimation(frame, b"maximumWidth")
+            self.animation.setDuration(400)
+            self.animation.setStartValue(width)
+            self.animation.setEndValue(widthExtended)
+            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuint)
 
     def toggleMenuMinHeight(self, frame, minHeight, enable):
         if enable:
@@ -500,23 +473,19 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 heightExtended = standard_height
             
             #  height ANIMATION
-            animation = QtCore.QPropertyAnimation(frame, b"minimumHeight")
-            animation.setDuration(400)
-            animation.setStartValue(height)
-            animation.setEndValue(heightExtended)
-            animation.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
-            animation.start()
-
-            group = QtCore.QSequentialAnimationGroup(self)
-            group.addAnimation(animation)
-            group.start()
+            self.animation = QtCore.QPropertyAnimation(frame, b"minimumHeight")
+            self.animation.setDuration(400)
+            self.animation.setStartValue(height)
+            self.animation.setEndValue(heightExtended)
+            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
+            self.animation.start()
 
     ##########
-    # Logout # 
+    # BackToMain # 
     ##########
-    def Logout(self):
+    def BackToMain(self):
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'Main_tab'))
-        self.toggleMenuMaxWidth(self.main_buttons_frame, 100, True)
+        self.toggleMainButtonsMenu(self.main_buttons_frame, 0, True)
         self.toggleStackWidget(0,True)
 
         self.frame_19.setMaximumWidth(0)
@@ -525,8 +494,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.frame_24.setMaximumWidth(0)
         self.date_treeview_panel.setMaximumWidth(0)
 
-        self.DAILY_TABLES_FLAG = False
-        self.ARCHIVE_TABLES_FLAG = False
         self.panel_title_lbl.setText('')
 
         self.blur.setBlurRadius(0)
@@ -557,7 +524,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open daily panel"""
 
         self.DAILY_TABLES_FLAG = True
-        self.toggleMenuMaxWidth(self.main_buttons_frame, 80, True)
+        self.toggleMainButtonsMenu(self.main_buttons_frame, 80, True)
         self.panel_title_lbl.setText('Daily')
         
         # Change blur radius for main panel
@@ -591,7 +558,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open acrchive panel"""
 
         self.ARCHIVE_TABLES_FLAG = True
-        self.toggleMenuMaxWidth(self.main_buttons_frame, 80, True)
+        self.toggleMainButtonsMenu(self.main_buttons_frame, 80, True)
         self.panel_title_lbl.setText('Archive')  
 
         self.buttons_stackedWidget.setCurrentWidget(self.buttons_stackedWidget.findChild(QtWidgets.QWidget, 'dailyAndarchive_buttons_tab'))
@@ -626,7 +593,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open settings panel"""
 
         self.SETTINGS_TABLES_FLAG = True
-        self.toggleMenuMaxWidth(self.main_buttons_frame, 80, True)
+        self.toggleMainButtonsMenu(self.main_buttons_frame, 80, True)
         self.panel_title_lbl.setText('Settings')  
         
         self.buttons_stackedWidget.setCurrentWidget(self.buttons_stackedWidget.findChild(QtWidgets.QWidget, 'settings_buttons_tab'))
@@ -643,8 +610,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Reinitialize comboBox
         self.initialSettingsComboBoxs()
-
-
 
     def setViewModel(self):
         
@@ -678,6 +643,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.shifts_sort_model = ShiftsSortModel(self.shifts_model)
             self.offers_sort_model = OffersSortModel(self.offers_model)
             self.reports_sort_model = ReportsSortModel(self.reports_model)
+
+            self.setCurrentDate()
 
     def disableMainButton(self):
         self.archive_btn.setEnabled(False)
@@ -1677,6 +1644,46 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.showShiftsSupervisors()
 
+    def removeOffers(self):
+        """Remove offer/s from offers table"""
+        # Get selected rows and their indexs
+        rows_indices = self.offers_tableView.selectionModel().selectedRows()
+    
+        if (len(rows_indices) <= 0):
+            QtWidgets.QToolTip.showText(self.offer_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select offer/s")
+        
+        else:
+            messageBox = QtWidgets.QMessageBox.warning(
+                self,
+                "Deleting Alert",
+                "Confirm",
+                QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel,
+            )
+            if messageBox == QtWidgets.QMessageBox.Ok:
+                # Create a worker thread
+                worker = Worker(self.daily_conn, 'Offers', 'offer_id', rows_indices)
+
+                # Disable remove button
+
+                worker.finished.connect(worker.deleteLater)
+                worker.finished.connect(lambda : self.offers_model.submitAll())
+                worker.finished.connect(lambda : self.offers_model.select())
+                worker.finished.connect(lambda : resetCounting(table = 'Offers', column = 'offer_id', db1 = self.daily_conn))
+                worker.finished.connect(self.initialSettingsComboBoxs)
+                worker.finished.connect(self.Completers)
+                
+                # Start the thread
+                worker.start()
+
+                # Create progressBar
+                prog = PorgressBarDialog()
+                prog.progressBar.setMaximum(len(rows_indices))
+                prog.progressBar.setMinimum(0)
+                worker.row_num_changed.connect(prog.progressBar.setValue)
+                worker.finished.connect(prog.close)
+                prog.exec()
+    
+
     def plusOffer(self):
         """Adding new order to orders list"""
         self._item_number += 1
@@ -1762,7 +1769,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # pass on delete buttons to connect it with its frame.
         delete_btn.clicked.connect(lambda : self.deleteOfferFrame(offer_frame))
-            
+    
     def isItemExists(self, item_comboBox):
         # Check if the item is selected previously 
         combo_selected_items = [emp.currentText() for emp in self.offers_items_frame.findChildren(QtWidgets.QComboBox)]
@@ -1813,6 +1820,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             for num, label in zip(range(1, self._item_number+1),labels): 
                 label.setText(_translate("MainWindow", f"Item : {num} "))
     
+    def clearOffersFitlers(self):
+        self.offers_sort_model.setItemNameFilter('')
+        self.offers_sort_model.setDateFilter('')
 
     ###############
     # Supervisors #
@@ -1943,8 +1953,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.showShiftsSupervisors()
 
-       
-    
     def showShiftsSupervisors(self):
         """Display available years, months, and days from Archive"""
 
