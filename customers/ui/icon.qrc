@@ -1,0 +1,93 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/add-order.svg</file>
+    <file>icons/add-order2.svg</file>
+    <file>icons/add-user.svg</file>
+    <file>icons/add-user2.svg</file>
+    <file>icons/annual1.svg</file>
+    <file>icons/annual2.svg</file>
+    <file>icons/back1.svg</file>
+    <file>icons/back2.svg</file>
+    <file>icons/background.jpg</file>
+    <file>icons/background-removebg-preview (2).png</file>
+    <file>icons/branch-closed.png</file>
+    <file>icons/branch-end.png</file>
+    <file>icons/branch-more.png</file>
+    <file>icons/branch-open.png</file>
+    <file>icons/business-report.svg</file>
+    <file>icons/business-report2.svg</file>
+    <file>icons/calendar1.svg</file>
+    <file>icons/calendar2.svg</file>
+    <file>icons/cancel.svg</file>
+    <file>icons/checkbox.png</file>
+    <file>icons/checkbox2.png</file>
+    <file>icons/checkmark.svg</file>
+    <file>icons/customer1.svg</file>
+    <file>icons/customer2.svg</file>
+    <file>icons/down_arrow.png</file>
+    <file>icons/edit1.svg</file>
+    <file>icons/edit2.svg</file>
+    <file>icons/exchange.svg</file>
+    <file>icons/exchange1.svg</file>
+    <file>icons/exchange2.svg</file>
+    <file>icons/export.svg</file>
+    <file>icons/export2.svg</file>
+    <file>icons/eye.png</file>
+    <file>icons/files1.svg</file>
+    <file>icons/files2.svg</file>
+    <file>icons/filter.svg</file>
+    <file>icons/funnel.svg</file>
+    <file>icons/handle.png</file>
+    <file>icons/hierarchical-structure1.svg</file>
+    <file>icons/hierarchical-structure2.svg</file>
+    <file>icons/iconmonstr-marketing-34.svg</file>
+    <file>icons/id-card.svg</file>
+    <file>icons/inbox1.svg</file>
+    <file>icons/inbox2.svg</file>
+    <file>icons/invisibility.svg</file>
+    <file>icons/letter-x1.svg</file>
+    <file>icons/letter-x2.svg</file>
+    <file>icons/logout1.svg</file>
+    <file>icons/logout2.svg</file>
+    <file>icons/loupe (1).svg</file>
+    <file>icons/loupe (2).svg</file>
+    <file>icons/loupe (3).svg</file>
+    <file>icons/loupe1.svg</file>
+    <file>icons/loupe2.svg</file>
+    <file>icons/menu1.svg</file>
+    <file>icons/menu2.svg</file>
+    <file>icons/minus-sign.svg</file>
+    <file>icons/minus-sign2.svg</file>
+    <file>icons/offers.png</file>
+    <file>icons/offers2.png</file>
+    <file>icons/open-trash-can.svg</file>
+    <file>icons/order1.svg</file>
+    <file>icons/order2.svg</file>
+    <file>icons/organization 2.svg</file>
+    <file>icons/organization.svg</file>
+    <file>icons/padlock.svg</file>
+    <file>icons/PinClipart.com_black-white-clip-art_192041.png</file>
+    <file>icons/plus.svg</file>
+    <file>icons/plus2.svg</file>
+    <file>icons/refresh.svg</file>
+    <file>icons/refresh2.svg</file>
+    <file>icons/remove-user.svg</file>
+    <file>icons/remove-user2.svg</file>
+    <file>icons/report1.svg</file>
+    <file>icons/report2.svg</file>
+    <file>icons/settings1.svg</file>
+    <file>icons/settings2.svg</file>
+    <file>icons/shifts1.png</file>
+    <file>icons/shifts2.png</file>
+    <file>icons/start1.png</file>
+    <file>icons/start2.png</file>
+    <file>icons/stop1.png</file>
+    <file>icons/stop2.png</file>
+    <file>icons/trash-can-with-cover.svg</file>
+    <file>icons/user.svg</file>
+    <file>icons/visibility.svg</file>
+    <file>icons/vline.png</file>
+    <file>icons/warehouse1.svg</file>
+    <file>icons/warehouse2.svg</file>
+  </qresource>
+</RCC>
