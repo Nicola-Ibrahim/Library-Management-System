@@ -638,17 +638,16 @@ class OffersModel(QSqlTableModel):
         
     def addOffer(self, data : list):
     
-        # Insert new record
-        record = self.record()
-        
+        # Insert new row
+        row = self.rowCount()
+        self.insertRows(row, 1)
+
         columns = ['offer_name', 'offer_price']
 
         # Take only the colums that suitable for data list length
         for col_ind, field in enumerate(data):
-            col = record.indexOf(columns[col_ind])
-            record.setValue(col, field)
-
-        self.insertRecord(-1,record)
+            col = self.fieldIndex(columns[col_ind])
+            self.setData(self.index(row, col), field, Qt.EditRole)
 
         # Submit all changes
         ret = self.submitAll()

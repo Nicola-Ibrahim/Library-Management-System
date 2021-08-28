@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIflfpqG.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIoCppCU.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -747,7 +747,15 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
-        self.panel_title_lbl = QtWidgets.QLabel(self.centralwidget)
+        self.frame_5 = QtWidgets.QFrame(self.centralwidget)
+        self.frame_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_5.setObjectName("frame_5")
+        self.verticalLayout_55 = QtWidgets.QVBoxLayout(self.frame_5)
+        self.verticalLayout_55.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_55.setSpacing(0)
+        self.verticalLayout_55.setObjectName("verticalLayout_55")
+        self.panel_title_lbl = QtWidgets.QLabel(self.frame_5)
         self.panel_title_lbl.setMinimumSize(QtCore.QSize(0, 80))
         self.panel_title_lbl.setMaximumSize(QtCore.QSize(16777215, 80))
         self.panel_title_lbl.setStyleSheet("QLabel{\n"
@@ -761,583 +769,8 @@ class Ui_MainWindow(object):
         self.panel_title_lbl.setText("")
         self.panel_title_lbl.setAlignment(QtCore.Qt.AlignCenter)
         self.panel_title_lbl.setObjectName("panel_title_lbl")
-        self.gridLayout.addWidget(self.panel_title_lbl, 0, 1, 1, 1)
-        self.main_buttons_frame = QtWidgets.QFrame(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.main_buttons_frame.sizePolicy().hasHeightForWidth())
-        self.main_buttons_frame.setSizePolicy(sizePolicy)
-        self.main_buttons_frame.setMinimumSize(QtCore.QSize(0, 0))
-        self.main_buttons_frame.setMaximumSize(QtCore.QSize(0, 16777215))
-        self.main_buttons_frame.setMouseTracking(True)
-        self.main_buttons_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.main_buttons_frame.setStyleSheet("")
-        self.main_buttons_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.main_buttons_frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.main_buttons_frame.setObjectName("main_buttons_frame")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.main_buttons_frame)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setSpacing(4)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.menu_btn = QtWidgets.QPushButton(self.main_buttons_frame)
-        self.menu_btn.setMinimumSize(QtCore.QSize(50, 50))
-        self.menu_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    padding: 4px;\n"
-"    background-color: transparent;\n"
-"    image: url(:/icons/icons/menu1.svg);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    image: url(:/icons/icons/menu2.svg);\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    image: url(:/icons/icons/menu2.svg);\n"
-"}\n"
-"\n"
-"")
-        self.menu_btn.setText("")
-        self.menu_btn.setObjectName("menu_btn")
-        self.verticalLayout_2.addWidget(self.menu_btn)
-        self.buttons_stackedWidget = QtWidgets.QStackedWidget(self.main_buttons_frame)
-        self.buttons_stackedWidget.setMinimumSize(QtCore.QSize(0, 0))
-        self.buttons_stackedWidget.setStyleSheet("#buttons_stackedWidget{\n"
-"background-color: rgba(255, 255, 255, 0);\n"
-"border-style: solid;\n"
-"border-width: 5px px 0px 0px;\n"
-"border-radius: 0px;\n"
-"border-color: rgb(244, 154, 32);\n"
-"\n"
-"}")
-        self.buttons_stackedWidget.setObjectName("buttons_stackedWidget")
-        self.dailyAndarchive_buttons_tab = QtWidgets.QWidget()
-        self.dailyAndarchive_buttons_tab.setObjectName("dailyAndarchive_buttons_tab")
-        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.dailyAndarchive_buttons_tab)
-        self.verticalLayout_17.setContentsMargins(0, 11, 0, 0)
-        self.verticalLayout_17.setSpacing(0)
-        self.verticalLayout_17.setObjectName("verticalLayout_17")
-        self.frame_4 = QtWidgets.QFrame(self.dailyAndarchive_buttons_tab)
-        self.frame_4.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_4.setObjectName("frame_4")
-        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.frame_4)
-        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_6.setSpacing(0)
-        self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.daily_customers_btn = QtWidgets.QPushButton(self.frame_4)
-        self.daily_customers_btn.setEnabled(True)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.daily_customers_btn.sizePolicy().hasHeightForWidth())
-        self.daily_customers_btn.setSizePolicy(sizePolicy)
-        self.daily_customers_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.daily_customers_btn.setStyleSheet("QPushButton{\n"
-"    \n"
-"    padding-right:60px;\n"
-"\n"
-"    background-color:  none;\n"
-"    background-image: url(:/icons/icons/customer1.png);\n"
-"    background-repeat:none;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-image: url(:/icons/icons/customer2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    background-image: url(:/icons/icons/customer2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    background-image: url(:/icons/icons/customer2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.daily_customers_btn.setObjectName("daily_customers_btn")
-        self.verticalLayout_6.addWidget(self.daily_customers_btn)
-        self.monthly_subscrib_btn = QtWidgets.QPushButton(self.frame_4)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.monthly_subscrib_btn.sizePolicy().hasHeightForWidth())
-        self.monthly_subscrib_btn.setSizePolicy(sizePolicy)
-        self.monthly_subscrib_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.monthly_subscrib_btn.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.monthly_subscrib_btn.setStyleSheet("QPushButton{\n"
-"\n"
-"    padding-right:60px;\n"
-"    background-color:  none;\n"
-"    background-image: url(:/icons/icons/annual1.svg);\n"
-"    background-repeat:none;\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-image: url(:/icons/icons/annual2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    background-image: url(:/icons/icons/annual2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    background-image: url(:/icons/icons/annual2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.monthly_subscrib_btn.setObjectName("monthly_subscrib_btn")
-        self.verticalLayout_6.addWidget(self.monthly_subscrib_btn)
-        self.orders_btn = QtWidgets.QPushButton(self.frame_4)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.orders_btn.sizePolicy().hasHeightForWidth())
-        self.orders_btn.setSizePolicy(sizePolicy)
-        self.orders_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.orders_btn.setStyleSheet("QPushButton{\n"
-"\n"
-"    padding-right:60px;\n"
-"    background-color:  none;\n"
-"    background-image: url(:/icons/icons/order1.svg);\n"
-"    background-repeat:none;\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-image: url(:/icons/icons/order2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    background-image: url(:/icons/icons/order2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    background-image: url(:/icons/icons/order2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.orders_btn.setObjectName("orders_btn")
-        self.verticalLayout_6.addWidget(self.orders_btn)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_6.addItem(spacerItem)
-        self.verticalLayout_17.addWidget(self.frame_4)
-        self.buttons_stackedWidget.addWidget(self.dailyAndarchive_buttons_tab)
-        self.settings_buttons_tab = QtWidgets.QWidget()
-        self.settings_buttons_tab.setObjectName("settings_buttons_tab")
-        self.verticalLayout_23 = QtWidgets.QVBoxLayout(self.settings_buttons_tab)
-        self.verticalLayout_23.setContentsMargins(0, -1, 0, 0)
-        self.verticalLayout_23.setSpacing(0)
-        self.verticalLayout_23.setObjectName("verticalLayout_23")
-        self.frame_18 = QtWidgets.QFrame(self.settings_buttons_tab)
-        self.frame_18.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.frame_18.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_18.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_18.setObjectName("frame_18")
-        self.verticalLayout_26 = QtWidgets.QVBoxLayout(self.frame_18)
-        self.verticalLayout_26.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_26.setSpacing(0)
-        self.verticalLayout_26.setObjectName("verticalLayout_26")
-        self.warehouse_btn = QtWidgets.QPushButton(self.frame_18)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.warehouse_btn.sizePolicy().hasHeightForWidth())
-        self.warehouse_btn.setSizePolicy(sizePolicy)
-        self.warehouse_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.warehouse_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-right-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image: url(:/icons/icons/warehouse1.svg);\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/warehouse2.svg);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/warehouse2.svg);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/warehouse2.svg);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.warehouse_btn.setObjectName("warehouse_btn")
-        self.verticalLayout_26.addWidget(self.warehouse_btn)
-        self.reports_btn = QtWidgets.QPushButton(self.frame_18)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.reports_btn.sizePolicy().hasHeightForWidth())
-        self.reports_btn.setSizePolicy(sizePolicy)
-        self.reports_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.reports_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-right-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image:url(:/icons/icons/report1.svg);\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/report2.svg);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/report2.svg);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/report2.svg);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.reports_btn.setObjectName("reports_btn")
-        self.verticalLayout_26.addWidget(self.reports_btn)
-        self.supervisors_btn = QtWidgets.QPushButton(self.frame_18)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.supervisors_btn.sizePolicy().hasHeightForWidth())
-        self.supervisors_btn.setSizePolicy(sizePolicy)
-        self.supervisors_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.supervisors_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-right-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image: url(:/icons/icons/hierarchical-structure1.svg);\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/hierarchical-structure2.svg);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/hierarchical-structure2.svg);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/hierarchical-structure2.svg);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.supervisors_btn.setObjectName("supervisors_btn")
-        self.verticalLayout_26.addWidget(self.supervisors_btn)
-        self.offers_btn = QtWidgets.QPushButton(self.frame_18)
-        self.offers_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.offers_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-right-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image: url(:/icons/icons/offers.png);\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/offers2.png)\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/offers2.png)\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/offers2.png)\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.offers_btn.setObjectName("offers_btn")
-        self.verticalLayout_26.addWidget(self.offers_btn)
-        self.shifts_btn = QtWidgets.QPushButton(self.frame_18)
-        self.shifts_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.shifts_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-right-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image: url(:/icons/icons/shifts1.png);\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/shifts2.png);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/shifts2.png);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/shifts2.png);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.shifts_btn.setObjectName("shifts_btn")
-        self.verticalLayout_26.addWidget(self.shifts_btn)
-        self.copy_delete_btn = QtWidgets.QPushButton(self.frame_18)
-        self.copy_delete_btn.setMinimumSize(QtCore.QSize(70, 70))
-        self.copy_delete_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-right-color:  rgb(255, 255, 255);\n"
-"    border-width: 0px 0px 0px 5px;\n"
-"    border-radius: 0px;\n"
-"    \n"
-"    padding:5px;\n"
-"    \n"
-"    background-color:  rgba(230, 230, 230, 0);\n"
-"    \n"
-"    image: url(:/icons/icons/files1.svg);\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/files2.svg);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/files2.svg);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    border-color:  rgb(244, 154, 32);\n"
-"    image: url(:/icons/icons/files2.svg);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.copy_delete_btn.setObjectName("copy_delete_btn")
-        self.verticalLayout_26.addWidget(self.copy_delete_btn)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_26.addItem(spacerItem1)
-        self.verticalLayout_23.addWidget(self.frame_18)
-        self.buttons_stackedWidget.addWidget(self.settings_buttons_tab)
-        self.verticalLayout_2.addWidget(self.buttons_stackedWidget)
-        self.logout_btn = QtWidgets.QPushButton(self.main_buttons_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.logout_btn.sizePolicy().hasHeightForWidth())
-        self.logout_btn.setSizePolicy(sizePolicy)
-        self.logout_btn.setMinimumSize(QtCore.QSize(90, 60))
-        self.logout_btn.setMaximumSize(QtCore.QSize(16777215, 60))
-        self.logout_btn.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.logout_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;\n"
-"    border-width: 0px 0px 0px 0px;\n"
-"    color: #808086;\n"
-"    padding: 2px;\n"
-"\n"
-"    background-color: rgba(255,255,255,0);\n"
-"\n"
-"    image: url(:/icons/icons/back1.svg);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    border-style:  solid;\n"
-"        \n"
-"    border-width: 0px 0px 0px 0px;\n"
-"    padding-right: 10px;\n"
-"    background-color: rgba(255,255,255,0);\n"
-"\n"
-"    image: url(:/icons/icons/back2.svg);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    border-style:  solid;\n"
-"        \n"
-"    border-width: 0px 0px 0px 0px;\n"
-"    padding-right: 10px;\n"
-"    background-color: rgba(255,255,255,0);\n"
-"\n"
-"    image: url(:/icons/icons/back2.svg);\n"
-"}\n"
-"\n"
-"")
-        self.logout_btn.setObjectName("logout_btn")
-        self.verticalLayout_2.addWidget(self.logout_btn)
-        self.gridLayout.addWidget(self.main_buttons_frame, 0, 0, 2, 1)
-        self.frame_29 = QtWidgets.QFrame(self.centralwidget)
+        self.verticalLayout_55.addWidget(self.panel_title_lbl)
+        self.frame_29 = QtWidgets.QFrame(self.frame_5)
         self.frame_29.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_29.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_29.setObjectName("frame_29")
@@ -1357,8 +790,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_7.setSpacing(2)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        spacerItem2 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_7.addItem(spacerItem2)
+        spacerItem = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_7.addItem(spacerItem)
         self.frame_10 = QtWidgets.QFrame(self.daily_customers_properties_panel)
         self.frame_10.setAutoFillBackground(False)
         self.frame_10.setStyleSheet("")
@@ -1675,8 +1108,8 @@ class Ui_MainWindow(object):
         self.daily_customer_edit_price_btn.raise_()
         self.daily_customer_search_btn.raise_()
         self.verticalLayout_7.addWidget(self.frame_10)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(spacerItem3)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem1)
         self.stackedWidget.addWidget(self.daily_customers_properties_panel)
         self.orders_properties_panel = QtWidgets.QWidget()
         self.orders_properties_panel.setStyleSheet("")
@@ -1685,8 +1118,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_28.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_28.setSpacing(2)
         self.verticalLayout_28.setObjectName("verticalLayout_28")
-        spacerItem4 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_28.addItem(spacerItem4)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_28.addItem(spacerItem2)
         self.frame_17 = QtWidgets.QFrame(self.orders_properties_panel)
         self.frame_17.setAutoFillBackground(False)
         self.frame_17.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -1891,8 +1324,8 @@ class Ui_MainWindow(object):
         self.order_export_btn.setObjectName("order_export_btn")
         self.verticalLayout_9.addWidget(self.order_export_btn)
         self.verticalLayout_28.addWidget(self.frame_17)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 253, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_28.addItem(spacerItem5)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 253, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_28.addItem(spacerItem3)
         self.stackedWidget.addWidget(self.orders_properties_panel)
         self.monthly_customers_properties_panel = QtWidgets.QWidget()
         self.monthly_customers_properties_panel.setObjectName("monthly_customers_properties_panel")
@@ -1900,8 +1333,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_30.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_30.setSpacing(2)
         self.verticalLayout_30.setObjectName("verticalLayout_30")
-        spacerItem6 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_30.addItem(spacerItem6)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_30.addItem(spacerItem4)
         self.frame_20 = QtWidgets.QFrame(self.monthly_customers_properties_panel)
         self.frame_20.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.frame_20.setAutoFillBackground(False)
@@ -2210,8 +1643,8 @@ class Ui_MainWindow(object):
         self.monthly_customer_edit_cost_btn.setObjectName("monthly_customer_edit_cost_btn")
         self.verticalLayout.addWidget(self.monthly_customer_edit_cost_btn)
         self.verticalLayout_30.addWidget(self.frame_20)
-        spacerItem7 = QtWidgets.QSpacerItem(20, 253, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_30.addItem(spacerItem7)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 253, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_30.addItem(spacerItem5)
         self.stackedWidget.addWidget(self.monthly_customers_properties_panel)
         self.warehouse_properties_panel = QtWidgets.QWidget()
         self.warehouse_properties_panel.setObjectName("warehouse_properties_panel")
@@ -2219,8 +1652,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_37.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_37.setSpacing(2)
         self.verticalLayout_37.setObjectName("verticalLayout_37")
-        spacerItem8 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_37.addItem(spacerItem8)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 250, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_37.addItem(spacerItem6)
         self.frame_7 = QtWidgets.QFrame(self.warehouse_properties_panel)
         self.frame_7.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_7.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -2327,8 +1760,8 @@ class Ui_MainWindow(object):
         self.warehouse_item_remove_btn.setObjectName("warehouse_item_remove_btn")
         self.verticalLayout_15.addWidget(self.warehouse_item_remove_btn)
         self.verticalLayout_37.addWidget(self.frame_7)
-        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_37.addItem(spacerItem9)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_37.addItem(spacerItem7)
         self.stackedWidget.addWidget(self.warehouse_properties_panel)
         self.reports_properties_panel = QtWidgets.QWidget()
         self.reports_properties_panel.setObjectName("reports_properties_panel")
@@ -2336,9 +1769,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_44.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout_44.setSpacing(2)
         self.verticalLayout_44.setObjectName("verticalLayout_44")
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_44.addItem(spacerItem8)
         self.frame_8 = QtWidgets.QFrame(self.reports_properties_panel)
-        self.frame_8.setMinimumSize(QtCore.QSize(80, 250))
-        self.frame_8.setMaximumSize(QtCore.QSize(90, 250))
         self.frame_8.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_8.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_8.setObjectName("frame_8")
@@ -2483,6 +1916,8 @@ class Ui_MainWindow(object):
         self.report_search_btn.setObjectName("report_search_btn")
         self.verticalLayout_14.addWidget(self.report_search_btn)
         self.verticalLayout_44.addWidget(self.frame_8)
+        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_44.addItem(spacerItem9)
         self.stackedWidget.addWidget(self.reports_properties_panel)
         self.supervisors_properties_panel = QtWidgets.QWidget()
         self.supervisors_properties_panel.setObjectName("supervisors_properties_panel")
@@ -2752,6 +2187,8 @@ class Ui_MainWindow(object):
         self.offers_properties_panel = QtWidgets.QWidget()
         self.offers_properties_panel.setObjectName("offers_properties_panel")
         self.verticalLayout_53 = QtWidgets.QVBoxLayout(self.offers_properties_panel)
+        self.verticalLayout_53.setContentsMargins(2, 2, 2, 2)
+        self.verticalLayout_53.setSpacing(2)
         self.verticalLayout_53.setObjectName("verticalLayout_53")
         spacerItem14 = QtWidgets.QSpacerItem(20, 220, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayout_53.addItem(spacerItem14)
@@ -3120,9 +2557,9 @@ class Ui_MainWindow(object):
         self.daily_customers_tab = QtWidgets.QWidget()
         self.daily_customers_tab.setObjectName("daily_customers_tab")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.daily_customers_tab)
-        self.gridLayout_3.setContentsMargins(11, 11, 11, 11)
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setHorizontalSpacing(7)
-        self.gridLayout_3.setVerticalSpacing(3)
+        self.gridLayout_3.setVerticalSpacing(0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.label_6 = QtWidgets.QLabel(self.daily_customers_tab)
         self.label_6.setMaximumSize(QtCore.QSize(16777215, 60))
@@ -3381,8 +2818,9 @@ class Ui_MainWindow(object):
         self.orders_tab = QtWidgets.QWidget()
         self.orders_tab.setObjectName("orders_tab")
         self.gridLayout_8 = QtWidgets.QGridLayout(self.orders_tab)
+        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_8.setHorizontalSpacing(7)
-        self.gridLayout_8.setVerticalSpacing(3)
+        self.gridLayout_8.setVerticalSpacing(0)
         self.gridLayout_8.setObjectName("gridLayout_8")
         self.label = QtWidgets.QLabel(self.orders_tab)
         self.label.setMaximumSize(QtCore.QSize(16777215, 60))
@@ -3700,7 +3138,8 @@ class Ui_MainWindow(object):
         self.monthly_tab = QtWidgets.QWidget()
         self.monthly_tab.setObjectName("monthly_tab")
         self.gridLayout_18 = QtWidgets.QGridLayout(self.monthly_tab)
-        self.gridLayout_18.setVerticalSpacing(3)
+        self.gridLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_18.setVerticalSpacing(0)
         self.gridLayout_18.setObjectName("gridLayout_18")
         self.frame_15 = QtWidgets.QFrame(self.monthly_tab)
         self.frame_15.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -3939,6 +3378,8 @@ class Ui_MainWindow(object):
         self.warehouse_tab = QtWidgets.QWidget()
         self.warehouse_tab.setObjectName("warehouse_tab")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.warehouse_tab)
+        self.gridLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_10.setVerticalSpacing(0)
         self.gridLayout_10.setObjectName("gridLayout_10")
         self.label_39 = QtWidgets.QLabel(self.warehouse_tab)
         self.label_39.setMaximumSize(QtCore.QSize(16777215, 60))
@@ -4140,6 +3581,8 @@ class Ui_MainWindow(object):
         self.reports_tab = QtWidgets.QWidget()
         self.reports_tab.setObjectName("reports_tab")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.reports_tab)
+        self.gridLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_11.setVerticalSpacing(0)
         self.gridLayout_11.setObjectName("gridLayout_11")
         self.label_8 = QtWidgets.QLabel(self.reports_tab)
         self.label_8.setStyleSheet("QLabel{\n"
@@ -4240,6 +3683,8 @@ class Ui_MainWindow(object):
         self.supervisors_tab = QtWidgets.QWidget()
         self.supervisors_tab.setObjectName("supervisors_tab")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.supervisors_tab)
+        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_4.setVerticalSpacing(0)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.frame_22 = QtWidgets.QFrame(self.supervisors_tab)
         self.frame_22.setMinimumSize(QtCore.QSize(0, 0))
@@ -4493,6 +3938,8 @@ class Ui_MainWindow(object):
         self.offers_tab = QtWidgets.QWidget()
         self.offers_tab.setObjectName("offers_tab")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.offers_tab)
+        self.gridLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_6.setVerticalSpacing(0)
         self.gridLayout_6.setObjectName("gridLayout_6")
         spacerItem31 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_6.addItem(spacerItem31, 1, 0, 1, 1)
@@ -4790,6 +4237,7 @@ class Ui_MainWindow(object):
         self.shifts_tab = QtWidgets.QWidget()
         self.shifts_tab.setObjectName("shifts_tab")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.shifts_tab)
+        self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_7.setObjectName("gridLayout_7")
         self.frame_69 = QtWidgets.QFrame(self.shifts_tab)
         self.frame_69.setMaximumSize(QtCore.QSize(0, 16777215))
@@ -5040,7 +4488,583 @@ class Ui_MainWindow(object):
         self.gridLayout_7.addItem(spacerItem38, 1, 0, 1, 1)
         self.tabWidget.addTab(self.shifts_tab, "")
         self.horizontalLayout_33.addWidget(self.tabWidget)
-        self.gridLayout.addWidget(self.frame_29, 1, 1, 1, 1)
+        self.verticalLayout_55.addWidget(self.frame_29)
+        self.gridLayout.addWidget(self.frame_5, 0, 1, 1, 1)
+        self.main_buttons_frame = QtWidgets.QFrame(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.main_buttons_frame.sizePolicy().hasHeightForWidth())
+        self.main_buttons_frame.setSizePolicy(sizePolicy)
+        self.main_buttons_frame.setMinimumSize(QtCore.QSize(0, 0))
+        self.main_buttons_frame.setMaximumSize(QtCore.QSize(0, 16777215))
+        self.main_buttons_frame.setMouseTracking(True)
+        self.main_buttons_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.main_buttons_frame.setStyleSheet("")
+        self.main_buttons_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.main_buttons_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.main_buttons_frame.setObjectName("main_buttons_frame")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.main_buttons_frame)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setSpacing(4)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.menu_btn = QtWidgets.QPushButton(self.main_buttons_frame)
+        self.menu_btn.setMinimumSize(QtCore.QSize(50, 50))
+        self.menu_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;\n"
+"    padding: 4px;\n"
+"    background-color: transparent;\n"
+"    image: url(:/icons/icons/menu1.svg);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    image: url(:/icons/icons/menu2.svg);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    image: url(:/icons/icons/menu2.svg);\n"
+"}\n"
+"\n"
+"")
+        self.menu_btn.setText("")
+        self.menu_btn.setObjectName("menu_btn")
+        self.verticalLayout_2.addWidget(self.menu_btn)
+        self.buttons_stackedWidget = QtWidgets.QStackedWidget(self.main_buttons_frame)
+        self.buttons_stackedWidget.setMinimumSize(QtCore.QSize(0, 0))
+        self.buttons_stackedWidget.setStyleSheet("#buttons_stackedWidget{\n"
+"background-color: rgba(255, 255, 255, 0);\n"
+"border-style: solid;\n"
+"border-width: 5px px 0px 0px;\n"
+"border-radius: 0px;\n"
+"border-color: rgb(244, 154, 32);\n"
+"\n"
+"}")
+        self.buttons_stackedWidget.setObjectName("buttons_stackedWidget")
+        self.dailyAndarchive_buttons_tab = QtWidgets.QWidget()
+        self.dailyAndarchive_buttons_tab.setObjectName("dailyAndarchive_buttons_tab")
+        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.dailyAndarchive_buttons_tab)
+        self.verticalLayout_17.setContentsMargins(0, 11, 0, 0)
+        self.verticalLayout_17.setSpacing(0)
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+        self.frame_4 = QtWidgets.QFrame(self.dailyAndarchive_buttons_tab)
+        self.frame_4.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_4.setObjectName("frame_4")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.frame_4)
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_6.setSpacing(0)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.daily_customers_btn = QtWidgets.QPushButton(self.frame_4)
+        self.daily_customers_btn.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.daily_customers_btn.sizePolicy().hasHeightForWidth())
+        self.daily_customers_btn.setSizePolicy(sizePolicy)
+        self.daily_customers_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.daily_customers_btn.setStyleSheet("QPushButton{\n"
+"    \n"
+"    padding-right:60px;\n"
+"\n"
+"    background-color:  none;\n"
+"    background-image: url(:/icons/icons/customer1.png);\n"
+"    background-repeat:none;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-image: url(:/icons/icons/customer2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    background-image: url(:/icons/icons/customer2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    background-image: url(:/icons/icons/customer2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.daily_customers_btn.setObjectName("daily_customers_btn")
+        self.verticalLayout_6.addWidget(self.daily_customers_btn)
+        self.monthly_subscrib_btn = QtWidgets.QPushButton(self.frame_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.monthly_subscrib_btn.sizePolicy().hasHeightForWidth())
+        self.monthly_subscrib_btn.setSizePolicy(sizePolicy)
+        self.monthly_subscrib_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.monthly_subscrib_btn.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.monthly_subscrib_btn.setStyleSheet("QPushButton{\n"
+"\n"
+"    padding-right:60px;\n"
+"    background-color:  none;\n"
+"    background-image: url(:/icons/icons/annual1.png);\n"
+"    background-repeat:none;\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-image: url(:/icons/icons/annual2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    background-image: url(:/icons/icons/annual2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    background-image: url(:/icons/icons/annual2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.monthly_subscrib_btn.setObjectName("monthly_subscrib_btn")
+        self.verticalLayout_6.addWidget(self.monthly_subscrib_btn)
+        self.orders_btn = QtWidgets.QPushButton(self.frame_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.orders_btn.sizePolicy().hasHeightForWidth())
+        self.orders_btn.setSizePolicy(sizePolicy)
+        self.orders_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.orders_btn.setStyleSheet("QPushButton{\n"
+"\n"
+"    padding-right:60px;\n"
+"    background-color:  none;\n"
+"    background-image: url(:/icons/icons/order1.png);\n"
+"    background-repeat:none;\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-image: url(:/icons/icons/order2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    background-image: url(:/icons/icons/order2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    background-image: url(:/icons/icons/order2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.orders_btn.setObjectName("orders_btn")
+        self.verticalLayout_6.addWidget(self.orders_btn)
+        spacerItem39 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_6.addItem(spacerItem39)
+        self.verticalLayout_17.addWidget(self.frame_4)
+        self.buttons_stackedWidget.addWidget(self.dailyAndarchive_buttons_tab)
+        self.settings_buttons_tab = QtWidgets.QWidget()
+        self.settings_buttons_tab.setObjectName("settings_buttons_tab")
+        self.verticalLayout_23 = QtWidgets.QVBoxLayout(self.settings_buttons_tab)
+        self.verticalLayout_23.setContentsMargins(0, -1, 0, 0)
+        self.verticalLayout_23.setSpacing(0)
+        self.verticalLayout_23.setObjectName("verticalLayout_23")
+        self.frame_18 = QtWidgets.QFrame(self.settings_buttons_tab)
+        self.frame_18.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.frame_18.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_18.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_18.setObjectName("frame_18")
+        self.verticalLayout_26 = QtWidgets.QVBoxLayout(self.frame_18)
+        self.verticalLayout_26.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_26.setSpacing(0)
+        self.verticalLayout_26.setObjectName("verticalLayout_26")
+        self.warehouse_btn = QtWidgets.QPushButton(self.frame_18)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.warehouse_btn.sizePolicy().hasHeightForWidth())
+        self.warehouse_btn.setSizePolicy(sizePolicy)
+        self.warehouse_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.warehouse_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;\n"
+"    border-right-color:  rgb(255, 255, 255);\n"
+"    border-width: 0px 0px 0px 5px;\n"
+"    border-radius: 0px;\n"
+"    \n"
+"    padding:5px;\n"
+"    \n"
+"    background-color:  rgba(230, 230, 230, 0);\n"
+"    \n"
+"    image: url(:/icons/icons/warehouse1.svg);\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/warehouse2.svg);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/warehouse2.svg);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/warehouse2.svg);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.warehouse_btn.setObjectName("warehouse_btn")
+        self.verticalLayout_26.addWidget(self.warehouse_btn)
+        self.reports_btn = QtWidgets.QPushButton(self.frame_18)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.reports_btn.sizePolicy().hasHeightForWidth())
+        self.reports_btn.setSizePolicy(sizePolicy)
+        self.reports_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.reports_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;\n"
+"    border-right-color:  rgb(255, 255, 255);\n"
+"    border-width: 0px 0px 0px 5px;\n"
+"    border-radius: 0px;\n"
+"    \n"
+"    padding:5px;\n"
+"    \n"
+"    background-color:  rgba(230, 230, 230, 0);\n"
+"    \n"
+"    image:url(:/icons/icons/report1.svg);\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/report2.svg);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/report2.svg);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/report2.svg);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.reports_btn.setObjectName("reports_btn")
+        self.verticalLayout_26.addWidget(self.reports_btn)
+        self.supervisors_btn = QtWidgets.QPushButton(self.frame_18)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.supervisors_btn.sizePolicy().hasHeightForWidth())
+        self.supervisors_btn.setSizePolicy(sizePolicy)
+        self.supervisors_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.supervisors_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;\n"
+"    border-right-color:  rgb(255, 255, 255);\n"
+"    border-width: 0px 0px 0px 5px;\n"
+"    border-radius: 0px;\n"
+"    \n"
+"    padding:5px;\n"
+"    \n"
+"    background-color:  rgba(230, 230, 230, 0);\n"
+"    \n"
+"    image: url(:/icons/icons/hierarchical-structure1.svg);\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/hierarchical-structure2.svg);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/hierarchical-structure2.svg);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/hierarchical-structure2.svg);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.supervisors_btn.setObjectName("supervisors_btn")
+        self.verticalLayout_26.addWidget(self.supervisors_btn)
+        self.offers_btn = QtWidgets.QPushButton(self.frame_18)
+        self.offers_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.offers_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;\n"
+"    border-right-color:  rgb(255, 255, 255);\n"
+"    border-width: 0px 0px 0px 5px;\n"
+"    border-radius: 0px;\n"
+"    \n"
+"    padding:5px;\n"
+"    \n"
+"    background-color:  rgba(230, 230, 230, 0);\n"
+"    \n"
+"    image: url(:/icons/icons/offers.png);\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/offers2.png)\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/offers2.png)\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/offers2.png)\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.offers_btn.setObjectName("offers_btn")
+        self.verticalLayout_26.addWidget(self.offers_btn)
+        self.shifts_btn = QtWidgets.QPushButton(self.frame_18)
+        self.shifts_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.shifts_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;\n"
+"    border-right-color:  rgb(255, 255, 255);\n"
+"    border-width: 0px 0px 0px 5px;\n"
+"    border-radius: 0px;\n"
+"    \n"
+"    padding:5px;\n"
+"    \n"
+"    background-color:  rgba(230, 230, 230, 0);\n"
+"    \n"
+"    image: url(:/icons/icons/shifts1.png);\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/shifts2.png);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/shifts2.png);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/shifts2.png);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.shifts_btn.setObjectName("shifts_btn")
+        self.verticalLayout_26.addWidget(self.shifts_btn)
+        self.copy_delete_btn = QtWidgets.QPushButton(self.frame_18)
+        self.copy_delete_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.copy_delete_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;\n"
+"    border-right-color:  rgb(255, 255, 255);\n"
+"    border-width: 0px 0px 0px 5px;\n"
+"    border-radius: 0px;\n"
+"    \n"
+"    padding:5px;\n"
+"    \n"
+"    background-color:  rgba(230, 230, 230, 0);\n"
+"    \n"
+"    image: url(:/icons/icons/files1.svg);\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/files2.svg);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/files2.svg);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    border-color:  rgb(244, 154, 32);\n"
+"    image: url(:/icons/icons/files2.svg);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.copy_delete_btn.setObjectName("copy_delete_btn")
+        self.verticalLayout_26.addWidget(self.copy_delete_btn)
+        spacerItem40 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_26.addItem(spacerItem40)
+        self.verticalLayout_23.addWidget(self.frame_18)
+        self.buttons_stackedWidget.addWidget(self.settings_buttons_tab)
+        self.verticalLayout_2.addWidget(self.buttons_stackedWidget)
+        self.logout_btn = QtWidgets.QPushButton(self.main_buttons_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.logout_btn.sizePolicy().hasHeightForWidth())
+        self.logout_btn.setSizePolicy(sizePolicy)
+        self.logout_btn.setMinimumSize(QtCore.QSize(90, 60))
+        self.logout_btn.setMaximumSize(QtCore.QSize(16777215, 60))
+        self.logout_btn.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.logout_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;\n"
+"    border-width: 0px 0px 0px 0px;\n"
+"    color: #808086;\n"
+"    padding: 2px;\n"
+"\n"
+"    background-color: rgba(255,255,255,0);\n"
+"\n"
+"    image: url(:/icons/icons/back1.svg);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    border-style:  solid;\n"
+"        \n"
+"    border-width: 0px 0px 0px 0px;\n"
+"    padding-right: 10px;\n"
+"    background-color: rgba(255,255,255,0);\n"
+"\n"
+"    image: url(:/icons/icons/back2.svg);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    border-style:  solid;\n"
+"        \n"
+"    border-width: 0px 0px 0px 0px;\n"
+"    padding-right: 10px;\n"
+"    background-color: rgba(255,255,255,0);\n"
+"\n"
+"    image: url(:/icons/icons/back2.svg);\n"
+"}\n"
+"\n"
+"")
+        self.logout_btn.setObjectName("logout_btn")
+        self.verticalLayout_2.addWidget(self.logout_btn)
+        self.gridLayout.addWidget(self.main_buttons_frame, 0, 0, 3, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1867, 23))
@@ -5048,9 +5072,9 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(MainWindow)
-        self.buttons_stackedWidget.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(7)
-        self.tabWidget.setCurrentIndex(7)
+        self.tabWidget.setCurrentIndex(8)
+        self.buttons_stackedWidget.setCurrentIndex(0)
         self.logout_btn.clicked['bool'].connect(self.daily_btn.setDisabled)
         self.logout_btn.clicked['bool'].connect(self.archive_btn.setDisabled)
         self.logout_btn.clicked['bool'].connect(self.settings_btn.setDisabled)
@@ -5060,24 +5084,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Study Zone"))
-        self.daily_customers_btn.setToolTip(_translate("MainWindow", "Daily customers"))
-        self.daily_customers_btn.setText(_translate("MainWindow", "Daily Customers"))
-        self.monthly_subscrib_btn.setToolTip(_translate("MainWindow", "Monthly customers"))
-        self.monthly_subscrib_btn.setText(_translate("MainWindow", "Monthly Customers"))
-        self.orders_btn.setToolTip(_translate("MainWindow", "Orders"))
-        self.orders_btn.setText(_translate("MainWindow", "Orders"))
-        self.warehouse_btn.setToolTip(_translate("MainWindow", "Warehouse"))
-        self.warehouse_btn.setText(_translate("MainWindow", "Warehouse"))
-        self.reports_btn.setToolTip(_translate("MainWindow", "Reports"))
-        self.reports_btn.setText(_translate("MainWindow", "Reports"))
-        self.supervisors_btn.setToolTip(_translate("MainWindow", "Supervisors"))
-        self.supervisors_btn.setText(_translate("MainWindow", "Supervisors"))
-        self.offers_btn.setToolTip(_translate("MainWindow", "Offers"))
-        self.offers_btn.setText(_translate("MainWindow", "Offers"))
-        self.shifts_btn.setToolTip(_translate("MainWindow", "Shifts"))
-        self.shifts_btn.setText(_translate("MainWindow", "Shifts"))
-        self.copy_delete_btn.setToolTip(_translate("MainWindow", "Copy and Delete"))
-        self.copy_delete_btn.setText(_translate("MainWindow", "To Archive"))
         self.daily_customer_add_btn2.setToolTip(_translate("MainWindow", "Add customer"))
         self.daily_customer_remove_btn.setToolTip(_translate("MainWindow", "Remove customer"))
         self.daily_customer_add_order.setToolTip(_translate("MainWindow", "Add order"))
@@ -5228,5 +5234,23 @@ class Ui_MainWindow(object):
         self.shifts_clear_btn.setText(_translate("MainWindow", "Clear"))
         self.label_68.setText(_translate("MainWindow", "SHIFT EMPLOYEES"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.shifts_tab), _translate("MainWindow", "Shifts"))
+        self.daily_customers_btn.setToolTip(_translate("MainWindow", "Daily customers"))
+        self.daily_customers_btn.setText(_translate("MainWindow", "Daily Customers"))
+        self.monthly_subscrib_btn.setToolTip(_translate("MainWindow", "Monthly customers"))
+        self.monthly_subscrib_btn.setText(_translate("MainWindow", "Monthly Customers"))
+        self.orders_btn.setToolTip(_translate("MainWindow", "Orders"))
+        self.orders_btn.setText(_translate("MainWindow", "Orders"))
+        self.warehouse_btn.setToolTip(_translate("MainWindow", "Warehouse"))
+        self.warehouse_btn.setText(_translate("MainWindow", "Warehouse"))
+        self.reports_btn.setToolTip(_translate("MainWindow", "Reports"))
+        self.reports_btn.setText(_translate("MainWindow", "Reports"))
+        self.supervisors_btn.setToolTip(_translate("MainWindow", "Supervisors"))
+        self.supervisors_btn.setText(_translate("MainWindow", "Supervisors"))
+        self.offers_btn.setToolTip(_translate("MainWindow", "Offers"))
+        self.offers_btn.setText(_translate("MainWindow", "Offers"))
+        self.shifts_btn.setToolTip(_translate("MainWindow", "Shifts"))
+        self.shifts_btn.setText(_translate("MainWindow", "Shifts"))
+        self.copy_delete_btn.setToolTip(_translate("MainWindow", "Copy and Delete"))
+        self.copy_delete_btn.setText(_translate("MainWindow", "To Archive"))
 
-from .. import icon_rc
+import icon_rc

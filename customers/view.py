@@ -406,10 +406,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             # width ANIMATION
             self.animation = QtCore.QPropertyAnimation(self.stackedWidget, b"maximumWidth")
-            self.animation.setDuration(400)
+            self.animation.setDuration(250)
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
             self.animation.setEasingCurve(QtCore.QEasingCurve.OutQuad)
+
+            self.animation.start()
+
   
     def toggleMainButtonsMenu(self, frame, maxWidth, enable):
         if enable:
@@ -419,7 +422,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             standard_width = 80
 
             # SET MAX WIDTH
-            if width == 80:
+            if (width == 80):
                 widthExtended = maxWidth
 
             elif(maxWidth == 0):
@@ -428,15 +431,16 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 widthExtended = standard_width
             
-            print(widthExtended)
-
             # width ANIMATION
             self.animation = QtCore.QPropertyAnimation(frame, b"maximumWidth")
-            self.animation.setDuration(400)
+            self.animation.setDuration(250)
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
-            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuint)
-            self.animation.start()
+            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+
+            self.group = QtCore.QSequentialAnimationGroup(self)
+            self.group.addAnimation(self.animation)
+            self.group.start()
             
     def toggleMenuMaxWidth(self, frame, maxWidth, enable):
         if enable:
@@ -454,10 +458,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             # width ANIMATION
             self.animation = QtCore.QPropertyAnimation(frame, b"maximumWidth")
-            self.animation.setDuration(400)
+            self.animation.setDuration(250)
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
-            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuint)
+            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+            self.animation.start()
+            
+            
 
     def toggleMenuMinHeight(self, frame, minHeight, enable):
         if enable:
@@ -474,7 +481,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             
             #  height ANIMATION
             self.animation = QtCore.QPropertyAnimation(frame, b"minimumHeight")
-            self.animation.setDuration(400)
+            self.animation.setDuration(250)
             self.animation.setStartValue(height)
             self.animation.setEndValue(heightExtended)
             self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
@@ -681,7 +688,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Set on Daily customers tab widget
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'daily_customers_tab'))
         self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'daily_customers_properties_panel'))
-        self.toggleStackWidget(100, True)
+        self.toggleStackWidget(75, True)
 
     def addDailyCustomer(self):
         """Add new daily customer to daily table"""
@@ -836,7 +843,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Set on Monthly customers tab widget
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'monthly_tab'))
         self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'monthly_customers_properties_panel'))
-        self.toggleStackWidget(100, True)
+        self.toggleStackWidget(75, True)
 
     def addMonthlyCustomer(self):
         """Add new monthly customer to Monthly table"""
@@ -985,7 +992,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Set Orders tab widget
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'orders_tab'))
         self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'orders_properties_panel'))
-        self.toggleStackWidget(100, True)
+        self.toggleStackWidget(75, True)
             
     def addOrder(self):
 
@@ -1467,7 +1474,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # If Daily panel is opend then we can make change to date (add, edit, ...)
         if(self.SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'warehouse_properties_panel'))
-            self.toggleStackWidget(100, True)
+            self.toggleStackWidget(75, True)
 
 
         self.warehouse_tableView.setModel(self.warehouse_sort_model)
@@ -1600,7 +1607,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         if(self.SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'offers_properties_panel'))
-            self.toggleStackWidget(100, True)
+            self.toggleStackWidget(75, True)
 
 
         self.offers_tableView.setModel(self.offers_sort_model)
@@ -1611,38 +1618,38 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # self.initialItemsTypeComboBox()
 
     def addOffer(self):
-        """Add new shift with related employees"""
+        """Add new offer with related items"""
         
         # Take children of order register panel 
         # Item and quantity
-        combo_selected_employees = self.frame_70.findChildren(QtWidgets.QComboBox)
+        combo_selected_items = self.offers_items_frame.findChildren(QtWidgets.QComboBox)
 
         # Iterate to check if any Item name or quantity is empty
-        for combo_selected_employee in combo_selected_employees:
+        for combo_selected_item in combo_selected_items:
             # Check if the item comboBox is empty
-            if(combo_selected_employee.currentText()==""):
-                combo_selected_employee.setFocus()
-                QtWidgets.QToolTip.showText(combo_selected_employee.mapToGlobal(QtCore.QPoint(0,10)),"Select employee")
+            if(combo_selected_item.currentText()==""):
+                combo_selected_item.setFocus()
+                QtWidgets.QToolTip.showText(combo_selected_item.mapToGlobal(QtCore.QPoint(0,10)),"Select employee")
                 return   
 
         # Iterate to add customer's orders_model
-        data = [combo_selected_employee.currentText() for combo_selected_employee in combo_selected_employees]
-
-        self.shifts_model.addShift(data)
+        data = [combo_selected_item.currentText() for combo_selected_item in combo_selected_items]
+        print(data)
+        ret = self.offers_model.addOffer(data)
+        print(ret)
         
         # Delete shift registring panel 
-        self.clearLayout(self.frame_70.layout())
+        self.clearLayout(self.offers_items_frame.layout())
 
         # Resest employee numbers variable
-        self._employee_number = 0
+        self._item_number = 0
 
         # Insert an empty order
-        # self.plusEmployee()
+        self.plusOffer()
         
         # Reinitial items
         self.initialSettingsComboBoxs()
 
-        self.showShiftsSupervisors()
 
     def removeOffers(self):
         """Remove offer/s from offers table"""
@@ -1682,7 +1689,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 worker.row_num_changed.connect(prog.progressBar.setValue)
                 worker.finished.connect(prog.close)
                 prog.exec()
-    
 
     def plusOffer(self):
         """Adding new order to orders list"""
@@ -1840,7 +1846,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # self.supervisors_tableView.resizeColumnsToContents()
 
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'supervisors_tab'))
-        self.toggleStackWidget(100, True)
+        self.toggleStackWidget(75, True)
 
     def addSupervisor(self):
         """Add new supervisor to Supervisors table"""
@@ -1949,7 +1955,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.shifts_tableView.setModel(self.shifts_sort_model)
 
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'shifts_tab'))
-        self.toggleStackWidget(100, True)
+        self.toggleStackWidget(75, True)
 
         self.showShiftsSupervisors()
 
@@ -2236,7 +2242,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # If Daily panel is opend then we can make change to date (add, edit, ...)
         if(self.SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'reports_properties_panel'))
-            self.toggleStackWidget(100, True)
+            self.toggleStackWidget(75, True)
             self.showYMDs(self.daily_conn, 'Reports', 'date')
 
         
