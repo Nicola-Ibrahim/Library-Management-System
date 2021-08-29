@@ -1,7 +1,7 @@
 from datetime import date
 import typing
 from PyQt5 import QtCore, QtGui
-from customers.database import linkOfferItems, linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveDailyId, retrieveItemAvailabelQuantity, retrieveItemId, retrieveOffersItems, retrieveShiftsSupervisors, updateSubsState
+from customers.database import linkOfferItems, linkOrderItems, linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveDailyId, retrieveItemAvailabelQuantity, retrieveItemId, retrieveOffersItems, retrieveShiftsSupervisors, updateSubsState
 from PyQt5.QtSql import  QSqlDatabase, QSqlError, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
 from PyQt5.QtCore import QAbstractTableModel, QDate, QLocale, QRegularExpression, Qt
 
@@ -381,14 +381,10 @@ class OrdersModel(QSqlRelationalTableModel):
     def addOrder(self, data : list):
 
         order_data = data[0]
-        items_name = data[1]
-        customer_id = retrieveDailyId(data[0][0], self.db)
-        order_type = data[0][3]
-        
-        # Itereate to check if any order doesn't verify available quantity in the Warehouse
-        for i in range(len(data)):
-            item_id = retrieveItemId(data[i][1], self.db)
-            quantity = data[i][2]
+        customer_id = retrieveDailyId(order_data[0], db = self.db)
+        order_data = [customer_id, order_data[1]]
+
+        items_data = data[1]
 
         #     # Handle exceed quantity error
         #     available = retrieveItemAvailabelQuantity(item_id, self.db)
@@ -398,32 +394,37 @@ class OrdersModel(QSqlRelationalTableModel):
         #         return
             
 
-        for i in range(len(data)):
-            item_id = retrieveItemId(data[i][1], self.db)
-            quantity = data[i][2]
+        # for i in range(len(data)):
+        #     item_id = retrieveItemId(data[i][1], self.db)
+        #     quantity = data[i][2]
 
-            # record2 = [customer_id, item_id, quantity, order_type]
-            record2 = [customer_id, order_type]
+        #     # record2 = [customer_id, item_id, quantity, order_type]
+        #     record2 = [customer_id, order_type]
             
-            # Set SQL Error to Null
-            self.setLastError(QSqlError(driverText=''))
+        #     # Set SQL Error to Null
+        #     self.setLastError(QSqlError(driverText=''))
 
-            # Insert new row
-            row = self.rowCount()
-            self.insertRows(row, 1)
+        # Insert new row
+        row = self.rowCount()
+        self.insertRows(row, 1)
 
-            # Take only the colums that suitable for data list length
-            columns = ['daily_name', 'order_type']
+        # Take only the colums that suitable for data list length
+        columns = ['daily_name', 'order_type']
+        for col_ind, field in enumerate(order_data):
+            col = self.fieldIndex(columns[col_ind])
+            self.setData(self.index(row, col), field, Qt.EditRole)
+            
+        # Submit all changes
+        ret = self.submitAll()
 
-            for col_ind, field in enumerate(record2):
-                col = self.fieldIndex(columns[col_ind])
-                self.setData(self.index(row, col), field, Qt.EditRole)
-                
-            # Submit all changes
-            self.submitAll()
-            self.select()
+        # Link order with its items
+        order_id = self.query().lastInsertId()
+        print(order_id)
+        for item_name, quantity in items_data:
+            linkOrderItems(order_id, item_name, quantity, db=self.db)
 
-            # Link order with related items and offer
+        self.select()
+
             
             
     def data(self, index: QtCore.QModelIndex, role: int) -> None:

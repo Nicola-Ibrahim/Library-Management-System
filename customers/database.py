@@ -600,11 +600,11 @@ def _createCustomersTables(db_1, db_2):
         TRIGGER4_DAILYCUSTOMERS_STATEMENT,
         TRIGGER5_DAILYCUSTOMERS_STATEMENT,
 
-        TRIGGER1_ORDERS_STATEMENT,
-        TRIGGER2_ORDERS_STATEMENT,
-        TRIGGER3_ORDERS_STATEMENT,
-        TRIGGER4_ORDERS_STATEMENT,
-        TRIGGER5_ORDERS_STATEMENT,
+        # TRIGGER1_ORDERS_STATEMENT,
+        # TRIGGER2_ORDERS_STATEMENT,
+        # TRIGGER3_ORDERS_STATEMENT,
+        # TRIGGER4_ORDERS_STATEMENT,
+        # TRIGGER5_ORDERS_STATEMENT,
 
         TRIGGER1_REPORTS_STATEMENT,
         TRIGGER2_REPORTS_STATEMENT,
@@ -821,6 +821,38 @@ def retrieveDailySubsState(db = None):
 
     return subs_states  
 
+##########
+# Orders #
+##########
+def retrieveItemId(item_name, db = None) -> int:
+    id = None
+    
+    STATEMENT = f"""
+        SELECT item_id FROM Warehouse where item_name = '{item_name}'
+    """
+
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+
+    while query.next():
+        id = query.value(query.record().indexOf('item_id'))
+        
+    return id
+
+
+def linkOrderItems(order_id, item_name, quantity, db = None) -> None:
+
+    item_id = retrieveItemId(item_name, db=db)
+    STATEMENT = \
+        f"""
+        INSERT INTO Orders_items (order_id, item_id, quantity) VALUES ({order_id}, {item_id}, {quantity})
+        """
+    
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+    return query
+
+
 #############
 # Warehouse #
 #############
@@ -850,7 +882,6 @@ def retrieveItemNames(id = None, name_filter : tuple = None, db = None) -> list:
         result.append(name)
        
     return result
-
 
 def retrieveItemPrice(item_name, db = None) -> int:
     STATEMENT = f"""

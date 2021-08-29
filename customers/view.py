@@ -1034,7 +1034,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 return      
 
         # Iterate to add customer's orders_model
-        items_data = [(order_comboBox, quantity_txt) for order_comboBox, quantity_txt in zip(order_comboBox_lst, order_quantity_txt_lst)]
+        items_data = [(order_comboBox.currentText(), quantity_txt.text()) for order_comboBox, quantity_txt in zip(order_comboBox_lst, order_quantity_txt_lst)]
         
         data = [(self.customer_name_txt2.text(), self.order_sell_type_comboBox.currentText()),items_data]
 
