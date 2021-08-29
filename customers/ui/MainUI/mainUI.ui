@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1867</width>
+    <width>1841</width>
     <height>1127</height>
    </rect>
   </property>
@@ -594,11 +594,17 @@ QSlider::sub-page:vertical {
 }
 
 
-QScrollArea {
-	border:none;
-	background-color:none;
-}
 
+QScrollArea { 
+	background: transparent; 
+	border:none;
+}
+QScrollArea &gt; QWidget &gt; QWidget { 
+	background: transparent; 
+}
+QScrollArea &gt; QWidget &gt; QScrollBar { 
+	background: palette(base); 
+}
 
 QScrollBar:horizontal {
 	max-width: 30px;
@@ -855,7 +861,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
              <enum>QFrame::Plain</enum>
             </property>
             <property name="currentIndex">
-             <number>7</number>
+             <number>5</number>
             </property>
             <widget class="QWidget" name="daily_customers_properties_panel">
              <property name="styleSheet">
@@ -2639,7 +2645,7 @@ QPushButton:pressed{
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="supervisors_properties_panel">
+            <widget class="QWidget" name="employees_properties_panel">
              <layout class="QVBoxLayout" name="verticalLayout_49">
               <property name="spacing">
                <number>2</number>
@@ -2706,7 +2712,7 @@ QPushButton:pressed{
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="supervisor_add_btn2">
+                  <widget class="QPushButton" name="employee_add_btn2">
                    <property name="minimumSize">
                     <size>
                      <width>70</width>
@@ -2762,7 +2768,7 @@ QPushButton:pressed{
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="supervisor_remove_btn">
+                  <widget class="QPushButton" name="employee_remove_btn">
                    <property name="minimumSize">
                     <size>
                      <width>70</width>
@@ -3359,7 +3365,7 @@ QPushButton:pressed{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>8</number>
+             <number>2</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -4706,6 +4712,9 @@ QPushButton:pressed{
                      <width>0</width>
                      <height>500</height>
                     </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
                    </property>
                    <property name="widgetResizable">
                     <bool>true</bool>
@@ -6472,7 +6481,7 @@ background-color: rgb(244, 154, 32);
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="supervisors_tab">
+            <widget class="QWidget" name="employees_tab">
              <attribute name="title">
               <string>المشرفين</string>
              </attribute>
@@ -6575,7 +6584,7 @@ padding: 2px;
                     </widget>
                    </item>
                    <item alignment="Qt::AlignRight">
-                    <widget class="QLineEdit" name="supervisor_name_txt">
+                    <widget class="QLineEdit" name="employee_name_txt">
                      <property name="minimumSize">
                       <size>
                        <width>250</width>
@@ -6628,7 +6637,7 @@ padding: 2px;
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="QRadioButton" name="supervisor_manager_btn">
+                      <widget class="QRadioButton" name="employee_manager_btn">
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
@@ -6641,7 +6650,7 @@ padding: 2px;
                       </widget>
                      </item>
                      <item>
-                      <widget class="QRadioButton" name="supervisor_worker_btn">
+                      <widget class="QRadioButton" name="employee_worker_btn">
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
@@ -6679,7 +6688,7 @@ padding: 2px;
                     </widget>
                    </item>
                    <item alignment="Qt::AlignRight">
-                    <widget class="QLineEdit" name="supervisors_username_txt">
+                    <widget class="QLineEdit" name="employee_username_txt">
                      <property name="minimumSize">
                       <size>
                        <width>250</width>
@@ -6712,7 +6721,7 @@ padding: 2px;
                     </widget>
                    </item>
                    <item alignment="Qt::AlignRight">
-                    <widget class="QLineEdit" name="supervisors_password_txt">
+                    <widget class="QLineEdit" name="employee_password_txt">
                      <property name="minimumSize">
                       <size>
                        <width>250</width>
@@ -6724,7 +6733,7 @@ padding: 2px;
                   </layout>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="supervisor_add_btn">
+                  <widget class="QPushButton" name="employee_add_btn">
                    <property name="minimumSize">
                     <size>
                      <width>100</width>
@@ -6834,7 +6843,7 @@ QPushButton:disabled{
 }</string>
                    </property>
                    <property name="text">
-                    <string>SUPERVISORS</string>
+                    <string>EMPLOYEES</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -6931,7 +6940,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QLineEdit" name="supervisors_employee_name_filter_txt">
+                            <widget class="QLineEdit" name="employees_employee_name_filter_txt">
                              <property name="minimumSize">
                               <size>
                                <width>300</width>
@@ -6973,7 +6982,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QComboBox" name="supervisors_job_type_filter_comberoBox">
+                            <widget class="QComboBox" name="employees_job_type_filter_comberoBox">
                              <property name="minimumSize">
                               <size>
                                <width>300</width>
@@ -7008,7 +7017,7 @@ background-color: rgb(244, 154, 32);
                         </layout>
                        </item>
                        <item alignment="Qt::AlignBottom">
-                        <widget class="QPushButton" name="supervisors_clear_btn">
+                        <widget class="QPushButton" name="employees_clear_btn">
                          <property name="minimumSize">
                           <size>
                            <width>100</width>
@@ -7040,7 +7049,7 @@ background-color: rgb(244, 154, 32);
                   </widget>
                  </item>
                  <item>
-                  <widget class="QTableView" name="supervisors_tableView">
+                  <widget class="QTableView" name="employees_tableView">
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
                    </property>
@@ -7103,9 +7112,6 @@ background-color: rgb(244, 154, 32);
                   <width>0</width>
                   <height>16777215</height>
                  </size>
-                </property>
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -8501,7 +8507,7 @@ border-color: rgb(244, 154, 32);
 }</string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="dailyAndarchive_buttons_tab">
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -8522,9 +8528,6 @@ border-color: rgb(244, 154, 32);
            </property>
            <item>
             <widget class="QFrame" name="frame_4">
-             <property name="layoutDirection">
-              <enum>Qt::RightToLeft</enum>
-             </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -8552,12 +8555,6 @@ border-color: rgb(244, 154, 32);
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -8570,8 +8567,7 @@ border-color: rgb(244, 154, 32);
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
 	
-	padding-right:60px;
-
+	padding-left:70px;
 	background-color:  none;
 	background-image: url(:/icons/icons/customer1.png);
 	background-repeat:none;
@@ -8616,12 +8612,6 @@ QPushButton:disabled{
               </item>
               <item>
                <widget class="QPushButton" name="monthly_subscrib_btn">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -8631,33 +8621,30 @@ QPushButton:disabled{
                 <property name="toolTip">
                  <string>Monthly customers</string>
                 </property>
-                <property name="layoutDirection">
-                 <enum>Qt::RightToLeft</enum>
-                </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
 
-	padding-right:60px;
+	padding-left:70px;
 	background-color:  none;
-	background-image: url(:/icons/icons/annual1.png);
+	background-image: url(:/icons/icons/monthly1.png);
 	background-repeat:none;
 
 }
 
 
 QPushButton:hover{
-	background-image: url(:/icons/icons/annual2.png);
+	background-image: url(:/icons/icons/monthly2.png);
 	background-repeat:none;
 	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-	background-image: url(:/icons/icons/annual2.png);
+	background-image: url(:/icons/icons/monthly2.png);
 	background-repeat:none;
 	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	background-image: url(:/icons/icons/annual2.png);
+	background-image: url(:/icons/icons/monthly2.png);
 	background-repeat:none;
 	color:  rgb(244, 154, 32);
 }
@@ -8683,12 +8670,6 @@ QPushButton:disabled{
               </item>
               <item>
                <widget class="QPushButton" name="orders_btn">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -8701,7 +8682,7 @@ QPushButton:disabled{
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
 
-	padding-right:60px;
+	padding-left:70px;
 	background-color:  none;
 	background-image: url(:/icons/icons/order1.png);
 	background-repeat:none;
@@ -8779,9 +8760,6 @@ QPushButton:disabled{
            </property>
            <item>
             <widget class="QFrame" name="frame_18">
-             <property name="layoutDirection">
-              <enum>Qt::RightToLeft</enum>
-             </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -8806,12 +8784,6 @@ QPushButton:disabled{
               </property>
               <item>
                <widget class="QPushButton" name="warehouse_btn">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -8823,32 +8795,29 @@ QPushButton:disabled{
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-right-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
-	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image: url(:/icons/icons/warehouse1.svg);
-
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/warehouse1.png);
+	background-repeat:none;
 }
 
 
 QPushButton:hover{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/warehouse2.svg);
+	background-image: url(:/icons/icons/warehouse2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
+
 QPushButton:pressed{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/warehouse2.svg);
+	background-image: url(:/icons/icons/warehouse2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/warehouse2.svg);
+	background-image: url(:/icons/icons/warehouse2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -8872,12 +8841,6 @@ QPushButton:disabled{
               </item>
               <item>
                <widget class="QPushButton" name="reports_btn">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -8889,32 +8852,29 @@ QPushButton:disabled{
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-right-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
 	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image:url(:/icons/icons/report1.svg);
-
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/report1.png);
+	background-repeat:none;
 }
 
 
 QPushButton:hover{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/report2.svg);
+	background-image: url(:/icons/icons/report2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/report2.svg);
+	background-image: url(:/icons/icons/report2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/report2.svg);
+	background-image: url(:/icons/icons/report2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -8937,13 +8897,7 @@ QPushButton:disabled{
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="supervisors_btn">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
+               <widget class="QPushButton" name="employees_btn">
                 <property name="minimumSize">
                  <size>
                   <width>70</width>
@@ -8951,36 +8905,33 @@ QPushButton:disabled{
                  </size>
                 </property>
                 <property name="toolTip">
-                 <string>Supervisors</string>
+                 <string>Employees</string>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-right-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
 	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image: url(:/icons/icons/hierarchical-structure1.svg);
-
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/employee1.png);
+	background-repeat:none;
 }
 
 
 QPushButton:hover{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/hierarchical-structure2.svg);
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/hierarchical-structure2.svg);
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/hierarchical-structure2.svg);
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -8998,7 +8949,7 @@ QPushButton:disabled{
 }</string>
                 </property>
                 <property name="text">
-                 <string>Supervisors</string>
+                 <string>Employees</string>
                 </property>
                </widget>
               </item>
@@ -9015,32 +8966,29 @@ QPushButton:disabled{
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-right-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
 	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image: url(:/icons/icons/offers.png);
-
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/offers1.png);
+	background-repeat:none;
 }
 
 
 QPushButton:hover{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/offers2.png)
+	background-image: url(:/icons/icons/offers2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/offers2.png)
+	background-image: url(:/icons/icons/offers2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/offers2.png)
+	background-image: url(:/icons/icons/offers2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -9075,33 +9023,29 @@ QPushButton:disabled{
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-right-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
 	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image: url(:/icons/icons/shifts1.png);
-
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/shifts1.png);
+	background-repeat:none;
 }
 
 
 QPushButton:hover{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/shifts2.png);
+	background-image: url(:/icons/icons/shifts2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/shifts2.png);
+	background-image: url(:/icons/icons/shifts2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/shifts2.png);
+	background-image: url(:/icons/icons/shifts2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -9136,32 +9080,29 @@ QPushButton:disabled{
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-	border-style: solid;
-	border-right-color:  rgb(255, 255, 255);
-	border-width: 0px 0px 0px 5px;
-	border-radius: 0px;
 	
-	padding:5px;
-	
-	background-color:  rgba(230, 230, 230, 0);
-	
-	image: url(:/icons/icons/files1.svg);
-
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/files1.png);
+	background-repeat:none;
 }
 
 
 QPushButton:hover{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/files2.svg);
+	background-image: url(:/icons/icons/files2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 QPushButton:pressed{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/files2.svg);
+	background-image: url(:/icons/icons/files2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 QPushButton:focus{
-	border-color:  rgb(244, 154, 32);
-	image: url(:/icons/icons/files2.svg);
+	background-image: url(:/icons/icons/files2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
 }
 
 
@@ -9272,7 +9213,7 @@ QPushButton:pressed{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1867</width>
+     <width>1841</width>
      <height>23</height>
     </rect>
    </property>

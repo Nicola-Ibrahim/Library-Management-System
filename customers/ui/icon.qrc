@@ -4,8 +4,6 @@
     <file>icons/add-order2.svg</file>
     <file>icons/add-user.svg</file>
     <file>icons/add-user2.svg</file>
-    <file>icons/annual1.svg</file>
-    <file>icons/annual2.svg</file>
     <file>icons/back1.svg</file>
     <file>icons/back2.svg</file>
     <file>icons/background.jpg</file>
@@ -27,19 +25,19 @@
     <file>icons/down_arrow.png</file>
     <file>icons/edit1.svg</file>
     <file>icons/edit2.svg</file>
+    <file>icons/employee1.png</file>
+    <file>icons/employee2.png</file>
     <file>icons/exchange.svg</file>
     <file>icons/exchange1.svg</file>
     <file>icons/exchange2.svg</file>
     <file>icons/export.svg</file>
     <file>icons/export2.svg</file>
     <file>icons/eye.png</file>
-    <file>icons/files1.svg</file>
-    <file>icons/files2.svg</file>
+    <file>icons/files1.png</file>
+    <file>icons/files2.png</file>
     <file>icons/filter.svg</file>
     <file>icons/funnel.svg</file>
     <file>icons/handle.png</file>
-    <file>icons/hierarchical-structure1.svg</file>
-    <file>icons/hierarchical-structure2.svg</file>
     <file>icons/iconmonstr-marketing-34.svg</file>
     <file>icons/id-card.svg</file>
     <file>icons/inbox1.svg</file>
@@ -58,11 +56,13 @@
     <file>icons/menu2.svg</file>
     <file>icons/minus-sign.svg</file>
     <file>icons/minus-sign2.svg</file>
-    <file>icons/offers.png</file>
+    <file>icons/monthly1.png</file>
+    <file>icons/monthly2.png</file>
+    <file>icons/offers1.png</file>
     <file>icons/offers2.png</file>
     <file>icons/open-trash-can.svg</file>
-    <file>icons/order1.svg</file>
-    <file>icons/order2.svg</file>
+    <file>icons/order1.png</file>
+    <file>icons/order2.png</file>
     <file>icons/organization 2.svg</file>
     <file>icons/organization.svg</file>
     <file>icons/padlock.svg</file>
@@ -73,8 +73,8 @@
     <file>icons/refresh2.svg</file>
     <file>icons/remove-user.svg</file>
     <file>icons/remove-user2.svg</file>
-    <file>icons/report1.svg</file>
-    <file>icons/report2.svg</file>
+    <file>icons/report1.png</file>
+    <file>icons/report2.png</file>
     <file>icons/settings1.svg</file>
     <file>icons/settings2.svg</file>
     <file>icons/shifts1.png</file>
@@ -87,7 +87,7 @@
     <file>icons/user.svg</file>
     <file>icons/visibility.svg</file>
     <file>icons/vline.png</file>
-    <file>icons/warehouse1.svg</file>
-    <file>icons/warehouse2.svg</file>
+    <file>icons/warehouse1.png</file>
+    <file>icons/warehouse2.png</file>
   </qresource>
 </RCC>
