@@ -824,12 +824,24 @@ def retrieveDailySubsState(db = None):
 #############
 # Warehouse #
 #############
-def retrieveItemNames(name_filter : tuple, db = None) -> list:
+def retrieveItemNames(id = None, name_filter : tuple = None, db = None) -> list:
     result = []
     
-    STATEMENT = f"""
-        SELECT item_name FROM Warehouse WHERE current_items_quantity > 0 AND item_name NOT IN {name_filter}
-    """
+    if(id == None):
+        if(name_filter == None):
+            STATEMENT = f"""
+            SELECT item_name FROM Warehouse WHERE current_items_quantity > 0 AND item_name NOT IN {name_filter}
+            """
+        elif(name_filter != None):
+            STATEMENT = f"""
+            SELECT item_name FROM Warehouse WHERE current_items_quantity > 0
+            """
+
+    elif(id != None):
+        STATEMENT = f"""
+        SELECT item_name FROM Warehouse WHERE current_items_quantity > 0 AND item_id = {id}
+        """
+
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
 
@@ -838,6 +850,7 @@ def retrieveItemNames(name_filter : tuple, db = None) -> list:
         result.append(name)
        
     return result
+
 
 def retrieveItemPrice(item_name, db = None) -> int:
     STATEMENT = f"""
@@ -1044,6 +1057,67 @@ def linkShiftSupervisor(shift_id, supervisor_name, db = None) -> None:
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
     return query
+
+##########
+# Offers #
+##########
+def linkOfferItems(offer_id, item_name, db = None) -> None:
+
+    item_id = retrieveItemId(item_name, db=db)
+    STATEMENT = \
+        f"""
+        INSERT INTO Offers_items (offer_id, item_id) VALUES ({offer_id}, {item_id})
+        """
+    
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+    return query
+
+def retrieveOfferNames(id, db = None):
+    names = []
+
+    if(id == None):
+        STATEMENT = f"""
+            SELECT offer_name FROM Offers WHERE offer_id NOT IN (SELECT offer_id FROM Offers_items WHERE date = date('now'))
+        """
+
+    elif(id != None):
+        STATEMENT = f"""
+            SELECT offer_name FROM Offers WHERE offer_id = {id}
+        """
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+
+    while query.next():
+        name = str(query.value(query.record().indexOf('offer_name'))).strip()
+        names.append(name)
+
+    return names
+
+def retrieveOffersItems(db = None):
+
+    indices_tree = []
+
+    # Get available dates
+    STATEMENT = \
+        """
+        SELECT date, offer_id, item_id FROM Offers_items
+        """
+
+    query = QSqlQuery(db)
+    query.exec(STATEMENT)
+
+    while(query.next()):
+        date = str(query.value(query.record().indexOf('date'))).strip()
+        offer_id = int(str(query.value(query.record().indexOf('offer_id'))).strip())
+        item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
+        offer_name = retrieveOfferNames(offer_id, db=db)[0]
+        item_name = retrieveItemNames(item_id, db=db)[0]
+        indices_tree.append([date, offer_name, item_name])
+
+    
+    dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
+    return dic
 
 
 ##########

@@ -861,7 +861,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
              <enum>QFrame::Plain</enum>
             </property>
             <property name="currentIndex">
-             <number>5</number>
+             <number>6</number>
             </property>
             <widget class="QWidget" name="daily_customers_properties_panel">
              <property name="styleSheet">
@@ -3365,7 +3365,7 @@ QPushButton:pressed{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>7</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>

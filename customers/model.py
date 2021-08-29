@@ -1,7 +1,7 @@
 from datetime import date
 import typing
 from PyQt5 import QtCore, QtGui
-from customers.database import linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveDailyId, retrieveItemAvailabelQuantity, retrieveItemId, retrieveShiftsSupervisors, updateSubsState
+from customers.database import linkOfferItems, linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveDailyId, retrieveItemAvailabelQuantity, retrieveItemId, retrieveOffersItems, retrieveShiftsSupervisors, updateSubsState
 from PyQt5.QtSql import  QSqlDatabase, QSqlError, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
 from PyQt5.QtCore import QAbstractTableModel, QDate, QLocale, QRegularExpression, Qt
 
@@ -637,7 +637,10 @@ class OffersModel(QSqlTableModel):
         self.select()
         
     def addOffer(self, data : list):
-    
+        
+        offer_data = data[0]
+        items_name = data[1]
+        
         # Insert new row
         row = self.rowCount()
         self.insertRows(row, 1)
@@ -645,7 +648,7 @@ class OffersModel(QSqlTableModel):
         columns = ['offer_name', 'offer_price']
 
         # Take only the colums that suitable for data list length
-        for col_ind, field in enumerate(data):
+        for col_ind, field in enumerate(offer_data):
             col = self.fieldIndex(columns[col_ind])
             self.setData(self.index(row, col), field, Qt.EditRole)
 
@@ -653,6 +656,9 @@ class OffersModel(QSqlTableModel):
         ret = self.submitAll()
 
         # Link offer with related items
+        offer_id = self.query().lastInsertId()
+        for item_name in items_name:
+            linkOfferItems(offer_id, item_name, db = self.db)
 
         self.select()
 
@@ -973,6 +979,36 @@ class HierarcicalShiftsSupervisorsModel(QtGui.QStandardItemModel):
                 shift_id.appendRows(supervisors_names)
 
                 date.appendRow(shift_id)
+
+            
+            self.appendRow(date)
+
+
+
+######################
+# Offers-Ites #
+######################
+class HierarcicalOffersItemsModel(QtGui.QStandardItemModel):
+
+    def __init__(self, db, parent: typing.Optional[QtCore.QObject] = None):
+        super().__init__(parent=parent)
+        self.db = db
+        self.showOffersItems()
+
+    def showOffersItems(self):
+        
+        ret = retrieveOffersItems(db = self.db)
+        dates = list(map(lambda x : QtGui.QStandardItem(x), ret.keys()))
+
+        for date in dates:
+            offers_ids = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()]))
+
+            for offer_id in offers_ids:
+                supervisors_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][offer_id.text()]))
+
+                offer_id.appendRows(supervisors_names)
+
+                date.appendRow(offer_id)
 
             
             self.appendRow(date)

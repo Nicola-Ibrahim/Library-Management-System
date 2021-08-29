@@ -73,9 +73,12 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._employee_number = 0
         self._item_number = 0
 
-        # insert an empty order previously
+        # insert an empty order and offer and employee previously
         self.plusOrder()
+        self.plusOffer()
+        self.plusEmployee()
 
+        # Apply desire changing to Main widnow
         self.uiCahnges()
         self.handleButtons()
         self.Completers()
@@ -287,7 +290,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.logout_btn.clicked.connect(self.BackToMain)
         self.exit_btn.clicked.connect(self.close)
 
-        self.menu_btn.clicked.connect(lambda : self.toggleMainButtonsMenu(self.main_buttons_frame,300,True))
+        self.menu_btn.clicked.connect(lambda : self.toggleMainButtonsMenu(self.main_buttons_frame,310,True))
 
         # tabWidget buttons
         self.daily_customers_btn.clicked.connect(self.showDailyCustomers)
@@ -361,7 +364,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.employees_clear_btn.clicked.connect(self.clearEmployeesFilters)
 
         # Shifts tab butons
-        self.shift_add_btn2.clicked.connect(lambda: self.toggleMenuMaxWidth(self.offers_items_frame,500,True))
+        self.shift_add_btn2.clicked.connect(lambda: self.toggleMenuMaxWidth(self.frame_69,500,True))
         self.shift_add_btn.clicked.connect(self.addShift)
         self.plus_employee_btn.clicked.connect(self.plusEmployee)
         self.shift_remove_btn.clicked.connect(self.removeShifts)
@@ -380,7 +383,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Offers tab buttons
         self.offer_add_btn2.clicked.connect(lambda: self.toggleMenuMaxWidth(self.frame_33,500,True))
         self.offer_add_btn.clicked.connect(self.addOffer)
-        # self.offer_remove_btn.connect(self.removeOffer)
+        self.offer_remove_btn.clicked.connect(self.removeOffer)
         self.plus_item_btn.clicked.connect(self.plusOffer)
         self.offers_item_name_filter_txt.textChanged['QString'].connect(lambda date : self.offers_sort_model.setItemNameFilter(date))
         self.offers_date_filter_dateEdit1.dateChanged['QDate'].connect(lambda date : self.offers_sort_model.setDateFilter(date))
@@ -1611,45 +1614,68 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.offers_tableView.setModel(self.offers_sort_model)
 
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'offers_tab'))
-        
+
+        self.showOffersItems()
+
         # Read available item type 
-        # self.initialItemsTypeComboBox()
+        self.initialItemsTypeComboBox()
+
+    def showOffersItems(self):
+        """Display available offers and their items"""
+
+        self.offers_items_model = HierarcicalOffersItemsModel(self.daily_conn)
+        self.offers_items_treeView.setHeaderHidden(True)
+        self.offers_items_treeView.setModel(self.offers_items_model) 
+        self.offers_items_treeView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        
+        # selection_model = self.offers_items_treeView.selectionModel()
+        # # selection_model.selectionChanged.connect(self.selectionChangedSlot)
 
     def addOffer(self):
         """Add new offer with related items"""
+
+        # Check if the offer name field is empty
+        if(not self.offer_price_txt.text()):
+            self.offer_price_txt.setFocus()
+            QtWidgets.QToolTip.showText(self.offer_price_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter offer name")
+            return
         
-        # Take children of order register panel 
-        # Item and quantity
-        combo_selected_items = self.offers_items_frame.findChildren(QtWidgets.QComboBox)
+        # Check if the offer price field is empty
+        elif(not self.offer_price_txt.text()):
+            self.offer_price_txt.setFocus()
+            QtWidgets.QToolTip.showText(self.offer_price_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter offer price")
+            return
+    
+        # Take children of offer register panel 
+        selected_items = self.offers_items_frame.findChildren(QtWidgets.QComboBox)
 
         # Iterate to check if any Item name or quantity is empty
-        for combo_selected_item in combo_selected_items:
+        for selected_item in selected_items:
             # Check if the item comboBox is empty
-            if(combo_selected_item.currentText()==""):
-                combo_selected_item.setFocus()
-                QtWidgets.QToolTip.showText(combo_selected_item.mapToGlobal(QtCore.QPoint(0,10)),"Select employee")
+            if(selected_item.currentText()==""):
+                selected_item.setFocus()
+                QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,10)),"Select item")
                 return   
 
         # Iterate to add customer's orders_model
-        data = [combo_selected_item.currentText() for combo_selected_item in combo_selected_items]
-        print(data)
+        data = [(self.offer_name_txt.text(), self.offer_price_txt.text()),(selected_item.currentText() for selected_item in selected_items)]
+
         ret = self.offers_model.addOffer(data)
-        print(ret)
         
-        # Delete shift registring panel 
-        self.clearLayout(self.offers_items_frame.layout())
+        if(ret):
+            # Delete shift registring panel 
+            self.clearLayout(self.offers_items_frame.layout())
 
-        # Resest employee numbers variable
-        self._item_number = 0
+            # Resest employee numbers variable
+            self._item_number = 0
 
-        # Insert an empty order
-        self.plusOffer()
-        
-        # Reinitial items
-        self.initialSettingsComboBoxs()
+            # Insert an empty order
+            self.plusOffer()
+            
+            # Reinitial items
+            self.initialSettingsComboBoxs()
 
-
-    def removeOffers(self):
+    def removeOffer(self):
         """Remove offer/s from offers table"""
         # Get selected rows and their indexs
         rows_indices = self.offers_tableView.selectionModel().selectedRows()
@@ -1885,15 +1911,16 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.employee_password_txt.text()
         ]
     
-        self.employees_model.addEmployee(data)
+        ret = self.employees_model.addEmployee(data)
 
-        # Reinitial items
-        self.initialSettingsComboBoxs()
+        if(ret):
+            # Reinitial items
+            self.initialSettingsComboBoxs()
 
-        # Resest text
-        self.employee_name_txt.setText('')
-        self.employee_username_txt.setText('')
-        self.employee_password_txt.setText('')
+            # Resest text
+            self.employee_name_txt.setText('')
+            self.employee_username_txt.setText('')
+            self.employee_password_txt.setText('')
 
     def removeEmployees(self):
         """Remove employee/s from Supervisors table"""
@@ -1955,10 +1982,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'shifts_tab'))
         self.toggleStackWidget(75, True)
 
-        self.showShiftsSupervisors()
+        self.showShiftsEmployees()
 
-    def showShiftsSupervisors(self):
-        """Display available years, months, and days from Archive"""
+    def showShiftsEmployees(self):
+        """Display available shifts and related employees"""
 
         self.shifts_supervisors_model = HierarcicalShiftsSupervisorsModel(self.daily_conn)
         self.shifts_supervisors_treeView.setHeaderHidden(True)
@@ -2000,7 +2027,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Reinitial items
         self.initialSettingsComboBoxs()
 
-        self.showShiftsSupervisors()
+        self.showShiftsEmployees()
 
     def plusEmployee(self):
         """Adding new order to orders list"""
@@ -2169,7 +2196,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 worker.finished.connect(lambda : self.shifts_model.select())
                 worker.finished.connect(lambda : resetCounting(table = 'Shifts', column = 'shift_id', db1 = self.daily_conn))
                 worker.finished.connect(self.initialSettingsComboBoxs)
-                worker.finished.connect(self.showShiftsSupervisors)
+                worker.finished.connect(self.showShiftsEmployees)
                 worker.finished.connect(self.Completers)
                 
                 # Start the thread
