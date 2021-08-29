@@ -850,7 +850,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <widget class="QStackedWidget" name="stackedWidget">
             <property name="maximumSize">
              <size>
-              <width>0</width>
+              <width>80</width>
               <height>16777215</height>
              </size>
             </property>
@@ -861,7 +861,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
              <enum>QFrame::Plain</enum>
             </property>
             <property name="currentIndex">
-             <number>6</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="daily_customers_properties_panel">
              <property name="styleSheet">
@@ -1563,6 +1563,63 @@ QPushButton:disabled{
                    </property>
                    <property name="toolTip">
                     <string>Search date</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	border-style: solid;	
+	border-width: 5px;
+	border-radius:35px;
+	border-color: rgb(174, 174, 174);
+
+	padding: 10px;
+	
+	background-color: rgb(255, 255, 255);
+
+	image: url(:/icons/icons/loupe1.svg);
+	
+}
+
+
+QPushButton:hover{
+	border-style:  solid;
+	border-color: rgb(174, 174, 174);
+	border-width: 5px;
+	border-radius: 35px;
+	padding: 10px;
+	
+	image: url(:/icons/icons/loupe2.svg);
+}
+QPushButton:pressed{
+	
+	border-style:  solid;
+	border-width: 5px;
+	border-radius: 35px;
+	padding: 10px;
+	background-color: rgb(100, 100, 100);
+	image: url(:/icons/icons/loupe2.svg);
+}
+QPushButton:disabled{
+	border-style:  solid;
+	border-color: rgb(174, 174, 174);
+	border-width: 5px;
+	border-radius: 35px;
+	padding: 10px;
+	padding: 10px;
+	background-color: rgb(142,142,142);
+}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="order_show_btn">
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton{
@@ -3365,7 +3422,7 @@ QPushButton:pressed{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>7</number>
+             <number>2</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -4447,7 +4504,7 @@ background-color: rgb(244, 154, 32);
                <widget class="QFrame" name="frame_11">
                 <property name="maximumSize">
                  <size>
-                  <width>0</width>
+                  <width>500</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -4724,8 +4781,8 @@ QPushButton:pressed{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>45</width>
-                      <height>479</height>
+                      <width>498</width>
+                      <height>500</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_8">

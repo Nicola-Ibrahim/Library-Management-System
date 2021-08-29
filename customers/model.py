@@ -369,7 +369,6 @@ class OrdersModel(QSqlRelationalTableModel):
         self.setEditStrategy(self.OnFieldChange)
         
         # headers = ('رقم الطلب','اسم الزبون','اسم المادة','الكمية','الاجمالي','النوع','التاريخ')
-        # headers = ('Id','Customer name','Item name','Quantity','Total','Type','offer_id','Date')
         headers = ('Id','Customer name','Total','Type','Date')
         for ind, header in enumerate(headers):
             self.setHeaderData(ind, Qt.Horizontal,header)
@@ -381,6 +380,8 @@ class OrdersModel(QSqlRelationalTableModel):
         
     def addOrder(self, data : list):
 
+        order_data = data[0]
+        items_name = data[1]
         customer_id = retrieveDailyId(data[0][0], self.db)
         order_type = data[0][3]
         
@@ -389,12 +390,12 @@ class OrdersModel(QSqlRelationalTableModel):
             item_id = retrieveItemId(data[i][1], self.db)
             quantity = data[i][2]
 
-            # Handle exceed quantity error
-            available = retrieveItemAvailabelQuantity(item_id, self.db)
-            if(quantity > available):
-                # Set SQL Error
-                self.setLastError(QSqlError(driverText=f'exceed the available quantity\n{available}'))
-                return
+        #     # Handle exceed quantity error
+        #     available = retrieveItemAvailabelQuantity(item_id, self.db)
+        #     if(quantity > available):
+        #         # Set SQL Error
+        #         self.setLastError(QSqlError(driverText=f'exceed the available quantity\n{available}'))
+        #         return
             
 
         for i in range(len(data)):

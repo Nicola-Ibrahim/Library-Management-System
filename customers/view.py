@@ -1034,9 +1034,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 return      
 
         # Iterate to add customer's orders_model
-        for order_comboBox, quantity_txt in zip(order_comboBox_lst, order_quantity_txt_lst):             
-            record = (self.customer_name_txt2.text(), order_comboBox.currentText(), int(quantity_txt.text()), self.order_sell_type_comboBox.currentText())
-            data.append(record)
+        items_data = [(order_comboBox, quantity_txt) for order_comboBox, quantity_txt in zip(order_comboBox_lst, order_quantity_txt_lst)]
+        
+        data = [(self.customer_name_txt2.text(), self.order_sell_type_comboBox.currentText()),items_data]
 
         self.orders_model.addOrder(data)
 
@@ -1394,7 +1394,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "    border-color: rgb(255, 0, 0);\n"
             "}\n"
             "")
-
+            self.order_add_btn.setEnabled(False)
         else:
             quantity_txt.setStyleSheet("QLineEdit{\n"
             "\n"
@@ -1404,6 +1404,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "    border-color: rgb(255, 170, 0);\n"
             "}\n"
             "")
+            self.order_add_btn.setEnabled(True)
 
             # Change the total price
             self.setTotalOrderPrice()
