@@ -716,14 +716,14 @@ class OffersSortModel(QtCore.QSortFilterProxyModel):
 ###############
 # Supervisors #
 ###############
-class SupervisorsModel(QSqlRelationalTableModel):
+class EmployeesModel(QSqlRelationalTableModel):
     """ Supervisors model for controlling all transctions"""
     def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
         super().__init__(parent=parent, db=db)
         self.db = db
-        self.showSupervisors()
+        self.showEmployees()
     
-    def showSupervisors(self):
+    def showEmployees(self):
         self.setTable("Supervisors")
         self.setEditStrategy(self.OnFieldChange)
         
@@ -738,7 +738,7 @@ class SupervisorsModel(QSqlRelationalTableModel):
 
         self.select()
         
-    def addSupervisor(self, data : list):
+    def addEmployee(self, data : list):
 
         # Check if the the supervisor exists previously
         result = None
@@ -790,49 +790,42 @@ class SupervisorsModel(QSqlRelationalTableModel):
                 
         return super().data(index, role=role)  
 
-class  SupervisorsSortModel(QtCore.QSortFilterProxyModel):
+class  EmployeesSortModel(QtCore.QSortFilterProxyModel):
     """ Daily customers sorting model"""
     def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
-        self._supervisor_name_pattern = QRegularExpression()
-        self._supervisor_job_type_pattern =  QRegularExpression()
+        self._employee_name_pattern = QRegularExpression()
+        self._employee_job_type_pattern =  QRegularExpression()
         # self._date_pattern = QRegularExpression()
         
         # Set source model
         self.setSourceModel(source_model)
     
-    def setSupervisorNameFilter(self, string):
+    def setEmployeeNameFilter(self, string):
         """Set regex for customer name"""
-        self._supervisor_name_pattern.setPattern(f'{string}')
+        self._employee_name_pattern.setPattern(f'{string}')
         self.invalidateFilter()
 
     def setJobTypeFilter(self, string):
         """Set regex pattern for subscription type"""
-        self._supervisor_job_type_pattern.setPattern(f'^{(string)}')
+        self._employee_job_type_pattern.setPattern(f'^{(string)}')
             
         self.invalidateFilter()
 
-    # def setDateFilter(self, string):
-    #     """Set regex pattern for date type"""   
-    #     self._date_pattern.setPattern(string)
-    #     self.invalidateFilter()
     
     def filterAcceptsRow(self, row_num: int, source_parent: QtCore.QModelIndex):
         
         supervisor_name_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('supervisor_name'), source_parent)
         job_type_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('job_type'), source_parent)
-        # date_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('daily_date'),  source_parent)
 
         supervisor_name = self.sourceModel().data(supervisor_name_index, Qt.DisplayRole)
         job_type = self.sourceModel().data(job_type_index, Qt.DisplayRole)
-        # date = self.sourceModel().data(date_index, Qt.DisplayRole)
 
         tests =  [
-            self._supervisor_name_pattern.match(supervisor_name).hasMatch(),
-            self._supervisor_job_type_pattern.match(job_type).hasMatch(),
-            # self._date_pattern.match(date).hasMatch()    
+            self._employee_name_pattern.match(supervisor_name).hasMatch(),
+            self._employee_job_type_pattern.match(job_type).hasMatch(),
         ]
         
         return (not False in tests)

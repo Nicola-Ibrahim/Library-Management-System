@@ -53,7 +53,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customers_model = None
         self.orders_model = None
         self.warehouse_model = None
-        self.supervisors_model = None
+        self.employees_model = None
         self.reports_model = None
         self.offers_model = None
         self.shifts_model = None
@@ -63,7 +63,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customers_sort_model = None
         self.order_sort_model = None
         self.warehouse_sort_model = None
-        self.supervisors_sort_model = None
+        self.employees_sort_model = None
         self.offers_sort_model = None
         self.shifts_sort_model = None
          
@@ -133,9 +133,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.warehouse_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
         self.warehouse_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
         
-        self.supervisors_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        self.supervisors_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
-        self.supervisors_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
+        self.employees_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        self.employees_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
+        self.employees_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
         
         self.reports_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.reports_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
@@ -185,16 +185,16 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customer_name_filter_txt.setValidator(validator)
         self.customer_name_txt2.setValidator(validator)
         self.orders_customer_name_filter_txt.setValidator(validator)
-        self.supervisor_name_txt.setValidator(validator)
+        self.employee_name_txt.setValidator(validator)
 
         # English names regular expression
         validator = QtGui.QRegularExpressionValidator(QtCore.QRegularExpression("[a-zA-Z]+"))
-        self.supervisors_username_txt.setValidator(validator)
+        self.employee_username_txt.setValidator(validator)
 
 
         # password regular expression
         validator = QtGui.QRegularExpressionValidator(QtCore.QRegularExpression("[\w+|\.]+"))
-        self.supervisors_password_txt.setValidator(validator)
+        self.employee_password_txt.setValidator(validator)
 
         # numbers regular expression
         validator = QtGui.QRegularExpressionValidator(QtCore.QRegularExpression("[0-9]+"))
@@ -224,8 +224,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.warehouse_item_type_filter_comboBox.clear()
         self.warehouse_item_type_filter_comboBox.addItems(['']+ retrieveItemType(self.daily_conn))
 
-        self.supervisors_job_type_filter_comberoBox.clear()
-        self.supervisors_job_type_filter_comberoBox.addItems(['']+ retrieveSuperviosrsJobType(self.daily_conn))
+        self.employees_job_type_filter_comberoBox.clear()
+        self.employees_job_type_filter_comberoBox.addItems(['']+ retrieveSuperviosrsJobType(self.daily_conn))
 
     def setCurrentDate(self):
         self.shifts_date_filter_dateEdit1.setDate(QtCore.QDate.currentDate())
@@ -294,12 +294,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_subscrib_btn.clicked.connect(self.showMonthlyCustomers)
         self.orders_btn.clicked.connect(self.showOrders)
         self.reports_btn.clicked.connect(self.showReports)
-        self.supervisors_btn.clicked.connect(self.showSupervisors)
+        self.employees_btn.clicked.connect(self.showEmployees)
         self.warehouse_btn.clicked.connect(self.showWarehouse)
         self.offers_btn.clicked.connect(self.showOffers)
         self.shifts_btn.clicked.connect(self.showShifts)
-        self.supervisors_btn.clicked.connect(self.showSupervisors)
-        self.reports_btn.clicked.connect(self.showReports)
 
 
 
@@ -355,15 +353,15 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customer_edit_cost_btn.clicked.connect(self.openPriceDialog)
 
         # Supervisors tab buttons
-        self.supervisor_add_btn2.clicked.connect(lambda : self.toggleMenuMaxWidth(self.frame_22,500,True))
-        self.supervisor_add_btn.clicked.connect(self.addSupervisor)
-        self.supervisor_remove_btn.clicked.connect(self.removeSupervisor)
-        self.supervisors_employee_name_filter_txt.textChanged['QString'].connect(lambda supervisor_name : self.supervisors_sort_model.setSupervisorNameFilter(supervisor_name))
-        self.supervisors_job_type_filter_comberoBox.currentTextChanged['QString'].connect(lambda job_type : self.supervisors_sort_model.setJobTypeFilter(job_type))
-        self.supervisors_clear_btn.clicked.connect(self.clearSupervisorFilters)
+        self.employee_add_btn2.clicked.connect(lambda : self.toggleMenuMaxWidth(self.frame_22,500,True))
+        self.employee_add_btn.clicked.connect(self.addEmployees)
+        self.employee_remove_btn.clicked.connect(self.removeEmployees)
+        self.employees_employee_name_filter_txt.textChanged['QString'].connect(lambda employee_name : self.employees_sort_model.setSupervisorNameFilter(employee_name))
+        self.employees_job_type_filter_comberoBox.currentTextChanged['QString'].connect(lambda job_type : self.employees_sort_model.setJobTypeFilter(job_type))
+        self.employees_clear_btn.clicked.connect(self.clearEmployeesFilters)
 
         # Shifts tab butons
-        self.shift_add_btn2.clicked.connect(lambda: self.toggleMenuMaxWidth(self.offers_items_frame9,500,True))
+        self.shift_add_btn2.clicked.connect(lambda: self.toggleMenuMaxWidth(self.offers_items_frame,500,True))
         self.shift_add_btn.clicked.connect(self.addShift)
         self.plus_employee_btn.clicked.connect(self.plusEmployee)
         self.shift_remove_btn.clicked.connect(self.removeShifts)
@@ -419,10 +417,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
             # GET WIDTH
             width = frame.width()
-            standard_width = 80
+            standard_width = 70
 
             # SET MAX WIDTH
-            if (width == 80):
+            if (width == 70):
                 widthExtended = maxWidth
 
             elif(maxWidth == 0):
@@ -531,7 +529,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open daily panel"""
 
         self.DAILY_TABLES_FLAG = True
-        self.toggleMainButtonsMenu(self.main_buttons_frame, 80, True)
+        self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
         self.panel_title_lbl.setText('Daily')
         
         # Change blur radius for main panel
@@ -565,7 +563,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open acrchive panel"""
 
         self.ARCHIVE_TABLES_FLAG = True
-        self.toggleMainButtonsMenu(self.main_buttons_frame, 80, True)
+        self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
         self.panel_title_lbl.setText('Archive')  
 
         self.buttons_stackedWidget.setCurrentWidget(self.buttons_stackedWidget.findChild(QtWidgets.QWidget, 'dailyAndarchive_buttons_tab'))
@@ -600,7 +598,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open settings panel"""
 
         self.SETTINGS_TABLES_FLAG = True
-        self.toggleMainButtonsMenu(self.main_buttons_frame, 80, True)
+        self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
         self.panel_title_lbl.setText('Settings')  
         
         self.buttons_stackedWidget.setCurrentWidget(self.buttons_stackedWidget.findChild(QtWidgets.QWidget, 'settings_buttons_tab'))
@@ -640,13 +638,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         elif(self.SETTINGS_TABLES_FLAG == True):
             self.warehouse_model = WarehouseModel(self.daily_conn)
-            self.supervisors_model = SupervisorsModel(self.daily_conn)
+            self.employees_model = EmployeesModel(self.daily_conn)
             self.shifts_model = ShiftsModel(self.daily_conn)
             self.offers_model = OffersModel(self.daily_conn)
             self.reports_model = ReportsModel(self.daily_conn)
 
             self.warehouse_sort_model = WarehouseSortModel(self.warehouse_model)
-            self.supervisors_sort_model = SupervisorsSortModel(self.supervisors_model)
+            self.employees_sort_model = EmployeesSortModel(self.employees_model)
             self.shifts_sort_model = ShiftsSortModel(self.shifts_model)
             self.offers_sort_model = OffersSortModel(self.offers_model)
             self.reports_sort_model = ReportsSortModel(self.reports_model)
@@ -1833,77 +1831,77 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     ###############
     # Supervisors #
     ###############
-    def showSupervisors(self):
-        """Show all Supervisors from Supervisors table"""
+    def showEmployees(self):
+        """Show all employees from Supervisors table"""
         
         self.setViewModel()
 
         # # If Daily panel is opend then we can make change to date (add, edit, ...)
         if(self.SETTINGS_TABLES_FLAG == True):
-            self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'supervisors_properties_panel'))
+            self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'employees_properties_panel'))
 
-        self.supervisors_tableView.setModel(self.supervisors_sort_model)
-        # self.supervisors_tableView.resizeColumnsToContents()
+        self.employees_tableView.setModel(self.employees_sort_model)
+        # self.employees_tableView.resizeColumnsToContents()
 
-        self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'supervisors_tab'))
+        self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'employees_tab'))
         self.toggleStackWidget(75, True)
 
-    def addSupervisor(self):
-        """Add new supervisor to Supervisors table"""
+    def addEmployees(self):
+        """Add new employee to Supervisors table"""
         # Check if the supervisor name field is empty
-        if(self.supervisor_name_txt.text()==""):
-            self.supervisor_name_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.supervisor_name_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter supervisor name")
+        if(self.employee_name_txt.text()==""):
+            self.employee_name_txt.setFocus()
+            QtWidgets.QToolTip.showText(self.employee_name_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter supervisor name")
             return
         
         # Check if the supervisor job type button is checked
-        if(self.supervisor_manager_btn.isChecked()==False and self.supervisor_worker_btn.isChecked()==False):
-            self.supervisor_worker_btn.setFocus()
-            QtWidgets.QToolTip.showText(self.supervisor_worker_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select job type")
+        if(self.employee_manager_btn.isChecked()==False and self.employee_worker_btn.isChecked()==False):
+            self.employee_worker_btn.setFocus()
+            QtWidgets.QToolTip.showText(self.employee_worker_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select job type")
             return
 
         # Check if the supervisor username field is empty
-        if(self.supervisors_username_txt.text()==""):
-            self.supervisors_username_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.supervisors_username_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter username")
+        if(self.employee_username_txt.text()==""):
+            self.employee_username_txt.setFocus()
+            QtWidgets.QToolTip.showText(self.employee_username_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter username")
             return
         
         # Check if the supervisor password field is empty
-        if(self.supervisors_password_txt.text()==""):
-            self.supervisors_password_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.supervisors_password_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter password")
+        if(self.employee_password_txt.text()==""):
+            self.employee_password_txt.setFocus()
+            QtWidgets.QToolTip.showText(self.employee_password_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter password")
             return
 
-        if(self.supervisor_manager_btn.isChecked()==True):
-            job_type = self.supervisor_manager_btn.text()
+        if(self.employee_manager_btn.isChecked()==True):
+            job_type = self.employee_manager_btn.text()
         else:
-            job_type = self.supervisor_worker_btn.text()
+            job_type = self.employee_worker_btn.text()
         
         
         data = [
-            self.supervisor_name_txt.text().strip(),
+            self.employee_name_txt.text().strip(),
             job_type,
-            self.supervisors_username_txt.text(), 
-            self.supervisors_password_txt.text()
+            self.employee_username_txt.text(), 
+            self.employee_password_txt.text()
         ]
     
-        self.supervisors_model.addSupervisor(data)
+        self.employees_model.addEmployee(data)
 
         # Reinitial items
         self.initialSettingsComboBoxs()
 
         # Resest text
-        self.supervisor_name_txt.setText('')
-        self.supervisors_username_txt.setText('')
-        self.supervisors_password_txt.setText('')
+        self.employee_name_txt.setText('')
+        self.employee_username_txt.setText('')
+        self.employee_password_txt.setText('')
 
-    def removeSupervisor(self):
-        """Remove supervisor from Supervisors table"""
+    def removeEmployees(self):
+        """Remove employee/s from Supervisors table"""
         # Get selected rows and their indexs
-        rows_indices = self.supervisors_tableView.selectionModel().selectedRows()
+        rows_indices = self.employees_tableView.selectionModel().selectedRows()
     
         if (len(rows_indices) <= 0):
-            QtWidgets.QToolTip.showText(self.supervisor_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select supervisor/s")
+            QtWidgets.QToolTip.showText(self.employee_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select supervisor/s")
         
         else:
             messageBox = QtWidgets.QMessageBox.warning(
@@ -1919,8 +1917,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 # Disable remove button
 
                 worker.finished.connect(worker.deleteLater)
-                worker.finished.connect(lambda : self.supervisors_model.submitAll())
-                worker.finished.connect(lambda : self.supervisors_model.select())
+                worker.finished.connect(lambda : self.employees_model.submitAll())
+                worker.finished.connect(lambda : self.employees_model.select())
                 worker.finished.connect(lambda : resetCounting(table = 'Supervisors', column = 'supervisor_id', db1 = self.daily_conn))
                 worker.finished.connect(self.initialSettingsComboBoxs)
                 worker.finished.connect(self.Completers)
@@ -1936,9 +1934,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 worker.finished.connect(prog.close)
                 prog.exec()
 
-    def clearSupervisorFilters(self):
-        self.supervisors_employee_name_filter_txt.setText('')
-        self.supervisors_job_type_filter_comberoBox.setCurrentText('')
+    def clearEmployeesFilters(self):
+        self.employees_employee_name_filter_txt.setText('')
+        self.employees_job_type_filter_comberoBox.setCurrentText('')
 
 
     ##########
@@ -2151,7 +2149,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rows_indices = self.shifts_tableView.selectionModel().selectedRows()
     
         if (len(rows_indices) <= 0):
-            QtWidgets.QToolTip.showText(self.supervisor_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select shift/s")
+            QtWidgets.QToolTip.showText(self.employee_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select shift/s")
         
         else:
             messageBox = QtWidgets.QMessageBox.warning(
