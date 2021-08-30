@@ -1,3 +1,4 @@
+from customers.ui.OrderDialog.orderDialogMain import OrderDialog
 from customers.ui.LoginDialog.LoginMain import LoginDialog
 from customers.threads import ReportsWorker, Worker
 import datetime
@@ -354,6 +355,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Subscription prices tab buttons
         self.daily_customer_edit_price_btn.clicked.connect(self.openPriceDialog)
         self.monthly_customer_edit_cost_btn.clicked.connect(self.openPriceDialog)
+        self.order_show_btn.clicked.connect(self.openOrderDialog)
 
         # Supervisors tab buttons
         self.employee_add_btn2.clicked.connect(lambda : self.toggleMenuMaxWidth(self.frame_22,500,True))
@@ -1265,11 +1267,11 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         horizontalLayout.addWidget(delete_btn)
 
 
-        # Create vertical spacer and add it to main frame 
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        # # Create vertical spacer and add it to main frame 
+        # spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
 
-        # Add layout to the order panel
-        order_frame_verticalLayout.addItem(spacerItem)
+        # # Add layout to the order panel
+        # order_frame_verticalLayout.addItem(spacerItem)
         order_frame_verticalLayout.addLayout(horizontalLayout)
         
 
@@ -1720,7 +1722,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Create register order panel 
 
-        offer_frame = QtWidgets.QFrame(self.frame_70)
+        offer_frame = QtWidgets.QFrame()
         offer_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
         offer_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         offer_frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -2341,12 +2343,19 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     #################
     def openPriceDialog(self):
         """Open change price dialog"""
-        price_diag = PriceDialog(self.daily_conn)
+        price_diag = PriceDialog(db = self.daily_conn)
         if(price_diag.exec() == QtWidgets.QDialog.Accepted):
             """Change subscription price"""
             subs_type = price_diag.data[0]
             price = price_diag.data[1]
-            changeSubsCost(price, subs_type, self.daily_conn)        
+            changeSubsCost(price, subs_type, self.daily_conn)    
+
+
+    def openOrderDialog(self):
+        """Open change order dialog"""
+        order_diag = OrderDialog(2, db = self.daily_conn)
+        if(order_diag.exec() == QtWidgets.QDialog.Accepted):
+            pass  
         
     
     ############

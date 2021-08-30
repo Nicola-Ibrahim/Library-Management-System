@@ -894,7 +894,7 @@ def retrieveOrdersItems(db = None):
     # Get available dates
     STATEMENT = \
         """
-        SELECT date, shift_id, supervisor_id FROM Shifts_Supervisors WHERE shift_id NOTNULL
+        SELECT date, order_id, item_id FROM Orders_items
         """
 
     query = QSqlQuery(db)
@@ -902,15 +902,34 @@ def retrieveOrdersItems(db = None):
 
     while(query.next()):
         date = str(query.value(query.record().indexOf('date'))).strip()
-        shift_id = int(str(query.value(query.record().indexOf('shift_id'))).strip())
-        supervisor_id = int(str(query.value(query.record().indexOf('supervisor_id'))).strip())
-        shift_name = retrieveShiftNames(shift_id, db=db)[0]
-        supervisor_name = retrieveSupervisorsNames(supervisor_id, db=db)[0]
-        indices_tree.append([date, shift_name, supervisor_name])
+        order_id = int(str(query.value(query.record().indexOf('order_id'))).strip())
+        item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
+        item_name = retrieveItemNames(item_id, db=db)[0]
+        indices_tree.append([date, order_id, item_name])
 
    
     dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
     return dic
+
+def retrieveOrderItems(order_id = None, db = None):
+
+    items = []
+
+    # Get available dates
+    STATEMENT = \
+        f"""
+        SELECT item_id FROM Orders_items WHERE order_id = {order_id} AND date = date('now')
+        """
+
+    query = QSqlQuery(db)
+    query.exec(STATEMENT)
+
+    while(query.next()):
+        item_id = query.value(query.record().indexOf('item_id'))
+        items.append(item_id)
+
+   
+    return items
 
 
 #############
