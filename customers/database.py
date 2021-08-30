@@ -918,7 +918,7 @@ def retrieveOrderItems(order_id = None, db = None):
     # Get available dates
     STATEMENT = \
         f"""
-        SELECT item_id FROM Orders_items WHERE order_id = {order_id} AND date = date('now')
+        SELECT item_id, quantity FROM Orders_items WHERE order_id = {order_id} AND date = date('now')
         """
 
     query = QSqlQuery(db)
@@ -926,9 +926,9 @@ def retrieveOrderItems(order_id = None, db = None):
 
     while(query.next()):
         item_id = query.value(query.record().indexOf('item_id'))
-        items.append(item_id)
+        quantity = query.value(query.record().indexOf('quantity'))
+        items.append([item_id, quantity])
 
-   
     return items
 
 

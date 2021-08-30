@@ -1467,6 +1467,20 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             comboBox.addItem('')
             comboBox.addItems(retrieveItemNames(db  = self.daily_conn))
     
+    def openOrderDialog(self):
+        """Open change order dialog"""
+        # Get selected row and its index
+        index = self.orders_tableView.selectionModel().currentIndex()
+        
+        id = index.sibling(index.row(), 0).data()
+
+        if (id == None):
+            QtWidgets.QToolTip.showText(self.shift_start_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select order")
+        
+        else:
+                order_diag = OrderDialog(id, db = self.daily_conn)
+                if(order_diag.exec() == QtWidgets.QDialog.Accepted):
+                    pass  
     
     #############
     # Warehouse #
@@ -1857,7 +1871,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.offers_sort_model.setDateFilter('')
 
     ###############
-    # Supervisors #
+    # Employees #
     ###############
     def showEmployees(self):
         """Show all employees from Supervisors table"""
@@ -2351,11 +2365,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             changeSubsCost(price, subs_type, self.daily_conn)    
 
 
-    def openOrderDialog(self):
-        """Open change order dialog"""
-        order_diag = OrderDialog(2, db = self.daily_conn)
-        if(order_diag.exec() == QtWidgets.QDialog.Accepted):
-            pass  
+   
         
     
     ############
