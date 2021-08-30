@@ -850,7 +850,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <widget class="QStackedWidget" name="stackedWidget">
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>0</width>
               <height>16777215</height>
              </size>
             </property>
@@ -4504,7 +4504,7 @@ background-color: rgb(244, 154, 32);
                <widget class="QFrame" name="frame_11">
                 <property name="maximumSize">
                  <size>
-                  <width>500</width>
+                  <width>0</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -4781,8 +4781,8 @@ QPushButton:pressed{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>498</width>
-                      <height>500</height>
+                      <width>45</width>
+                      <height>479</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -6540,7 +6540,7 @@ background-color: rgb(244, 154, 32);
             </widget>
             <widget class="QWidget" name="employees_tab">
              <attribute name="title">
-              <string>المشرفين</string>
+              <string>Employees</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_4">
               <property name="leftMargin">

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIkNBYRm.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIxXPoPD.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -1280,6 +1280,53 @@ class Ui_MainWindow(object):
         self.order_search_btn.setText("")
         self.order_search_btn.setObjectName("order_search_btn")
         self.verticalLayout_9.addWidget(self.order_search_btn)
+        self.order_show_btn = QtWidgets.QPushButton(self.frame_17)
+        self.order_show_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.order_show_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;    \n"
+"    border-width: 5px;\n"
+"    border-radius:35px;\n"
+"    border-color: rgb(174, 174, 174);\n"
+"\n"
+"    padding: 10px;\n"
+"    \n"
+"    background-color: rgb(255, 255, 255);\n"
+"\n"
+"    image: url(:/icons/icons/loupe1.svg);\n"
+"    \n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    border-style:  solid;\n"
+"    border-color: rgb(174, 174, 174);\n"
+"    border-width: 5px;\n"
+"    border-radius: 35px;\n"
+"    padding: 10px;\n"
+"    \n"
+"    image: url(:/icons/icons/loupe2.svg);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    \n"
+"    border-style:  solid;\n"
+"    border-width: 5px;\n"
+"    border-radius: 35px;\n"
+"    padding: 10px;\n"
+"    background-color: rgb(100, 100, 100);\n"
+"    image: url(:/icons/icons/loupe2.svg);\n"
+"}\n"
+"QPushButton:disabled{\n"
+"    border-style:  solid;\n"
+"    border-color: rgb(174, 174, 174);\n"
+"    border-width: 5px;\n"
+"    border-radius: 35px;\n"
+"    padding: 10px;\n"
+"    padding: 10px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.order_show_btn.setText("")
+        self.order_show_btn.setObjectName("order_show_btn")
+        self.verticalLayout_9.addWidget(self.order_show_btn)
         self.order_export_btn = QtWidgets.QPushButton(self.frame_17)
         self.order_export_btn.setMinimumSize(QtCore.QSize(70, 70))
         self.order_export_btn.setStyleSheet("QPushButton{\n"
@@ -4076,7 +4123,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 45, 479))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 100, 500))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.verticalLayout_41 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_41.setContentsMargins(0, 0, 25, 0)
@@ -5025,7 +5072,7 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(5)
+        self.stackedWidget.setCurrentIndex(1)
         self.tabWidget.setCurrentIndex(2)
         self.buttons_stackedWidget.setCurrentIndex(1)
         self.logout_btn.clicked['bool'].connect(self.daily_btn.setDisabled)
@@ -5161,7 +5208,7 @@ class Ui_MainWindow(object):
         self.employees_job_type_filter_comberoBox.setItemText(1, _translate("MainWindow", "Manager"))
         self.employees_job_type_filter_comberoBox.setItemText(2, _translate("MainWindow", "Employee"))
         self.employees_clear_btn.setText(_translate("MainWindow", "Clear"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.employees_tab), _translate("MainWindow", "المشرفين"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.employees_tab), _translate("MainWindow", "Employees"))
         self.label_43.setText(_translate("MainWindow", "Adding Offer"))
         self.label_44.setText(_translate("MainWindow", "Offer Name"))
         self.label_47.setText(_translate("MainWindow", "Offer Price"))
