@@ -36,19 +36,33 @@ def _createCustomersTables(db_1, db_2):
                                    NOT NULL,
             daily_customer_id INTEGER (10) CONSTRAINT fk_daily_customer_id REFERENCES Daily_customers (daily_id) ON DELETE CASCADE
                                                                                                                 ON UPDATE NO ACTION,
-            warehouse_item_id INTEGER (10) CONSTRAINT fk_item_price_id REFERENCES Warehouse (item_id) ON DELETE CASCADE
-                                                                                                    ON UPDATE NO ACTION
-                                        NOT NULL,
-            order_quantity    INTEGER (10) NOT NULL
-                                        DEFAULT (1) 
-                                        CHECK (order_quantity >= 1),
-            total_price       REAL (10)    NOT NULL
-                                        CHECK (total_price >= 0) 
+            order_price       REAL (10)    NOT NULL
+                                        CHECK (order_price >= 0) 
                                         DEFAULT (0),
             order_type        VARCHAR      NOT NULL
                                         DEFAULT عام,
             order_date        DATE         NOT NULL
-                                        DEFAULT (date('now') )
+                                        DEFAULT (date('now') )  
+        );
+
+        """
+
+    ORDER_ITEMS_STATEMENT = \
+        """
+        CREATE TABLE IF NOT EXISTS Orders_items (
+            id       INTEGER      PRIMARY KEY
+                                NOT NULL
+                                UNIQUE,
+            order_id INTEGER (10) REFERENCES Orders (order_id) ON DELETE CASCADE
+                                                            ON UPDATE NO ACTION,
+            item_id  INTEGER (10) REFERENCES Warehouse (item_id) ON DELETE SET NULL
+                                                                ON UPDATE NO ACTION,
+            offer_id INTEGER (10) REFERENCES Offers (offer_id) ON DELETE SET NULL
+                                                            ON UPDATE NO ACTION,
+            quantity INTEGER (10) NOT NULL,
+            price    REAL (10),
+            date     DATE         NOT NULL
+                                DEFAULT (date('now') )
         );
 
         """
@@ -73,7 +87,7 @@ def _createCustomersTables(db_1, db_2):
     
         """
 
-    SUPERVISORS_TABLE_STATEMENT = \
+    EMPLOYEES_TABLE_STATEMENT = \
         """
         CREATE TABLE IF NOT EXISTS Supervisors (
             supervisor_id   INTEGER       PRIMARY KEY AUTOINCREMENT
@@ -91,7 +105,7 @@ def _createCustomersTables(db_1, db_2):
                 
         """
 
-    SHIFTS_SUPERVISORS_TABEL_STATEMENT = \
+    SHIFTS_EMPLOYEES_TABEL_STATEMENT = \
         """
         CREATE TABLE IF NOT EXISTS Shifts_Supervisors (
             shift_id      INTEGER (10) REFERENCES Shifts (shift_id) ON DELETE CASCADE
@@ -108,17 +122,17 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Warehouse (
             item_id                INTEGER       PRIMARY KEY AUTOINCREMENT
-                                         UNIQUE
-                                         NOT NULL,
+                                                UNIQUE
+                                                NOT NULL,
             item_name              VARCHAR (255) NOT NULL,
             item_price             REAL (10)     NOT NULL,
             item_type              VARCHAR (255) CHECK (item_type IN ('Drink', 'Food') ) 
                                                 NOT NULL,
-            current_items_quantity INTEGER (10)  CHECK (current_items_quantity >= 0) 
+            item_current_quantity  INTEGER (10)  CHECK (item_current_quantity >= 0) 
                                                 NOT NULL,
-            daily_taken_items      INTEGER (10)  DEFAULT (0) 
-                                                CHECK (daily_taken_items >= 0) 
-                                                NOT NULL                               CHECK (daily_taken_items >= 0) 
+            item_consumed_quantity INTEGER (10)  CHECK (item_consumed_quantity >= 0) 
+                                                NOT NULL
+                                                DEFAULT (0)
         );
         """
 
@@ -188,6 +202,37 @@ def _createCustomersTables(db_1, db_2):
 
         """
 
+    OFFERS_STATEMENT = \
+        """
+        CREATE TABLE IF NOT EXISTS Offers (
+            offer_id    INTEGER      NOT NULL
+                                    PRIMARY KEY AUTOINCREMENT
+                                    UNIQUE,
+            offer_name  VARCHAR      NOT NULL
+                                    UNIQUE,
+            offer_price INTEGER (10) NOT NULL,
+            offer_date  DATE         DEFAULT (date('now') ) 
+                                    NOT NULL
+        );
+
+        """
+
+    OFFERS_ITEMS_STATEMENT = \
+        """
+        CREATE TABLE IF NOT EXISTS Offers_items (
+            item_offer_id INTEGER      PRIMARY KEY
+                                    UNIQUE
+                                    NOT NULL,
+            offer_id      INTEGER      REFERENCES Offers (offer_id) ON DELETE CASCADE
+                                                                    ON UPDATE NO ACTION,
+            item_id       INTEGER (10) REFERENCES Warehouse (item_id) ON DELETE CASCADE
+                                                                    ON UPDATE NO ACTION,
+            date          DATE         NOT NULL
+                                    DEFAULT (date('now') ) 
+        );
+    
+        """
+        
     META_TABLE_STATEMENT = \
         """
         CREATE TABLE IF NOT EXISTS Meta (
@@ -300,106 +345,94 @@ def _createCustomersTables(db_1, db_2):
         """
     
     
-    # Orders after insert trigger
-    # update total_price by multipling new quantity with item_price
-    TRIGGER1_ORDERS_STATEMENT = \
+    # Orders_items update price after insert trigger
+    TRIGGER1_ORDERS_ITEMS_STATEMENT = \
         """
-        CREATE TRIGGER IF NOT EXISTS update_total_price1
+        CREATE TRIGGER IF NOT EXISTS update_price1
                 AFTER INSERT
-                    ON Orders
+                    ON Orders_items
         BEGIN
-            UPDATE Orders
-            SET total_price = NEW.order_quantity * (
-                                                        SELECT item_price
-                                                            FROM Warehouse
-                                                        WHERE item_id = NEW.warehouse_item_id
-                                                    )
-            WHERE order_id = new.order_id AND 
-                order_type = 'عام';
+            UPDATE Orders_items
+            SET price = new.quantity * (
+                                            SELECT item_price
+                                                FROM Warehouse
+                                            WHERE item_id = NEW.item_id
+                                        )
+            WHERE id = new.id;
         END;
-
-
 
         """
     
-    # Orders after update of warehouse_item_id trigger
-    # update total_price by multipling new quantity with item_price
-    TRIGGER2_ORDERS_STATEMENT = \
+
+    # Orders_items update price after update quantity trigger
+    TRIGGER2_ORDERS_ITEMS_STATEMENT = \
         """
-        CREATE TRIGGER IF NOT EXISTS update_total_price2
-                AFTER UPDATE OF warehouse_item_id,
-                                order_quantity
-                    ON Orders
+        CREATE TRIGGER IF NOT EXISTS update_price2
+                AFTER UPDATE OF item_id,
+                                quantity
+                    ON Orders_items
         BEGIN
-            UPDATE Orders
-            SET total_price = NEW.order_quantity * (
-                                                        SELECT item_price
-                                                            FROM Warehouse
-                                                        WHERE item_id = NEW.warehouse_item_id
-                                                    )
-            WHERE order_id = new.order_id AND 
-                order_type = 'عام';
+            UPDATE Orders_items
+            SET price = new.quantity * (
+                                            SELECT item_price
+                                                FROM Warehouse
+                                            WHERE item_id = new.item_id
+                                        )
+            WHERE id = new.id;
+        END;
+
+
+        """
+
+    # Orders_items update item_consumed_quantity after insert trigger
+    TRIGGER3_ORDERS_ITEMS_STATEMENT = \
+        """
+        CREATE TRIGGER IF NOT EXISTS update_item_consumed_quantity1
+                AFTER INSERT
+                    ON Orders_items
+        BEGIN
+            UPDATE Warehouse
+            SET item_consumed_quantity = CASE WHEN new.quantity <= (
+                                                                        SELECT item_current_quantity - item_consumed_quantity
+                                                                            FROM Warehouse
+                                                                        WHERE item_id = new.item_id
+                                                                    )
+                THEN item_consumed_quantity + new.quantity ELSE RAISE(ABORT, "The item is out of warehouse") END
+            WHERE Warehouse.item_id = new.item_id;
         END;
 
         """
-
-    # Orders after insert trigger
-    # update daily_taken_items in Warehouse
-    TRIGGER3_ORDERS_STATEMENT = \
+    
+    # Orders_items update item_consumed_quantity after update of quantity trigger
+    TRIGGER4_ORDERS_ITEMS_STATEMENT = \
         """
-        CREATE TRIGGER IF NOT EXISTS update_warehouse_daily_quantity1
-                AFTER INSERT
-                    ON Orders
+        CREATE TRIGGER IF NOT EXISTS update_item_consumed_quantity2
+                AFTER UPDATE OF quantity
+                    ON Orders_items
         BEGIN
             UPDATE Warehouse
-            SET daily_taken_items = daily_taken_items + CASE WHEN NEW.order_quantity <= (
-                                                                                            SELECT current_items_quantity - daily_taken_items
-                                                                                                FROM Warehouse
-                                                                                                WHERE item_id = NEW.warehouse_item_id
+            SET item_consumed_quantity = CASE WHEN abs(new.quantity - old.quantity) > (
+                                                                                            SELECT item_current_quantity - item_consumed_quantity
+                                                                                            FROM Warehouse
+                                                                                            WHERE item_id = old.item_id
                                                                                         )
-                                                        THEN NEW.order_quantity ELSE RAISE(ABORT, "نفذت المادة في المستودع") END
-            WHERE Warehouse.item_id = NEW.warehouse_item_id;
+                THEN RAISE(ABORT, "The item is out of warehouse") WHEN (new.quantity < old.quantity) THEN item_consumed_quantity - abs(new.quantity - old.quantity) WHEN (new.quantity > old.quantity) THEN item_consumed_quantity + abs(new.quantity - old.quantity) END
+            WHERE Warehouse.item_id = new.item_id;
         END;
 
         """
-    
-    
-    # Orders after update of order_quantity trigger
-    # update daily_taken_items in Warehouse
-    TRIGGER4_ORDERS_STATEMENT = \
+
+    # Orders_items update item_consumed_quantity after delete trigger
+    TRIGGER5_ORDERS_ITEMS_STATEMENT = \
         """
-        CREATE TRIGGER IF NOT EXISTS update_warehouse_daily_quantity2
-                AFTER UPDATE OF order_quantity
-                    ON Orders
-                WHEN new.order_quantity NOTNULL
-        BEGIN
-            UPDATE Warehouse
-            SET daily_taken_items = CASE WHEN abs(new.order_quantity - old.order_quantity) > (
-                                                                                                    SELECT current_items_quantity - daily_taken_items
-                                                                                                    FROM Warehouse
-                                                                                                    WHERE item_id = old.warehouse_item_id
-                                                                                                )
-                THEN RAISE(ABORT, "تجاوزت الكمية المتاحة") WHEN (new.order_quantity < old.order_quantity) THEN daily_taken_items - abs(new.order_quantity - old.order_quantity) WHEN (new.order_quantity > old.order_quantity) THEN daily_taken_items + abs(new.order_quantity - old.order_quantity) END
-            WHERE item_id = old.warehouse_item_id;
-        END;
-
-
-
-        """
-
-    # Orders after delete trigger
-    # update daily_taken_items in Warehouse
-    TRIGGER5_ORDERS_STATEMENT = \
-        """
-        CREATE TRIGGER IF NOT EXISTS update_warehouse_daily_quantity3
+        CREATE TRIGGER IF NOT EXISTS update_item_consumed_quantity3
                 AFTER DELETE
-                    ON Orders
+                    ON Orders_items
         BEGIN
             UPDATE Warehouse
-            SET daily_taken_items = CASE WHEN daily_taken_items >= old.order_quantity THEN Warehouse.daily_taken_items - old.order_quantity END
-            WHERE item_id = old.warehouse_item_id;
+            SET item_consumed_quantity = CASE WHEN item_consumed_quantity >= old.quantity THEN Warehouse.item_consumed_quantity - old.quantity END
+            WHERE item_id = old.item_id;
         END;
-
 
         """
     
@@ -566,7 +599,7 @@ def _createCustomersTables(db_1, db_2):
         INSERT OR IGNORE INTO Subscription_prices (subs_name, subs_price) VALUES ('School fee','0');
         """
     
-    INSERT1_SUPERVISORS_STATEMENT = \
+    INSERT1_EMPLOYEES_STATEMENT = \
         """
         INSERT OR IGNORE INTO Supervisors (supervisor_name, job_type, username ,password) VALUES ('admin','Manager','admin','admin')
         """
@@ -585,13 +618,16 @@ def _createCustomersTables(db_1, db_2):
     sql_statements = (
         DAILYCUSTOMERS_TABLE_STATEMENT,
         ORDERS_TABLE_STATEMENT,
+        ORDER_ITEMS_STATEMENT,
         MONTHLYCUSTOMERS_TABLE_STATEMENT,
-        SUPERVISORS_TABLE_STATEMENT,
-        SHIFTS_SUPERVISORS_TABEL_STATEMENT,
+        EMPLOYEES_TABLE_STATEMENT,
+        SHIFTS_EMPLOYEES_TABEL_STATEMENT,
         WAREHOUSE_TABLE_STATEMENT,
         REPORTS_TABLE_STATEMENT,
         SUBSCRIPTION_PRICES_TABLE_STATEMENT,
         SHIFTS_STATEMENT,
+        OFFERS_STATEMENT,
+        OFFERS_ITEMS_STATEMENT,
         META_TABLE_STATEMENT,
 
         TRIGGER1_DAILYCUSTOMERS_STATEMENT,
@@ -600,11 +636,11 @@ def _createCustomersTables(db_1, db_2):
         TRIGGER4_DAILYCUSTOMERS_STATEMENT,
         TRIGGER5_DAILYCUSTOMERS_STATEMENT,
 
-        # TRIGGER1_ORDERS_STATEMENT,
-        # TRIGGER2_ORDERS_STATEMENT,
-        # TRIGGER3_ORDERS_STATEMENT,
-        # TRIGGER4_ORDERS_STATEMENT,
-        # TRIGGER5_ORDERS_STATEMENT,
+        TRIGGER1_ORDERS_ITEMS_STATEMENT,
+        TRIGGER2_ORDERS_ITEMS_STATEMENT,
+        TRIGGER3_ORDERS_ITEMS_STATEMENT,
+        TRIGGER4_ORDERS_ITEMS_STATEMENT,
+        TRIGGER5_ORDERS_ITEMS_STATEMENT,
 
         TRIGGER1_REPORTS_STATEMENT,
         TRIGGER2_REPORTS_STATEMENT,
@@ -621,7 +657,7 @@ def _createCustomersTables(db_1, db_2):
         INSERT2_SUBSCRIPTION_STATEMENT,
         INSERT3_SUBSCRIPTION_STATEMENT,
 
-        INSERT1_SUPERVISORS_STATEMENT,
+        INSERT1_EMPLOYEES_STATEMENT,
 
         INSERT1_META_STATEMENT,
         INSERT2_META_STATEMENT 
@@ -839,7 +875,6 @@ def retrieveItemId(item_name, db = None) -> int:
         
     return id
 
-
 def linkOrderItems(order_id, item_name, quantity, db = None) -> None:
 
     item_id = retrieveItemId(item_name, db=db)
@@ -852,6 +887,31 @@ def linkOrderItems(order_id, item_name, quantity, db = None) -> None:
     query.exec(STATEMENT)
     return query
 
+def retrieveOrdersItems(db = None):
+
+    indices_tree = []
+
+    # Get available dates
+    STATEMENT = \
+        """
+        SELECT date, shift_id, supervisor_id FROM Shifts_Supervisors WHERE shift_id NOTNULL
+        """
+
+    query = QSqlQuery(db)
+    query.exec(STATEMENT)
+
+    while(query.next()):
+        date = str(query.value(query.record().indexOf('date'))).strip()
+        shift_id = int(str(query.value(query.record().indexOf('shift_id'))).strip())
+        supervisor_id = int(str(query.value(query.record().indexOf('supervisor_id'))).strip())
+        shift_name = retrieveShiftNames(shift_id, db=db)[0]
+        supervisor_name = retrieveSupervisorsNames(supervisor_id, db=db)[0]
+        indices_tree.append([date, shift_name, supervisor_name])
+
+   
+    dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
+    return dic
+
 
 #############
 # Warehouse #
@@ -862,16 +922,16 @@ def retrieveItemNames(id = None, name_filter : tuple = None, db = None) -> list:
     if(id == None):
         if(name_filter == None):
             STATEMENT = f"""
-            SELECT item_name FROM Warehouse WHERE current_items_quantity > 0 AND item_name NOT IN {name_filter}
+            SELECT item_name FROM Warehouse WHERE item_current_quantity > 0 AND item_name NOT IN {name_filter}
             """
         elif(name_filter != None):
             STATEMENT = f"""
-            SELECT item_name FROM Warehouse WHERE current_items_quantity > 0
+            SELECT item_name FROM Warehouse WHERE item_current_quantity > 0
             """
 
     elif(id != None):
         STATEMENT = f"""
-        SELECT item_name FROM Warehouse WHERE current_items_quantity > 0 AND item_id = {id}
+        SELECT item_name FROM Warehouse WHERE item_current_quantity > 0 AND item_id = {id}
         """
 
     query = QSqlQuery(db = db)
@@ -914,7 +974,7 @@ def retrieveItemId(item_name, db) -> int:
 
 def retrieveItemAvailabelQuantity(item_id, db = None):
     STATEMENT = f"""
-        SELECT current_items_quantity - daily_taken_items AS available FROM Warehouse WHERE item_id = '{item_id}'
+        SELECT item_current_quantity - item_consumed_quantity AS available FROM Warehouse WHERE item_id = '{item_id}'
     """
     result = None
     query = QSqlQuery(db = db)
@@ -1355,7 +1415,7 @@ def copyData(src_db_1, dest_db_2):
 
     UPDATE_WAREHOUSE = \
         """
-        UPDATE Warehouse SET current_items_quantity = current_items_quantity - daily_taken_items;                     
+        UPDATE Warehouse SET item_current_quantity = item_current_quantity - item_consumed_quantity;                     
         """
     
     DELETE_STATEMENTS = \
@@ -1382,9 +1442,9 @@ def copyData(src_db_1, dest_db_2):
     
     
 
-#############
-# Available Years, Months, and days  #
-#############
+#####################################
+# Available Years, Months, and days #
+#####################################
 def retrieveArchiveYears(db, table, field):
 
     """Get the years from daily customers table in Archive DataBase"""

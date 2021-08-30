@@ -419,12 +419,12 @@ class OrdersModel(QSqlRelationalTableModel):
 
         # Link order with its items
         order_id = self.query().lastInsertId()
-        print(order_id)
         for item_name, quantity in items_data:
             linkOrderItems(order_id, item_name, quantity, db=self.db)
 
         self.select()
 
+        return ret
             
             
     def data(self, index: QtCore.QModelIndex, role: int) -> None:

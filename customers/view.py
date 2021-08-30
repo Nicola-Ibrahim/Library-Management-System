@@ -1038,7 +1038,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         data = [(self.customer_name_txt2.text(), self.order_sell_type_comboBox.currentText()),items_data]
 
-        self.orders_model.addOrder(data)
+        ret = self.orders_model.addOrder(data)
 
         if(self.orders_model.lastError().text().startswith("exceed")):
             QtWidgets.QMessageBox.critical(
@@ -1050,29 +1050,28 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             
             return
     
-            
-        # Delete order registring panel 
-        # Clear adding orders_model panel
-        self.clearLayout(self.orders_items_frame.layout())
+        if(ret):
+            # Delete order registring panel 
+            self.clearLayout(self.orders_items_frame.layout())
 
-        # Resest orders_number variable
-        self._order_item_number = 0
+            # Resest orders_number variable
+            self._order_item_number = 0
 
-        # Insert an empty order
-        self.plusOrder()
+            # Insert an empty order
+            self.plusOrder()
 
-        # Update Reports
-        updateReports(db =self.daily_conn)
+            # Update Reports
+            updateReports(db =self.daily_conn)
 
-        # Reinitial the comboBoxs
-        if(self.DAILY_TABLES_FLAG == True):
-            self.initialComboBoxs(self.daily_conn)
-        elif(self.ARCHIVE_TABLES_FLAG == True):
-            self.initialComboBoxs(self.archive_conn)
+            # Reinitial the comboBoxs
+            if(self.DAILY_TABLES_FLAG == True):
+                self.initialComboBoxs(self.daily_conn)
+            elif(self.ARCHIVE_TABLES_FLAG == True):
+                self.initialComboBoxs(self.archive_conn)
 
-        # Reset total price label and customer name
-        self.total_price_lbl.setText(str(0))
-        self.customer_name_txt2.setText('')
+            # Reset total price label and customer name
+            self.total_price_lbl.setText(str(0))
+            self.customer_name_txt2.setText('')
 
     def clearLayout(self, layout):
         """Clear frame layout after insert new order to tabel"""
