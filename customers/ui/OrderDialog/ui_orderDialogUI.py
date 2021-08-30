@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/orderDialogUIoZYeMR.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/orderDialogUIxNgFRA.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -312,10 +312,10 @@ class Ui_Dialog(object):
         self.label_5 = QtWidgets.QLabel(self.frame)
         self.label_5.setObjectName("label_5")
         self.horizontalLayout_3.addWidget(self.label_5)
-        self.pushButton_2 = QtWidgets.QPushButton(self.frame)
-        self.pushButton_2.setMinimumSize(QtCore.QSize(50, 50))
-        self.pushButton_2.setMaximumSize(QtCore.QSize(50, 50))
-        self.pushButton_2.setStyleSheet("QPushButton{\n"
+        self.plus_item_btn = QtWidgets.QPushButton(self.frame)
+        self.plus_item_btn.setMinimumSize(QtCore.QSize(50, 50))
+        self.plus_item_btn.setMaximumSize(QtCore.QSize(50, 50))
+        self.plus_item_btn.setStyleSheet("QPushButton{\n"
 "    border-style: solid;    \n"
 "    border-width: 5px;\n"
 "    border-radius:25px;\n"
@@ -358,9 +358,9 @@ class Ui_Dialog(object):
 "\n"
 "\n"
 "")
-        self.pushButton_2.setText("")
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout_3.addWidget(self.pushButton_2)
+        self.plus_item_btn.setText("")
+        self.plus_item_btn.setObjectName("plus_item_btn")
+        self.horizontalLayout_3.addWidget(self.plus_item_btn)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
@@ -381,25 +381,6 @@ class Ui_Dialog(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setSpacing(7)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.frame_2 = QtWidgets.QFrame(self.order_details_frame)
-        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_2.setObjectName("frame_2")
-        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.frame_2)
-        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_5.setSpacing(15)
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.label_2 = QtWidgets.QLabel(self.frame_2)
-        self.label_2.setObjectName("label_2")
-        self.horizontalLayout_5.addWidget(self.label_2)
-        self.lineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit.setMaximumSize(QtCore.QSize(100, 16777215))
-        self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout_5.addWidget(self.lineEdit)
-        self.pushButton = QtWidgets.QPushButton(self.frame_2)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_5.addWidget(self.pushButton)
-        self.verticalLayout_3.addWidget(self.frame_2)
         self.verticalLayout_2.addWidget(self.order_details_frame)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem1)
@@ -420,7 +401,5 @@ class Ui_Dialog(object):
         self.label_3.setText(_translate("Dialog", "Order Type"))
         self.order_type_txt.setText(_translate("Dialog", "sdfsdf"))
         self.label_5.setText(_translate("Dialog", "Adding new item"))
-        self.label_2.setText(_translate("Dialog", "Item"))
-        self.pushButton.setText(_translate("Dialog", "delete"))
 
-import icon_rc
+from .. import icon_rc

@@ -3422,7 +3422,7 @@ QPushButton:pressed{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>8</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -7869,7 +7869,7 @@ background-color: rgb(244, 154, 32);
                <widget class="QFrame" name="frame_69">
                 <property name="maximumSize">
                  <size>
-                  <width>0</width>
+                  <width>500</width>
                   <height>16777215</height>
                  </size>
                 </property>
