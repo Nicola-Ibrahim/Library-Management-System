@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>543</width>
+    <height>531</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+/*
+Aqua Style Sheet for QT Applications
+Author: Jaime A. Quiroga P.
+Company: GTRONICK
+Last updated: 22/01/2019, 07:55.
+Available at: https://github.com/GTRONICK/QSS/blob/master/Aqua.qss
+*/
+
+
+QDialog{	
+	background-color:  rgb(174,174,174);
+	border-style: solid;
+	border-color: red;
+	border-width: 20x;
+	background-color: rgb(100, 100, 100);
+}
+QComboBox{
+	
+	font-size:25px;
+}
+QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 1; }
+
+QPushButton{
+	font-size: 25px;
+
+	border-style: solid;
+	border-width: 0px;
+	border-radius: 5px;
+	padding: 3px;
+	color: rgb(255,255,255);
+	
+	background-color: rgb(244, 154, 32);
+}
+
+QPushButton:hover{
+	border-style:  solid;
+	
+	border-width: 0px;
+	border-radius: 5px;
+	padding: 3px;
+
+	color: rgb(255,255,255);
+	background-color: rgb(150,150,150);
+}
+QPushButton:pressed{
+	border-style:  solid;
+	
+	border-width: 0px;
+	border-radius: 5px;
+	padding: 3px;
+	color: rgb(255,255,255);
+	background-color: rgb(174,174,174);
+}
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 1px;
+	border-radius: 5px;
+	color: #808086;
+	padding: 2px;
+	background-color: rgb(142,142,142);
+}
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 1px;
+	border-radius: 5px;
+	color: #808086;
+	padding: 2px;
+	background-color: rgb(142,142,142);
+}
+
+QLineEdit {
+	border-width: 5px; 
+	border-radius: 10px;
+	border-style: solid;
+	border-color: rgb(12, 60, 83);
+	font-size: 25px;
+}
+QLineEdit:hover{
+	border-width: 5px; 
+	border-radius: 10px;
+	border-style: solid;
+	border-color: rgb(244, 154, 32);
+	font-size: 30px;
+	selection-background-color: darkgray;
+}
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character: 9679;
+}
+
+QLabel {
+	color: rgb(255,255,255);
+	font-size: 25px;
+	padding-bottom: 10px;
+}
+
+QScrollArea { 
+	background: transparent; 
+	border:none;
+}
+QScrollArea &gt; QWidget &gt; QWidget { 
+	background: transparent; 
+}
+QScrollArea &gt; QWidget &gt; QScrollBar { 
+	background: palette(base); 
+}
+
+QScrollBar:horizontal {
+	max-width: 30px;
+	border: 1px transparent black;
+	margin: 20px 0px 20px 0px;
+}
+
+QScrollBar::handle:horizontal {
+	background: rgb(150,150,150);
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(207,207,207);
+	border-radius: 7px;
+	min-height: 25px;
+}
+QScrollBar::handle:horizontal:hover {
+	background: rgb(244, 154, 32);
+}
+
+QScrollBar:vertical {
+	max-width: 30px;
+	border: 1px transparent black;
+	margin: 20px 0px 20px 0px;
+}
+
+
+QScrollBar::handle:vertical {
+	background: rgb(150,150,150);
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(207,207,207);
+	border-radius: 7px;
+	min-height: 25px;
+}
+QScrollBar::handle:vertical:hover {
+	background: rgb(244, 154, 32);
+}
+
+QScrollBar::add-line:horizontal {
+   border: 2px transparent grey;
+   border-top-right-radius: 7px;
+   border-bottom-right-radius: 7px;
+   background: rgba(34, 142, 255, 255);
+   width: 20px;
+   subcontrol-position: right;
+   subcontrol-origin: margin;
+}
+QScrollBar::add-line:horizontal:pressed {
+   border: 2px transparent grey;
+   border-top-right-radius: 7px;
+   border-bottom-right-radius: 7px;
+   background: rgb(181,181,181);
+   width: 20px;
+   subcontrol-position: right;
+   subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+   border: 2px transparent grey;
+   border-top-left-radius: 7px;
+   border-bottom-left-radius: 7px;
+   background: rgba(34, 142, 255, 255);
+   width: 20px;
+   subcontrol-position: left;
+   subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal:pressed {
+   border: 2px transparent grey;
+   border-top-left-radius: 7px;
+   border-bottom-left-radius: 7px;
+   background: rgb(181,181,181);
+   width: 20px;
+   subcontrol-position: left;
+   subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+   border: 2px transparent grey;
+   border-top-left-radius: 3px;
+   border-top-right-radius: 3px;
+   background: rgb(150,150,150);
+   height: 20px;
+   subcontrol-position: top;
+   subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical:pressed {
+   background: rgb(244, 154, 32);
+}
+
+QScrollBar::add-line:vertical {
+   border: 2px transparent grey;
+  	border-top-left-radius: 3px;
+   border-top-right-radius: 3px;
+   background: rgb(150,150,150);
+   height: 20px;
+   subcontrol-position: bottom;
+   subcontrol-origin: margin;
+}
+QScrollBar::add-line:vertical:pressed {
+   background: rgb(244, 154, 32);
+}
+
+QScrollBar::left-arrow:horizontal {
+   border: 1px transparent grey;
+   border-top-left-radius: 3px;
+   border-bottom-left-radius: 3px;
+   width: 6px;
+   height: 6px;
+   background: white;
+}
+QScrollBar::right-arrow:horizontal {
+   border: 1px transparent grey;
+   border-top-right-radius: 3px;
+   border-bottom-right-radius: 3px;
+   width: 6px;
+   height: 6px;
+   background: white;
+}
+QScrollBar::up-arrow:vertical {
+   border: 1px transparent grey;
+   border-top-left-radius: 3px;
+   border-top-right-radius: 3px;
+   width: 8px;
+   height: 8px;
+   background: white;
+}
+QScrollBar::down-arrow:vertical {
+   border: 1px transparent grey;
+   border-bottom-left-radius: 3px;
+   border-bottom-right-radius: 3px;
+   width: 8px;
+   height: 8px;
+   background: white;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+   background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+   background: none;
+}
+
+
+
+</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="1" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Customer name</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="customer_name_txt">
+          <property name="text">
+           <string>sdfsd</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Order Type</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="order_type_txt">
+          <property name="text">
+           <string>sdfsdf</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Adding new item</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	border-style: solid;	
+	border-width: 5px;
+	border-radius:25px;
+	border-color: rgb(174, 174, 174);
+
+	padding: 5px;;
+
+	background-color: rgb(255, 255, 255);
+	
+	image: url(:/icons/icons/plus.svg);
+	
+}
+
+
+QPushButton:hover{
+	border-style: solid;	
+	border-width: 5px;
+	border-radius:25px;
+	border-color: rgb(174, 174, 174);
+
+	padding:5px;
+	
+	background-color: rgb(255, 255, 255);
+	
+	image: url(:/icons/icons/plus2.svg);
+}
+QPushButton:pressed{
+	
+	border-style: solid;	
+	border-width: 5px;
+	border-radius:25px;
+	border-color: rgb(174, 174, 174);
+
+	padding:10px;
+
+	background-color: rgb(255, 255, 255);
+	image: url(:/icons/icons/plus2.svg);
+}
+
+
+
+</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>519</width>
+           <height>307</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="order_details_frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="spacing">
+              <number>7</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QFrame" name="frame_2">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="spacing">
+                 <number>15</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_2">
+                  <property name="text">
+                   <string>Item</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit">
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton">
+                  <property name="text">
+                   <string>delete</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../icon.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
