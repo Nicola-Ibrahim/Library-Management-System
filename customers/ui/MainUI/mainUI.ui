@@ -766,6 +766,807 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     <enum>Qt::LeftToRight</enum>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" rowspan="3">
+     <widget class="QFrame" name="main_buttons_frame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>0</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="menu_btn">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	border-style: solid;
+	padding: 4px;
+	background-color: transparent;
+	image: url(:/icons/icons/menu1.svg);
+
+}
+
+QPushButton:hover{
+	image: url(:/icons/icons/menu2.svg);
+}
+
+QPushButton:pressed{
+	image: url(:/icons/icons/menu2.svg);
+}
+
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QStackedWidget" name="buttons_stackedWidget">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">#buttons_stackedWidget{
+background-color: rgba(255, 255, 255, 0);
+border-style: solid;
+border-width: 5px px 0px 0px;
+border-radius: 0px;
+border-color: rgb(244, 154, 32);
+
+}</string>
+         </property>
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <widget class="QWidget" name="dailyAndarchive_buttons_tab">
+          <layout class="QVBoxLayout" name="verticalLayout_17">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>11</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="frame_4">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="daily_customers_btn">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Daily customers</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+	
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/customer1.png);
+	background-repeat:none;
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/customer2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/customer2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/customer2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Daily Customers</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="monthly_subscrib_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Monthly customers</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/monthly1.png);
+	background-repeat:none;
+
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/monthly2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/monthly2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/monthly2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Monthly Customers</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="orders_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Orders</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/order1.png);
+	background-repeat:none;
+
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/order2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/order2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/order2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Orders</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_21">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="settings_buttons_tab">
+          <layout class="QVBoxLayout" name="verticalLayout_23">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="frame_18">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_26">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="warehouse_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Warehouse</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/warehouse1.png);
+	background-repeat:none;
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/warehouse2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:pressed{
+	background-image: url(:/icons/icons/warehouse2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/warehouse2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Warehouse</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="reports_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Reports</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+	
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/report1.png);
+	background-repeat:none;
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/report2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/report2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/report2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Reports</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="employees_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Employees</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+	
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/employee1.png);
+	background-repeat:none;
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Employees</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="offers_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Offers</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+	
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/offers1.png);
+	background-repeat:none;
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/offers2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/offers2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/offers2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Offers</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="shifts_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Shifts</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+	
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/shifts1.png);
+	background-repeat:none;
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/shifts2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/shifts2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/shifts2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Shifts</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="copy_delete_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Copy and Delete</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+	
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/files1.png);
+	background-repeat:none;
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/files2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/files2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/files2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>To Archive</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="logout_btn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	border-style: solid;
+	border-width: 0px 0px 0px 0px;
+	color: #808086;
+	padding: 2px;
+
+	background-color: rgba(255,255,255,0);
+
+	image: url(:/icons/icons/back1.svg);
+}
+
+
+QPushButton:hover{
+	border-style:  solid;
+		
+	border-width: 0px 0px 0px 0px;
+	padding-right: 10px;
+	background-color: rgba(255,255,255,0);
+
+	image: url(:/icons/icons/back2.svg);
+}
+QPushButton:pressed{
+	border-style:  solid;
+		
+	border-width: 0px 0px 0px 0px;
+	padding-right: 10px;
+	background-color: rgba(255,255,255,0);
+
+	image: url(:/icons/icons/back2.svg);
+}
+
+</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="0" column="1">
      <widget class="QFrame" name="frame_5">
       <property name="frameShape">
@@ -3422,7 +4223,7 @@ QPushButton:pressed{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>8</number>
+             <number>0</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -3450,20 +4251,31 @@ QPushButton:pressed{
               <property name="bottomMargin">
                <number>0</number>
               </property>
-              <property name="spacing">
+              <property name="horizontalSpacing">
                <number>0</number>
               </property>
-              <item row="1" column="1">
+              <property name="verticalSpacing">
+               <number>50</number>
+              </property>
+              <item row="1" column="1" alignment="Qt::AlignHCenter|Qt::AlignTop">
                <widget class="QFrame" name="frame_9">
                 <property name="minimumSize">
                  <size>
-                  <width>400</width>
-                  <height>700</height>
+                  <width>600</width>
+                  <height>600</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>600</width>
+                  <height>600</height>
                  </size>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">#frame_9{
-image: url(:/icons/icons/background-removebg-preview (2).png) ;
+
+image: url(:/icons/icons/studyzone-logo.png);
+
 }</string>
                 </property>
                 <property name="frameShape">
@@ -3472,23 +4284,6 @@ image: url(:/icons/icons/background-removebg-preview (2).png) ;
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_5">
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                </layout>
                </widget>
               </item>
               <item row="3" column="1">
@@ -3510,18 +4305,12 @@ image: url(:/icons/icons/background-removebg-preview (2).png) ;
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
+              <item row="2" column="1" alignment="Qt::AlignHCenter">
                <widget class="QFrame" name="frame">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>100</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
                   <width>600</width>
-                  <height>300</height>
+                  <height>100</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -8457,807 +9246,6 @@ background-color: rgb(244, 154, 32);
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0" rowspan="3">
-     <widget class="QFrame" name="main_buttons_frame">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>0</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>4</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QPushButton" name="menu_btn">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{
-	border-style: solid;
-	padding: 4px;
-	background-color: transparent;
-	image: url(:/icons/icons/menu1.svg);
-
-}
-
-QPushButton:hover{
-	image: url(:/icons/icons/menu2.svg);
-}
-
-QPushButton:pressed{
-	image: url(:/icons/icons/menu2.svg);
-}
-
-</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QStackedWidget" name="buttons_stackedWidget">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#buttons_stackedWidget{
-background-color: rgba(255, 255, 255, 0);
-border-style: solid;
-border-width: 5px px 0px 0px;
-border-radius: 0px;
-border-color: rgb(244, 154, 32);
-
-}</string>
-         </property>
-         <property name="currentIndex">
-          <number>1</number>
-         </property>
-         <widget class="QWidget" name="dailyAndarchive_buttons_tab">
-          <layout class="QVBoxLayout" name="verticalLayout_17">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>11</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QFrame" name="frame_4">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="daily_customers_btn">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Daily customers</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-	
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/customer1.png);
-	background-repeat:none;
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/customer2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/customer2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/customer2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Daily Customers</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="monthly_subscrib_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Monthly customers</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/monthly1.png);
-	background-repeat:none;
-
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/monthly2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/monthly2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/monthly2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Monthly Customers</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="orders_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Orders</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/order1.png);
-	background-repeat:none;
-
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/order2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/order2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/order2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Orders</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_21">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="settings_buttons_tab">
-          <layout class="QVBoxLayout" name="verticalLayout_23">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QFrame" name="frame_18">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_26">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="warehouse_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Warehouse</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/warehouse1.png);
-	background-repeat:none;
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/warehouse2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:pressed{
-	background-image: url(:/icons/icons/warehouse2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/warehouse2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Warehouse</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="reports_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Reports</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-	
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/report1.png);
-	background-repeat:none;
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/report2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/report2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/report2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Reports</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="employees_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Employees</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-	
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/employee1.png);
-	background-repeat:none;
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/employee2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/employee2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/employee2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Employees</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="offers_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Offers</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-	
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/offers1.png);
-	background-repeat:none;
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/offers2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/offers2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/offers2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Offers</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="shifts_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Shifts</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-	
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/shifts1.png);
-	background-repeat:none;
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/shifts2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/shifts2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/shifts2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Shifts</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="copy_delete_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>70</width>
-                  <height>70</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Copy and Delete</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-	
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/files1.png);
-	background-repeat:none;
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/files2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/files2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/files2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>To Archive</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_9">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="logout_btn">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>90</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{
-	border-style: solid;
-	border-width: 0px 0px 0px 0px;
-	color: #808086;
-	padding: 2px;
-
-	background-color: rgba(255,255,255,0);
-
-	image: url(:/icons/icons/back1.svg);
-}
-
-
-QPushButton:hover{
-	border-style:  solid;
-		
-	border-width: 0px 0px 0px 0px;
-	padding-right: 10px;
-	background-color: rgba(255,255,255,0);
-
-	image: url(:/icons/icons/back2.svg);
-}
-QPushButton:pressed{
-	border-style:  solid;
-		
-	border-width: 0px 0px 0px 0px;
-	padding-right: 10px;
-	background-color: rgba(255,255,255,0);
-
-	image: url(:/icons/icons/back2.svg);
-}
-
-</string>
-         </property>
         </widget>
        </item>
       </layout>

@@ -1338,10 +1338,14 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         elif(selected_items.count(selected_item.currentText()) > 1):
             QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,10)),"Selected previously")
-            selected_item.setStyleSheet("border-width:4px 4px 4px 4px;\n"
+            selected_item.setStyleSheet(
+            "QComboBox{\n"
+            "border-width:0px 0px 4px 0px;\n"
             "border-style: solid;\n"
-            "border-radius:3px;\n"
-            "border-color: rgb(255, 0, 0);")
+            "border-radius:0px;\n"
+            "border-color: rgb(255, 0, 0);\n"
+            "}"
+            )
 
             # Disable editing quantity text 
             quntity_txt.setEnabled(False)
@@ -1349,11 +1353,33 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
 
         else:
-            selected_items_ids = tuple([retrieveItemId(item_name, self.daily_conn) for item_name in selected_items] + [''])
-            print(selected_items_ids)
-            offer_id = retrieveItemsOfferId(selected_items_ids, db = self.daily_conn)
-            print(offer_id)
+            selected_items_ids = [retrieveItemId(item_name, self.daily_conn) for item_name in selected_items]
+            for key, value in retrieveOffersItems(with_date= False, db = self.daily_conn).items():
+                if(value == sorted(selected_items_ids)):
 
+                    # offer_id = retrieveItemsOfferId(selected_items_ids, db = self.daily_conn)
+                    print(key)
+                            
+                    for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
+                        item.setStyleSheet(
+                        "QComboBox{\n"
+                        "border-width:0px 0px 4px 0px;\n"
+                        "border-style: solid;\n"
+                        "border-radius:0px;\n"
+                        "border-color: rgb(0, 255, 0);\n"
+                        "}"
+                        )
+
+                else:
+                    for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
+                        item.setStyleSheet(
+                        "QComboBox{\n"
+                        "border-width:0px 0px 4px 0px;\n"
+                        "border-style: solid;\n"
+                        "border-radius:0px;\n"
+                        "border-color: rgb(255, 170, 0);\n"
+                        "}"
+                        )
 
     def setOrderItemPrice(self, combo_selected_item, price_lbl, quntity_txt):
         """Get the item price and add it to label"""

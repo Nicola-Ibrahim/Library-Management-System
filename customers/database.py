@@ -1221,29 +1221,52 @@ def retrieveOfferNames(id, db = None):
 
     return names
 
-def retrieveOffersItems(db = None):
-
+def retrieveOffersItems(with_date = True, db = None):
+    
     indices_tree = []
 
-    # Get available dates
-    STATEMENT = \
-        """
-        SELECT date, offer_id, item_id FROM Offers_items
-        """
+    if(with_date):
 
-    query = QSqlQuery(db)
-    query.exec(STATEMENT)
+        # Get available dates
+        STATEMENT = \
+            """
+            SELECT date, offer_id, item_id FROM Offers_items
+            """
 
-    while(query.next()):
-        date = str(query.value(query.record().indexOf('date'))).strip()
-        offer_id = int(str(query.value(query.record().indexOf('offer_id'))).strip())
-        item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
-        offer_name = retrieveOfferNames(offer_id, db=db)[0]
-        item_name = retrieveItemNames(item_id, db=db)[0]
-        indices_tree.append([date, offer_name, item_name])
+        query = QSqlQuery(db)
+        query.exec(STATEMENT)
 
-    
-    dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
+        while(query.next()):
+            date = str(query.value(query.record().indexOf('date'))).strip()
+            offer_id = int(str(query.value(query.record().indexOf('offer_id'))).strip())
+            item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
+            offer_name = retrieveOfferNames(offer_id, db=db)[0]
+            item_name = retrieveItemNames(item_id, db=db)[0]
+            indices_tree.append([date, offer_name, item_name])
+
+        
+        dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
+
+    elif(with_date == False):
+
+        # Get available dates
+        STATEMENT = \
+            """
+            SELECT offer_id, item_id FROM Offers_items
+            """
+
+        query = QSqlQuery(db)
+        query.exec(STATEMENT)
+
+        while(query.next()):
+            offer_id = int(str(query.value(query.record().indexOf('offer_id'))).strip())
+            item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
+            offer_name = retrieveOfferNames(offer_id, db=db)[0]
+            indices_tree.append([offer_name, item_id])
+
+        
+        dic = {key: [val for _,val in values]  for key, values in groupby(indices_tree, itemgetter(0))}
+
     return dic
 
 def retrieveItemsOfferId(items : tuple = None, db = None):
