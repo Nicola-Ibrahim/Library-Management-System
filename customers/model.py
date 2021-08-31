@@ -543,8 +543,7 @@ class WarehouseModel(QSqlTableModel):
         # Take the first record
         if(query.first() == True): 
             result = query.value(0)
-        print(data[0])
-        print(result)
+
 
         # If the record doesn't exist then insert it 
         if(result == 0):
@@ -724,10 +723,10 @@ class OffersSortModel(QtCore.QSortFilterProxyModel):
 
 
 ###############
-# Supervisors #
+# Employyes #
 ###############
-class EmployeesModel(QSqlRelationalTableModel):
-    """ Supervisors model for controlling all transctions"""
+class EmployeesModel(QSqlTableModel):
+    """ Employyes model for controlling all transctions"""
     def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
         super().__init__(parent=parent, db=db)
         self.db = db
@@ -738,12 +737,10 @@ class EmployeesModel(QSqlRelationalTableModel):
         self.setEditStrategy(self.OnFieldChange)
         
         # headers = ('رقم المشرف','اسم المشرف','طبيعة العمل','اسم المستخدم','كلمة السر')
-        headers = ('Id','Name','Job type','Username','password','Number workdays', 'Idle shift')
+        headers = ('Id','Name','Username','password','Job type','Number workdays')
         for ind, header in enumerate(headers):
             self.setHeaderData(ind, Qt.Horizontal,header)
 
-        self.setJoinMode(self.LeftJoin)
-        self.setRelation(self.fieldIndex("shift_id"), QSqlRelation("Shifts", "shift_id", "box"))
         self.setSort(self.fieldIndex("supervisor_id"), Qt.AscendingOrder)
 
         self.select()

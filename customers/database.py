@@ -584,6 +584,23 @@ def _createCustomersTables(db_1, db_2):
 
         """
     
+    TRIGGER5_SHIFTS_STATEMENT = \
+        """
+        CREATE TRIGGER update_employee_dayworks
+                AFTER UPDATE OF shift_state
+                    ON Shifts
+                WHEN new.shift_state = 'Finished'
+        BEGIN
+            UPDATE Supervisors
+            SET num_workdays = num_workdays + 1
+            WHERE supervisor_id IN (
+                SELECT supervisor_id
+                FROM Shifts_Supervisors
+                WHERE shift_id = new.shift_id
+            );
+        END;
+"""
+
     INSERT1_SUBSCRIPTION_STATEMENT = \
         """
         INSERT OR IGNORE INTO Subscription_prices (subs_name, subs_price) VALUES ('Daily fee','0');
@@ -652,6 +669,7 @@ def _createCustomersTables(db_1, db_2):
         TRIGGER2_SHIFTS_STATEMENT,
         TRIGGER3_SHIFTS_STATEMENT,
         TRIGGER4_SHIFTS_STATEMENT,
+        TRIGGER5_SHIFTS_STATEMENT,
 
         INSERT1_SUBSCRIPTION_STATEMENT,
         INSERT2_SUBSCRIPTION_STATEMENT,
@@ -920,7 +938,6 @@ def retrieveOrderItems(order_id = None, db = None):
         f"""
         SELECT item_id, quantity FROM Orders_items WHERE order_id = {order_id} AND date = date('now')
         """
-
     query = QSqlQuery(db)
     query.exec(STATEMENT)
 
@@ -939,11 +956,11 @@ def retrieveItemNames(id = None, name_filter : tuple = None, db = None) -> list:
     result = []
     
     if(id == None):
-        if(name_filter == None):
+        if(name_filter != None):
             STATEMENT = f"""
             SELECT item_name FROM Warehouse WHERE item_current_quantity > 0 AND item_name NOT IN {name_filter}
             """
-        elif(name_filter != None):
+        elif(name_filter == None):
             STATEMENT = f"""
             SELECT item_name FROM Warehouse WHERE item_current_quantity > 0
             """
@@ -1229,6 +1246,24 @@ def retrieveOffersItems(db = None):
     dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
     return dic
 
+def retrieveItemsOfferId(items : tuple = None, db = None):
+
+    offer_id = None
+
+    # Get available dates
+    STATEMENT = \
+        f"""
+        SELECT offer_id FROM Offers_items WHERE item_id IN {items}
+        """
+
+    print(STATEMENT)
+    query = QSqlQuery(db)
+    query.exec(STATEMENT)
+
+    while(query.next()):
+        offer_id = query.value(query.record().indexOf('offer_id'))
+
+    return offer_id
 
 ##########
 # Shifts #
@@ -1279,7 +1314,7 @@ def retrieveShiftsSupervisors(db = None):
     dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
     return dic
 
-def startingShift(id, db = None):
+def startShift(id, db = None):
     STATEMENT1 = \
         """
         UPDATE Shifts SET shift_state = 'Finished' WHERE shift_state = 'Active' AND shift_date = date('now');
@@ -1287,7 +1322,7 @@ def startingShift(id, db = None):
 
     STATEMENT2 = \
         f"""
-        UPDATE Shifts SET shift_state = 'Active' WHERE shift_id = {id} AND shift_date = date('now') AND shift_state <> 'Finished';
+        UPDATE Shifts SET shift_state = 'Active' WHERE shift_id = {id} AND shift_date = date('now') AND shift_state = 'Inactive';
 
         """
 
@@ -1297,12 +1332,12 @@ def startingShift(id, db = None):
 
     return query
 
-def stopingShift(id, db = None):
+def finishShift(id, db = None):
 
 
     STATEMENT = \
         f"""
-        UPDATE Shifts SET shift_state = 'Finished' WHERE shift_id = {id} AND shift_date = date('now');
+        UPDATE Shifts SET shift_state = 'Finished' WHERE shift_id = {id} AND shift_date = date('now') AND shift_state = 'Active';
 
         """
 

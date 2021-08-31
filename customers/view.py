@@ -17,7 +17,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSql import QSqlRelationalDelegate
 
 
-from .database import changeSubsCost, copyData, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveSuperviosrsJobType, retrieveSupervisorsId, retrieveSupervisorsNames, startingShift, stopingShift, updateReports
+from .database import changeSubsCost, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveItemsOfferId, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveSuperviosrsJobType, retrieveSupervisorsNames, startShift, updateReports
 from .model import *
 
 # from PyQt5.uic import loadUiType
@@ -371,7 +371,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.plus_employee_btn.clicked.connect(self.plusEmployee)
         self.shift_remove_btn.clicked.connect(self.removeShifts)
         self.shift_start_btn.clicked.connect(self.startShift)
-        self.shift_stop_btn.clicked.connect(self.stopShift)
+        self.shift_stop_btn.clicked.connect(self.finishShift)
         self.shifts_date_filter_dateEdit1.dateChanged['QDate'].connect(lambda date : self.shifts_sort_model.setDateFilter(date))
         self.shifts_clear_btn.clicked.connect(self.clearShiftsFitlers)
 
@@ -1320,12 +1320,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             combo.addItem('')
             combo.addItems(retrieveItemNames(name_filter=(order_item_comboBox.currentText(),''), db = self.daily_conn))      
 
-    def isOrderItemExist(self, combo_selected_item, quntity_txt):
-        # Check if the item is selected previously 
-        combo_selected_items = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
+    def isOrderItemExist(self, selected_item, quntity_txt):
 
-        if(combo_selected_item.currentText()==''):
-            combo_selected_item.setStyleSheet(
+        # Check if the item is selected previously 
+        selected_items = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
+
+        if(selected_item.currentText()==''):
+            selected_item.setStyleSheet(
             "QComboBox{\n"
             "border-width:0px 0px 4px 0px;\n"
             "border-style: solid;\n"
@@ -1335,21 +1336,28 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             )
             quntity_txt.setEnabled(False)
 
-        elif(combo_selected_items.count(combo_selected_item.currentText()) > 1):
-            QtWidgets.QToolTip.showText(combo_selected_item.mapToGlobal(QtCore.QPoint(0,10)),"Selected previously")
-            combo_selected_item.setStyleSheet("border-width:4px 4px 4px 4px;\n"
+        elif(selected_items.count(selected_item.currentText()) > 1):
+            QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,10)),"Selected previously")
+            selected_item.setStyleSheet("border-width:4px 4px 4px 4px;\n"
             "border-style: solid;\n"
             "border-radius:3px;\n"
             "border-color: rgb(255, 0, 0);")
 
-            # Disableediting quantity text 
+            # Disable editing quantity text 
             quntity_txt.setEnabled(False)
             quntity_txt.setText('')
         
+
+        else:
+            selected_items_ids = tuple([retrieveItemId(item_name, self.daily_conn) for item_name in selected_items] + [''])
+            print(selected_items_ids)
+            offer_id = retrieveItemsOfferId(selected_items_ids, db = self.daily_conn)
+            print(offer_id)
+
+
     def setOrderItemPrice(self, combo_selected_item, price_lbl, quntity_txt):
         """Get the item price and add it to label"""
 
-        
         # elif(retrieveItemId(combo_selected_item.currentText(), db = self.daily_conn) is None):
         #     QtWidgets.QToolTip.showText(combo_selected_item.mapToGlobal(QtCore.QPoint(0,10)),"غير موجودة")
         #     combo_selected_item.setStyleSheet("border-width:4px 4px 4px 4px;\n"
@@ -1374,8 +1382,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Allow editing quantity text 
         quntity_txt.setEnabled(True)
-
-        
 
     def checkOrderItemQauntity(self, combo_selected_item, quantity_txt):
         if(quantity_txt.text() ==''):
@@ -1811,7 +1817,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.verticalLayout_45.addWidget(offer_frame)
         
         # pass on items comboBox
-        item_comboBox.addItems([''] + retrieveItemNames(('',''), db = self.daily_conn))
+        item_comboBox.addItems([''] + retrieveItemNames(db = self.daily_conn))
 
         # Connect each comboBox with its label.
         item_comboBox.currentTextChanged['QString'].connect(lambda : self.isItemExists(item_comboBox))
@@ -2236,12 +2242,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Get selected rows and their indexs
         index = self.shifts_tableView.selectionModel().currentIndex()
         
-        id = index.sibling(index.row(), 0).data()
+        shift_id = index.sibling(index.row(), self.shifts_model.fieldIndex('shift_id')).data()
+        shift_state = index.sibling(index.row(), self.shifts_model.fieldIndex('shift_state')).data()
 
-        if (id == None):
+        if (shift_id == None):
             QtWidgets.QToolTip.showText(self.shift_start_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select shift/s")
         
-        else:
+        elif(shift_state != 'Active'):
             messageBox = QtWidgets.QMessageBox.warning(
                 self,
                 "Starting Alert",
@@ -2249,15 +2256,15 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel,
             )
             if messageBox == QtWidgets.QMessageBox.Ok:
-                startingShift(id, db=self.daily_conn)
+                startShift(shift_id, db=self.daily_conn)
                 self.showShifts()
 
-    def stopShift(self):
+    def finishShift(self):
         """Stop selected shift"""
 
         # Get selected rows and their indexs
         index = self.shifts_tableView.selectionModel().currentIndex()
-        id = index.sibling(index.row(), 0).data()
+        id = index.sibling(index.row(), self.shifts_model.fieldIndex('shift_id')).data()
     
         if (id == None):
             QtWidgets.QToolTip.showText(self.shift_start_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select shift/s")
@@ -2270,7 +2277,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel,
             )
             if messageBox == QtWidgets.QMessageBox.Ok:
-                stopingShift(id, db=self.daily_conn)
+                finishShift(id, db=self.daily_conn)
                 self.showShifts()
 
     def clearShiftsFitlers(self):
