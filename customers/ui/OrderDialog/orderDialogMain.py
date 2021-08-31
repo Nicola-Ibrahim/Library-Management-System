@@ -4,9 +4,11 @@ from customers.database import *
 from customers.ui.OrderDialog.ui_orderDialogUI import Ui_Dialog
 
 class OrderDialog(QtWidgets.QDialog, Ui_Dialog):
-    def __init__(self, order_id, db, parent=None):
+    def __init__(self, order_id, customer_name, order_type, db, parent=None):
         QtWidgets.QDialog.__init__(self,parent)
         self.order_id = order_id
+        self.customer_name = customer_name
+        self.order_type = order_type
         self.db = db
         self._order_item_number = 0
 
@@ -171,11 +173,6 @@ class OrderDialog(QtWidgets.QDialog, Ui_Dialog):
         # pass on items comboBox
         item_comboBox.addItems(['']+retrieveItemNames(name_filter=('',''), db = self.db))
 
-        if(item_comboBox != None and item_quantity != None):
-            item_comboBox.setCurrentText(selected_item)
-            item_quantity.setText(str(quantity))
-
-
         # Connect each comboBox with its label.
         item_comboBox.currentTextChanged['QString'].connect(lambda : self.setOrderItemPrice(item_comboBox, item_price_lbl, item_quantity))
         item_comboBox.currentTextChanged['QString'].connect(lambda : self.isOrderItemExist(item_comboBox, item_quantity))
@@ -183,7 +180,10 @@ class OrderDialog(QtWidgets.QDialog, Ui_Dialog):
         # pass on items comboBox to connect it with its label.
         item_quantity.textEdited['QString'].connect(lambda : self.checkOrderItemQauntity(item_comboBox, item_quantity))
         
-        
+        if(item_comboBox and item_quantity):
+            item_comboBox.setCurrentText(selected_item)
+            item_quantity.setText(str(quantity))
+
         # pass on delete buttons to connect it with its frame.
         delete_btn.clicked.connect(lambda : self.deleteOrderFrame(order_frame))
 
@@ -272,6 +272,7 @@ class OrderDialog(QtWidgets.QDialog, Ui_Dialog):
     def deleteOrderFrame(self, frame):
         """Delete frame after clicking"""
 
+
         # Keep at least one order that shouldn't be deleted
         if len(self.order_details_frame.findChildren(QtWidgets.QComboBox)) > 1:
 
@@ -287,12 +288,12 @@ class OrderDialog(QtWidgets.QDialog, Ui_Dialog):
                 label.setText(_translate("MainWindow", f"Item : {num} "))
 
     def setOrderDetail(self):
+        self.customer_name_txt.setText(self.customer_name)
+        self.order_type_txt.setText(self.order_type)
         data = retrieveOrderItems(self.order_id, db = self.db)
         for item_id, quan in data:
             item_name = retrieveItemNames(item_id, db = self.db)[0]
             self.plusOrder(item_name, quan)
-
-
 
     def accept(self):
         """Accept the data provided through the dialog"""

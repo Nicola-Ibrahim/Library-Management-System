@@ -540,10 +540,12 @@ class WarehouseModel(QSqlTableModel):
         query = QSqlQuery(self.db)
         query.exec(STATEMENT)
        
-        # Take the last recorde
+        # Take the first record
         if(query.first() == True): 
             result = query.value(0)
-        
+        print(data[0])
+        print(result)
+
         # If the record doesn't exist then insert it 
         if(result == 0):
 
@@ -552,7 +554,7 @@ class WarehouseModel(QSqlTableModel):
             self.insertRows(row, 1)
 
             # Take only the colums that suitable for data list length
-            columns = ['item_name', 'item_price','item_type','current_items_quantity']
+            columns = ['item_name', 'item_price','item_type','item_current_quantity']
 
             for col_ind, field in enumerate(data):
                 col = self.fieldIndex(columns[col_ind])

@@ -1375,8 +1375,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Allow editing quantity text 
         quntity_txt.setEnabled(True)
 
-        # Change the total price
-        self.setTotalOrderPrice()
+        
 
     def checkOrderItemQauntity(self, combo_selected_item, quantity_txt):
         if(quantity_txt.text() ==''):
@@ -1448,6 +1447,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             labels = [label for label in self.orders_items_frame.findChildren(QtWidgets.QLabel) if(label.objectName() == 'item_number_lbl')]
             for num, label in zip(range(1, self._order_item_number+1),labels): 
                 label.setText(_translate("MainWindow", f"Item : {num} "))
+            
+            # Recalculate the total order price
+            self.setTotalOrderPrice()
  
     def clearOrderFitlers(self):
     
@@ -1471,14 +1473,16 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open change order dialog"""
         # Get selected row and its index
         index = self.orders_tableView.selectionModel().currentIndex()
-        
-        id = index.sibling(index.row(), 0).data()
 
-        if (id == None):
-            QtWidgets.QToolTip.showText(self.shift_start_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select order")
+        order_id = index.sibling(index.row(), self.orders_model.fieldIndex('order_id')).data()
+        customer_name = index.sibling(index.row(), self.orders_model.fieldIndex('daily_name')).data()
+        order_type = index.sibling(index.row(), self.orders_model.fieldIndex('order_type')).data()
+
+        if (order_id == None):
+            QtWidgets.QToolTip.showText(self.order_show_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select order")
         
         else:
-                order_diag = OrderDialog(id, db = self.daily_conn)
+                order_diag = OrderDialog(order_id, customer_name, order_type, db = self.daily_conn)
                 if(order_diag.exec() == QtWidgets.QDialog.Accepted):
                     pass  
     
@@ -1556,7 +1560,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             updateReports(db =self.daily_conn)
 
         else:
-            rep = QtWidgets.QMessageBox.warning(
+            QtWidgets.QMessageBox.warning(
             self,
             "Info",
             "Record exists...!",
