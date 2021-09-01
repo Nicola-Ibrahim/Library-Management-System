@@ -17,7 +17,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSql import QSqlRelationalDelegate
 
 
-from .database import changeSubsCost, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveItemsOfferId, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveSuperviosrsJobType, retrieveSupervisorsNames, startShift, updateReports
+from .database import changeSubsCost, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveItemsOfferId, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveSuperviosrsJobType, retrieveSupervisorsNames, startShift, updateReports
 from .model import *
 
 # from PyQt5.uic import loadUiType
@@ -698,7 +698,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if the customer name field is empty
         if(self.daily_customer_name_txt.text()==""):
             self.daily_customer_name_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.daily_customer_name_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter customer name")
+            QtWidgets.QToolTip.showText(self.daily_customer_name_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter customer name")
             return
         
             
@@ -739,7 +739,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rows_indices = self.daily_customers_tableView.selectionModel().selectedRows()
         
         if (len(rows_indices) < 1):
-            QtWidgets.QToolTip.showText(self.daily_customer_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select customer/s")
+            QtWidgets.QToolTip.showText(self.daily_customer_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select customer/s")
     
         else:    
             messageBox = QtWidgets.QMessageBox.warning(
@@ -809,7 +809,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Add order directly by selecting customer from daily table"""
         row = self.daily_customers_tableView.currentIndex().row()
         if (row < 0):
-            QtWidgets.QToolTip.showText(self.daily_customer_add_order.mapToGlobal(QtCore.QPoint(0,10)),"Select customer/s")
+            QtWidgets.QToolTip.showText(self.daily_customer_add_order.mapToGlobal(QtCore.QPoint(0,30)),"Select customer/s")
         
         # If customer is selected 
         else:
@@ -854,13 +854,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if the customer name field is empty
         if(self.monthly_customer_name_txt.text()==""):
             self.monthly_customer_name_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.monthly_customer_name_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter customer name")
+            QtWidgets.QToolTip.showText(self.monthly_customer_name_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter customer name")
             return
 
         # Check if the customer subscription field is empty
         if(self.monthly_customer_subscritption_comboBox.currentText()==""):
             self.monthly_customer_subscritption_comboBox.setFocus()
-            QtWidgets.QToolTip.showText(self.monthly_customer_subscritption_comboBox.mapToGlobal(QtCore.QPoint(0,10)),"Select subsription type")
+            QtWidgets.QToolTip.showText(self.monthly_customer_subscritption_comboBox.mapToGlobal(QtCore.QPoint(0,30)),"Select subsription type")
             return
         
         data = [self.monthly_customer_name_txt.text().strip(), self.monthly_customer_subscritption_comboBox.currentText().strip()]
@@ -901,7 +901,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         
         if (len(rows_indices) < 1) :
-            QtWidgets.QToolTip.showText(self.monthly_customer_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select customer/s/s")
+            QtWidgets.QToolTip.showText(self.monthly_customer_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select customer/s/s")
 
         else:
             messageBox = QtWidgets.QMessageBox.warning(
@@ -950,7 +950,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rows_indices = self.monthly_customers_tableView.selectionModel().selectedRows()
 
         if (len(rows_indices) <= 0):
-            QtWidgets.QToolTip.showText(self.monthly_customer_update_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select customer/s")
+            QtWidgets.QToolTip.showText(self.monthly_customer_update_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select customer/s")
 
         else:
             messageBox = QtWidgets.QMessageBox.warning(
@@ -1005,13 +1005,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if the customer name field is empty
         if(self.order_sell_type_comboBox.currentText()=='عام' and self.customer_name_txt2.text()==""):
             self.customer_name_txt2.setFocus()
-            QtWidgets.QToolTip.showText(self.customer_name_txt2.mapToGlobal(QtCore.QPoint(0,10)),"Enter customer name")
+            QtWidgets.QToolTip.showText(self.customer_name_txt2.mapToGlobal(QtCore.QPoint(0,30)),"Enter customer name")
             return
         
         # Check if the customer name field is empty
         elif(self.order_sell_type_comboBox.currentText()=='ضيافة' and self.customer_name_txt2.text()!=""):
             self.customer_name_txt2.setFocus()
-            QtWidgets.QToolTip.showText(self.customer_name_txt2.mapToGlobal(QtCore.QPoint(0,10)),"Delete the customer name")
+            QtWidgets.QToolTip.showText(self.customer_name_txt2.mapToGlobal(QtCore.QPoint(0,30)),"Delete the customer name")
             return
 
         # Take children of order register panel 
@@ -1027,18 +1027,18 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # Check if the item comboBox is empty
             if(order_comboBox.currentText()==""):
                 order_comboBox.setFocus()
-                QtWidgets.QToolTip.showText(order_comboBox.mapToGlobal(QtCore.QPoint(0,10)),"Select item")
+                QtWidgets.QToolTip.showText(order_comboBox.mapToGlobal(QtCore.QPoint(0,30)),"Select item")
                 return
             # Check if the quantity field is empty
             elif(quantity_txt.text()==""):
                 quantity_txt.setFocus()
-                QtWidgets.QToolTip.showText(quantity_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter quantity")
+                QtWidgets.QToolTip.showText(quantity_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter quantity")
                 return      
 
         # Iterate to add customer's orders_model
         items_data = [(order_comboBox.currentText(), quantity_txt.text()) for order_comboBox, quantity_txt in zip(order_comboBox_lst, order_quantity_txt_lst)]
         
-        data = [(self.customer_name_txt2.text(), self.order_sell_type_comboBox.currentText()),items_data]
+        data = [(self.customer_name_txt2.text(), self.order_sell_type_comboBox.currentText()), items_data, int(self.total_price_lbl.text())]
 
         ret = self.orders_model.addOrder(data)
 
@@ -1075,24 +1075,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.total_price_lbl.setText(str(0))
             self.customer_name_txt2.setText('')
 
-    def clearLayout(self, layout):
-        """Clear frame layout after insert new order to tabel"""
-        if layout is not None:
-            while layout.count():
-                item = layout.takeAt(0)
-                widget = item.widget()
-                if widget is not None:
-                    widget.deleteLater()
-                else:
-                    self.clearLayout(item.layout())
-            sip.delete(widget)
    
     def removeOrder(self):
         """Remove order from Orders table"""
         rows_indices = self.orders_tableView.selectionModel().selectedRows()
         
         if (len(rows_indices) < 1):
-            QtWidgets.QToolTip.showText(self.order_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select order/s")
+            QtWidgets.QToolTip.showText(self.order_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select order/s")
 
         else:
             messageBox = QtWidgets.QMessageBox.warning(
@@ -1186,17 +1175,21 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         order_item_comboBox.setEditable(False)
         order_item_comboBox.setObjectName("order_item_comboBox")
         order_item_comboBox.setEditable(True)
+        # Set validator on item
+        validator = QtGui.QRegularExpressionValidator(QRegularExpression("[a-zA-Zء-ي|\s]+"))
+        order_item_comboBox.setValidator(validator)
+
         horizontalLayout.addWidget(order_item_comboBox)
 
         # Add price label to the layout
         order_item_price_lbl = QtWidgets.QLabel(order_frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(order_item_price_lbl.sizePolicy().hasHeightForWidth())
-        order_item_price_lbl.setSizePolicy(sizePolicy)
-        order_item_price_lbl.setMinimumSize(QtCore.QSize(0, 40))
-        order_item_price_lbl.setMaximumSize(QtCore.QSize(10000, 16777215))
+        # sizePolicy.setHorizontalStretch(0)
+        # sizePolicy.setVerticalStretch(0)
+        # sizePolicy.setHeightForWidth(order_item_price_lbl.sizePolicy().hasHeightForWidth())
+        # order_item_price_lbl.setSizePolicy(sizePolicy)
+        # order_item_price_lbl.setMinimumSize(QtCore.QSize(0, 40))
+        order_item_price_lbl.setMaximumSize(QtCore.QSize(16777215, 16777215))
         order_item_price_lbl.setStyleSheet("color:rgb(244, 154, 32);")
         order_item_price_lbl.setFrameShape(QtWidgets.QFrame.NoFrame)
         order_item_price_lbl.setText("")
@@ -1320,12 +1313,24 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             combo.addItem('')
             combo.addItems(retrieveItemNames(name_filter=(order_item_comboBox.currentText(),''), db = self.daily_conn))      
 
-    def isOrderItemExist(self, selected_item, quntity_txt):
+    def isOrderItemExist(self, selected_item, quntity_txtBox):
 
         # Check if the item is selected previously 
-        selected_items = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
+        selected_items_name = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
 
-        if(selected_item.currentText()==''):
+        if(retrieveItemId(selected_item.currentText(), db = self.daily_conn) is None):
+            QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Not found")
+            selected_item.setStyleSheet(
+            "QComboBox{\n"
+            "border-width:0px 0px 4px 0px;\n"
+            "border-style: solid;\n"
+            "border-radius:0px;\n"
+            "border-color: rgb(255, 255, 0);\n"
+            "}"
+            )
+            quntity_txtBox.setEnabled(False)
+
+        elif(selected_item.currentText()==''):
             selected_item.setStyleSheet(
             "QComboBox{\n"
             "border-width:0px 0px 4px 0px;\n"
@@ -1334,10 +1339,11 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "border-color: rgb(255, 170, 0);\n"
             "}"
             )
-            quntity_txt.setEnabled(False)
+            quntity_txtBox.setEnabled(False)
 
-        elif(selected_items.count(selected_item.currentText()) > 1):
-            QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,10)),"Selected previously")
+        # Check if the item selected previously
+        elif(selected_items_name.count(selected_item.currentText()) > 1):
+            QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Selected previously")
             selected_item.setStyleSheet(
             "QComboBox{\n"
             "border-width:0px 0px 4px 0px;\n"
@@ -1348,52 +1354,11 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             )
 
             # Disable editing quantity text 
-            quntity_txt.setEnabled(False)
-            quntity_txt.setText('')
-        
-
-        else:
-            selected_items_ids = [retrieveItemId(item_name, self.daily_conn) for item_name in selected_items]
-            for key, value in retrieveOffersItems(with_date= False, db = self.daily_conn).items():
-                if(value == sorted(selected_items_ids)):
-
-                    # offer_id = retrieveItemsOfferId(selected_items_ids, db = self.daily_conn)
-                    print(key)
-                            
-                    for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
-                        item.setStyleSheet(
-                        "QComboBox{\n"
-                        "border-width:0px 0px 4px 0px;\n"
-                        "border-style: solid;\n"
-                        "border-radius:0px;\n"
-                        "border-color: rgb(0, 255, 0);\n"
-                        "}"
-                        )
-
-                else:
-                    for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
-                        item.setStyleSheet(
-                        "QComboBox{\n"
-                        "border-width:0px 0px 4px 0px;\n"
-                        "border-style: solid;\n"
-                        "border-radius:0px;\n"
-                        "border-color: rgb(255, 170, 0);\n"
-                        "}"
-                        )
-
+            quntity_txtBox.setEnabled(False)
+            quntity_txtBox.setText('')
+ 
     def setOrderItemPrice(self, combo_selected_item, price_lbl, quntity_txt):
         """Get the item price and add it to label"""
-
-        # elif(retrieveItemId(combo_selected_item.currentText(), db = self.daily_conn) is None):
-        #     QtWidgets.QToolTip.showText(combo_selected_item.mapToGlobal(QtCore.QPoint(0,10)),"غير موجودة")
-        #     combo_selected_item.setStyleSheet("border-width:4px 4px 4px 4px;\n"
-        #     "border-style: solid;\n"
-        #     "border-radius:3px;\n"
-        #     "border-color: rgb(255, 0, 0);")
-
-        #     # Disableediting quantity text 
-        #     quntity_txt.setEnabled(False)
-        #     quntity_txt.setText('')
             
         price = retrieveItemPrice(combo_selected_item.currentText(), self.daily_conn)
         price_lbl.setText(str(price)+' L.S')
@@ -1410,13 +1375,15 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         quntity_txt.setEnabled(True)
 
     def checkOrderItemQauntity(self, combo_selected_item, quantity_txt):
+        offer_id = None
         if(quantity_txt.text() ==''):
             return
 
         remain_quantity = retrieveItemAvailabelQuantity(retrieveItemId(combo_selected_item.currentText(), db = self.daily_conn), db = self.daily_conn)
+
         # If not enough items exist 
         if(int(quantity_txt.text()) > remain_quantity):
-            QtWidgets.QToolTip.showText(quantity_txt.mapToGlobal(QtCore.QPoint(0,10)),f"Exceed {remain_quantity}")
+            QtWidgets.QToolTip.showText(quantity_txt.mapToGlobal(QtCore.QPoint(0,30)),f"Exceed {remain_quantity}")
             
             quantity_txt.setStyleSheet("QLineEdit{\n"
             "\n"
@@ -1427,7 +1394,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "}\n"
             "")
             self.order_add_btn.setEnabled(False)
-        else:
+
+        elif(int(quantity_txt.text()) <= remain_quantity):
             quantity_txt.setStyleSheet("QLineEdit{\n"
             "\n"
             "    border-style: solid;\n"
@@ -1438,30 +1406,86 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "")
             self.order_add_btn.setEnabled(True)
 
-            # Change the total price
-            self.setTotalOrderPrice()
+            
+            # Check if the selected items have an offer
+            selected_items_name = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
+            selected_items_ids = [retrieveItemId(item_name, self.daily_conn) for item_name in selected_items_name]
+            
+            quans = self.orders_items_frame.findChildren(QtWidgets.QLineEdit)
 
-    def setTotalOrderPrice(self):
+            # Check if all quantities text box are enabled
+            enabled = list(map(lambda x : x.isEnabled(), quans))
+            if(False in enabled):
+                return
+                
+            quantities = [quans[i].text() for i in range(len(quans)) if (i%2 != 0)]
+            quantities_int = [int(quantity) for quantity in quantities if(quantity.isdigit())]
+
+            
+            for offer_key, items_key in retrieveOffersItems(with_date= False, with_quantity=True, db = self.daily_conn).items():
+                
+                quan = [item for sublist in list(items_key.values()) for item in sublist]
+                if(list(items_key.keys()) == sorted(selected_items_ids)):
+                    if(quan == sorted(quantities_int)):
+                        offer_id = offer_key
+                            
+                        for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
+                            item.setStyleSheet(
+                            "QComboBox{\n"
+                            "border-width:0px 0px 4px 0px;\n"
+                            "border-style: solid;\n"
+                            "border-radius:0px;\n"
+                            "border-color: rgb(0, 255, 0);\n"
+                            "}"
+                            )
+                        
+                    else:
+                        offer_id = None
+                        for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
+                            item.setStyleSheet(
+                            "QComboBox{\n"
+                            "border-width:0px 0px 4px 0px;\n"
+                            "border-style: solid;\n"
+                            "border-radius:0px;\n"
+                            "border-color: rgb(255, 170, 0);\n"
+                            "}"
+                            )
+
+            # Change the total price
+            self.setTotalOrderPrice(offer_id)
+
+    def setTotalOrderPrice(self, offer_id = None):
         """Calculate the items selected total price"""
 
-        # Take children of order register panel 
-        # Item and quantity
-        order_comboBox_lst = self.orders_items_frame.findChildren(QtWidgets.QComboBox)
-        order_quantity_txt_lst = self.orders_items_frame.findChildren(QtWidgets.QLineEdit)
+        # Take children of order register panel (Items and quantities)
+        selected_items_name = self.orders_items_frame.findChildren(QtWidgets.QComboBox)
+        quantities = self.orders_items_frame.findChildren(QtWidgets.QLineEdit)
 
         # Split quantity texts from other texts
-        order_quantity_txt_lst = [order_quantity_txt_lst[i] for i in range(len(order_quantity_txt_lst))if i%2 != 0]
+        quantities = [quantities[i].text() for i in range(len(quantities))if i%2 != 0]
         
         total = 0
 
-        # Iterate to sum the items price
-        for order_comboBox, quantity_txt in zip(order_comboBox_lst,order_quantity_txt_lst):
-            price = retrieveItemPrice(order_comboBox.currentText(), self.daily_conn)
-            if(str(quantity_txt.text()).isdigit()):
-                total += price * int(quantity_txt.text())
+        if(offer_id is None):
+            # Iterate to sum the items price
+            for item, quantity in zip(selected_items_name, quantities):
+                price = retrieveItemPrice(item.currentText(), self.daily_conn)
+                if(quantity.isdigit()):
+                    quantity = int(quantity)
+                    total += price * quantity
+
+        elif(offer_id is not None):
+            total = retrieveOfferPrice(offer_id, db = self.daily_conn)
         
         # Put total price in label
         self.total_price_lbl.setText(f'{total}')
+
+    def clearOrderFitlers(self):
+    
+        self.orders_customer_name_filter_txt.setText('')
+        self.orders_item_name_filter_txt.setText('')
+        self.orders_item_type_filter_comboBox.setCurrentText('')
+        self.orders_sort_model.setDateFilter('')
 
     def deleteOrderFrame(self, frame):
         """Delete frame after clicking"""
@@ -1483,13 +1507,18 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # Recalculate the total order price
             self.setTotalOrderPrice()
  
-    def clearOrderFitlers(self):
-    
-        self.orders_customer_name_filter_txt.setText('')
-        self.orders_item_name_filter_txt.setText('')
-        self.orders_item_type_filter_comboBox.setCurrentText('')
-        self.orders_sort_model.setDateFilter('')
-
+    def clearLayout(self, layout):
+        """Clear frame layout after insert new order to tabel"""
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    self.clearLayout(item.layout())
+            sip.delete(widget)
+   
     def resetAvailableItemsComboBox(self):
         """Refresh items comboBox list after adding new item to Warehouse"""
         # pass on items comboBox
@@ -1511,7 +1540,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         order_type = index.sibling(index.row(), self.orders_model.fieldIndex('order_type')).data()
 
         if (order_id == None):
-            QtWidgets.QToolTip.showText(self.order_show_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select order")
+            QtWidgets.QToolTip.showText(self.order_show_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select order")
         
         else:
                 order_diag = OrderDialog(order_id, customer_name, order_type, db = self.daily_conn)
@@ -1543,25 +1572,25 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if the item name field is empty
         if(not self.warehouse_item_name_txt.text()):
             self.warehouse_item_name_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.warehouse_item_name_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter item name")
+            QtWidgets.QToolTip.showText(self.warehouse_item_name_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter item name")
             return
         
         # Check if the item price field is empty
         if(not self.warehouse_item_price_txt.text()):
             self.warehouse_item_price_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.warehouse_item_price_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter price")
+            QtWidgets.QToolTip.showText(self.warehouse_item_price_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter price")
             return
         
         # Check if the item quantity field is empty
         if(not self.warehouse_item_quantity_txt.text()):
             self.warehouse_item_quantity_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.warehouse_item_quantity_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter quantity")
+            QtWidgets.QToolTip.showText(self.warehouse_item_quantity_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter quantity")
             return
 
         # Check if the item type field is empty
         if(not self.warehouse_item_type_comboBox.currentText()):
             self.warehouse_item_type_comboBox.setFocus()
-            QtWidgets.QToolTip.showText(self.warehouse_item_type_comboBox.mapToGlobal(QtCore.QPoint(0,10)),"Select item type")
+            QtWidgets.QToolTip.showText(self.warehouse_item_type_comboBox.mapToGlobal(QtCore.QPoint(0,30)),"Select item type")
             return
 
         
@@ -1605,7 +1634,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rows_indices = self.warehouse_tableView.selectionModel().selectedRows()
     
         if (len(rows_indices) < 1):
-            QtWidgets.QToolTip.showText(self.warehouse_item_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select item/s")
+            QtWidgets.QToolTip.showText(self.warehouse_item_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select item/s")
 
         else:    
             messageBox = QtWidgets.QMessageBox.warning(
@@ -1689,13 +1718,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if the offer name field is empty
         if(not self.offer_price_txt.text()):
             self.offer_price_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.offer_price_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter offer name")
+            QtWidgets.QToolTip.showText(self.offer_price_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter offer name")
             return
         
         # Check if the offer price field is empty
         elif(not self.offer_price_txt.text()):
             self.offer_price_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.offer_price_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter offer price")
+            QtWidgets.QToolTip.showText(self.offer_price_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter offer price")
             return
     
         # Take children of offer register panel 
@@ -1706,7 +1735,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # Check if the item comboBox is empty
             if(selected_item.currentText()==""):
                 selected_item.setFocus()
-                QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,10)),"Select item")
+                QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Select item")
                 return   
 
         # Iterate to add customer's orders_model
@@ -1733,7 +1762,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rows_indices = self.offers_tableView.selectionModel().selectedRows()
     
         if (len(rows_indices) <= 0):
-            QtWidgets.QToolTip.showText(self.offer_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select offer/s")
+            QtWidgets.QToolTip.showText(self.offer_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select offer/s")
         
         else:
             messageBox = QtWidgets.QMessageBox.warning(
@@ -1867,7 +1896,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Check if the currently selected item is previously existed
         elif(combo_selected_items.count(item_comboBox.currentText()) > 1):
-            QtWidgets.QToolTip.showText(item_comboBox.mapToGlobal(QtCore.QPoint(0,10)),"Selected previously")
+            QtWidgets.QToolTip.showText(item_comboBox.mapToGlobal(QtCore.QPoint(0,30)),"Selected previously")
             item_comboBox.setStyleSheet(
             "border-width: 0px 0px 4px 0px;\n"
             "border-style: solid;\n"
@@ -1929,25 +1958,25 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if the supervisor name field is empty
         if(self.employee_name_txt.text()==""):
             self.employee_name_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.employee_name_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter supervisor name")
+            QtWidgets.QToolTip.showText(self.employee_name_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter supervisor name")
             return
         
         # Check if the supervisor job type button is checked
         if(self.employee_manager_btn.isChecked()==False and self.employee_worker_btn.isChecked()==False):
             self.employee_worker_btn.setFocus()
-            QtWidgets.QToolTip.showText(self.employee_worker_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select job type")
+            QtWidgets.QToolTip.showText(self.employee_worker_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select job type")
             return
 
         # Check if the supervisor username field is empty
         if(self.employee_username_txt.text()==""):
             self.employee_username_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.employee_username_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter username")
+            QtWidgets.QToolTip.showText(self.employee_username_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter username")
             return
         
         # Check if the supervisor password field is empty
         if(self.employee_password_txt.text()==""):
             self.employee_password_txt.setFocus()
-            QtWidgets.QToolTip.showText(self.employee_password_txt.mapToGlobal(QtCore.QPoint(0,10)),"Enter password")
+            QtWidgets.QToolTip.showText(self.employee_password_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter password")
             return
 
         if(self.employee_manager_btn.isChecked()==True):
@@ -1980,7 +2009,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rows_indices = self.employees_tableView.selectionModel().selectedRows()
     
         if (len(rows_indices) <= 0):
-            QtWidgets.QToolTip.showText(self.employee_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select supervisor/s")
+            QtWidgets.QToolTip.showText(self.employee_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select supervisor/s")
         
         else:
             messageBox = QtWidgets.QMessageBox.warning(
@@ -2059,7 +2088,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # Check if the item comboBox is empty
             if(combo_selected_employee.currentText()==""):
                 combo_selected_employee.setFocus()
-                QtWidgets.QToolTip.showText(combo_selected_employee.mapToGlobal(QtCore.QPoint(0,10)),"Select employee")
+                QtWidgets.QToolTip.showText(combo_selected_employee.mapToGlobal(QtCore.QPoint(0,30)),"Select employee")
                 return   
 
         # Iterate to add customer's orders_model
@@ -2187,7 +2216,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
         # Check if the employee selected previously
         elif(combo_selected_employees.count(employee_comboBox.currentText()) > 1):
-            QtWidgets.QToolTip.showText(employee_comboBox.mapToGlobal(QtCore.QPoint(0,10)),"Selected previously")
+            QtWidgets.QToolTip.showText(employee_comboBox.mapToGlobal(QtCore.QPoint(0,30)),"Selected previously")
             employee_comboBox.setStyleSheet(
             "border-width: 0px 0px 6px 0px;\n"
             "border-style: solid;\n"
@@ -2228,7 +2257,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rows_indices = self.shifts_tableView.selectionModel().selectedRows()
     
         if (len(rows_indices) <= 0):
-            QtWidgets.QToolTip.showText(self.employee_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select shift/s")
+            QtWidgets.QToolTip.showText(self.employee_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select shift/s")
         
         else:
             messageBox = QtWidgets.QMessageBox.warning(
@@ -2272,7 +2301,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         shift_state = index.sibling(index.row(), self.shifts_model.fieldIndex('shift_state')).data()
 
         if (shift_id == None):
-            QtWidgets.QToolTip.showText(self.shift_start_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select shift/s")
+            QtWidgets.QToolTip.showText(self.shift_start_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select shift/s")
         
         elif(shift_state != 'Active'):
             messageBox = QtWidgets.QMessageBox.warning(
@@ -2293,7 +2322,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         id = index.sibling(index.row(), self.shifts_model.fieldIndex('shift_id')).data()
     
         if (id == None):
-            QtWidgets.QToolTip.showText(self.shift_start_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select shift/s")
+            QtWidgets.QToolTip.showText(self.shift_start_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select shift/s")
         
         else:
             messageBox = QtWidgets.QMessageBox.warning(
@@ -2339,7 +2368,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rows_indices = self.reports_tableView.selectionModel().selectedRows()
         
         if len(rows_indices) < 0:
-            QtWidgets.QToolTip.showText(self.order_remove_btn.mapToGlobal(QtCore.QPoint(0,10)),"Select report/s")
+            QtWidgets.QToolTip.showText(self.order_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select report/s")
 
         else:
             messageBox = QtWidgets.QMessageBox.warning(

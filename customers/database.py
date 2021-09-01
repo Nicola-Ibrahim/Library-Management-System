@@ -1221,11 +1221,11 @@ def retrieveOfferNames(id, db = None):
 
     return names
 
-def retrieveOffersItems(with_date = True, db = None):
+def retrieveOffersItems(with_date = True, with_quantity = False, db = None):
     
     indices_tree = []
 
-    if(with_date):
+    if(with_date ==True and with_quantity == False):
 
         # Get available dates
         STATEMENT = \
@@ -1247,7 +1247,7 @@ def retrieveOffersItems(with_date = True, db = None):
         
         dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
 
-    elif(with_date == False):
+    elif(with_date == False and with_quantity == False):
 
         # Get available dates
         STATEMENT = \
@@ -1266,6 +1266,25 @@ def retrieveOffersItems(with_date = True, db = None):
 
         
         dic = {key: [val for _,val in values]  for key, values in groupby(indices_tree, itemgetter(0))}
+
+    elif(with_date == False and with_quantity == True):
+        # Get available dates
+        STATEMENT = \
+            """
+            SELECT offer_id, item_id, quantity FROM Offers_items
+            """
+
+        query = QSqlQuery(db)
+        query.exec(STATEMENT)
+
+        while(query.next()):
+            offer_id = int(str(query.value(query.record().indexOf('offer_id'))).strip())
+            item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
+            quantity = int(str(query.value(query.record().indexOf('quantity'))).strip())
+            indices_tree.append([offer_id, item_id, quantity])
+
+        
+        dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
 
     return dic
 
@@ -1287,6 +1306,24 @@ def retrieveItemsOfferId(items : tuple = None, db = None):
         offer_id = query.value(query.record().indexOf('offer_id'))
 
     return offer_id
+
+def retrieveOfferPrice(offer_id, db = None):
+
+    offer_price = None
+
+    STATEMENT = \
+        f"""
+        SELECT offer_price FROM Offers WHERE offer_id = {offer_id}
+        """
+    
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+
+    while(query.next()):
+        offer_price = query.value(query.record().indexOf('offer_price'))
+        
+    return offer_price
+
 
 ##########
 # Shifts #

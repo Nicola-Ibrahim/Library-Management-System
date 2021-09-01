@@ -382,7 +382,8 @@ class OrdersModel(QSqlRelationalTableModel):
 
         order_data = data[0]
         customer_id = retrieveDailyId(order_data[0], db = self.db)
-        order_data = [customer_id, order_data[1]]
+        order_price = data[2]
+        order_data = [customer_id, order_data[1], order_price]
 
         items_data = data[1]
 
@@ -409,7 +410,7 @@ class OrdersModel(QSqlRelationalTableModel):
         self.insertRows(row, 1)
 
         # Take only the colums that suitable for data list length
-        columns = ['daily_name', 'order_type']
+        columns = ['daily_name', 'order_type', 'order_price']
         for col_ind, field in enumerate(order_data):
             col = self.fieldIndex(columns[col_ind])
             self.setData(self.index(row, col), field, Qt.EditRole)
