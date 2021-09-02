@@ -51,8 +51,8 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Orders_items (
             id       INTEGER      PRIMARY KEY
-                                NOT NULL
-                                UNIQUE,
+                          NOT NULL
+                          UNIQUE,
             order_id INTEGER (10) REFERENCES Orders (order_id) ON DELETE CASCADE
                                                             ON UPDATE NO ACTION,
             item_id  INTEGER (10) REFERENCES Warehouse (item_id) ON DELETE SET NULL
@@ -62,7 +62,7 @@ def _createCustomersTables(db_1, db_2):
             quantity INTEGER (10) NOT NULL,
             price    REAL (10),
             date     DATE         NOT NULL
-                                DEFAULT (date('now') )
+                                DEFAULT (date('now') ) 
         );
 
         """
@@ -221,14 +221,16 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Offers_items (
             item_offer_id INTEGER      PRIMARY KEY
-                                    UNIQUE
-                                    NOT NULL,
+                               UNIQUE
+                               NOT NULL,
             offer_id      INTEGER      REFERENCES Offers (offer_id) ON DELETE CASCADE
                                                                     ON UPDATE NO ACTION,
             item_id       INTEGER (10) REFERENCES Warehouse (item_id) ON DELETE CASCADE
                                                                     ON UPDATE NO ACTION,
+            quantity      INTEGER      NOT NULL
+                                    DEFAULT (1),
             date          DATE         NOT NULL
-                                    DEFAULT (date('now') ) 
+                                    DEFAULT (date('now') )
         );
     
         """
@@ -326,8 +328,7 @@ def _createCustomersTables(db_1, db_2):
         """
     
     
-    # Daily_customers after update daily_name trigger
-    # update monthly id
+    # Daily_customers update monthly id after update of daily_name trigger
     TRIGGER5_DAILYCUSTOMERS_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_monthly_id
@@ -353,34 +354,54 @@ def _createCustomersTables(db_1, db_2):
                     ON Orders_items
         BEGIN
             UPDATE Orders_items
-            SET price = new.quantity * (
-                                            SELECT item_price
-                                                FROM Warehouse
-                                            WHERE item_id = NEW.item_id
-                                        )
+            SET price = CASE WHEN (
+                                        SELECT order_type
+                                        FROM Orders
+                                        WHERE order_id = new.order_id
+                                    )
+        =              'عام' THEN CASE WHEN new.offer_id NOTNULL THEN 0 ELSE new.quantity * (
+                                                                                                SELECT item_price
+                                                                                                FROM Warehouse
+                                                                                                WHERE item_id = new.item_id
+                                                                                            )
+                    END WHEN (
+                                    SELECT order_type
+                                    FROM Orders
+                                    WHERE order_id = new.order_id
+                                )
+        =              'ضيافة' THEN 0 END
             WHERE id = new.id;
         END;
 
         """
     
-
     # Orders_items update price after update quantity trigger
     TRIGGER2_ORDERS_ITEMS_STATEMENT = \
         """
-        CREATE TRIGGER IF NOT EXISTS update_price2
+        CREATE TRIGGER update_price2
                 AFTER UPDATE OF item_id,
                                 quantity
                     ON Orders_items
         BEGIN
             UPDATE Orders_items
-            SET price = new.quantity * (
-                                            SELECT item_price
-                                                FROM Warehouse
-                                            WHERE item_id = new.item_id
-                                        )
+            SET price = CASE WHEN (
+                                        SELECT order_type
+                                        FROM Orders
+                                        WHERE order_id = new.order_id
+                                    )
+        =              'عام' THEN CASE WHEN new.offer_id NOTNULL THEN 0 ELSE new.quantity * (
+                                                                                                SELECT item_price
+                                                                                                FROM Warehouse
+                                                                                                WHERE item_id = new.item_id
+                                                                                            )
+                    END WHEN (
+                                    SELECT order_type
+                                    FROM Orders
+                                    WHERE order_id = new.order_id
+                                )
+        =              'ضيافة' THEN 0 END
             WHERE id = new.id;
         END;
-
 
         """
 
@@ -586,7 +607,7 @@ def _createCustomersTables(db_1, db_2):
     
     TRIGGER5_SHIFTS_STATEMENT = \
         """
-        CREATE TRIGGER update_employee_dayworks
+        CREATE TRIGGER IF NOT EXISTS update_employee_dayworks
                 AFTER UPDATE OF shift_state
                     ON Shifts
                 WHEN new.shift_state = 'Finished'
@@ -599,7 +620,26 @@ def _createCustomersTables(db_1, db_2):
                 WHERE shift_id = new.shift_id
             );
         END;
-"""
+
+        """
+
+    TRIGGER6_SHIFTS_STATEMENT = \
+        """
+        CREATE TRIGGER IF NOT EXISTS update_shift_income
+                AFTER UPDATE OF shift_state
+                    ON Shifts
+                WHEN new.shift_state = 'Finished'
+        BEGIN
+            UPDATE Shifts
+            SET shift_income = (
+                    SELECT sum(price) 
+                        FROM Orders_items
+                        WHERE date = date('now') 
+                )
+            WHERE shift_id = old.shift_id;
+        END;
+
+        """
 
     INSERT1_SUBSCRIPTION_STATEMENT = \
         """
@@ -626,6 +666,7 @@ def _createCustomersTables(db_1, db_2):
         INSERT OR IGNORE INTO Meta (key, value) VALUES ('version', '0.1.1')
 
         """
+    
     INSERT2_META_STATEMENT = \
         """
         INSERT OR IGNORE INTO Meta (key, value) VALUES ('last version', '0.1.0')
@@ -670,6 +711,8 @@ def _createCustomersTables(db_1, db_2):
         TRIGGER3_SHIFTS_STATEMENT,
         TRIGGER4_SHIFTS_STATEMENT,
         TRIGGER5_SHIFTS_STATEMENT,
+        TRIGGER6_SHIFTS_STATEMENT,
+
 
         INSERT1_SUBSCRIPTION_STATEMENT,
         INSERT2_SUBSCRIPTION_STATEMENT,
@@ -893,14 +936,37 @@ def retrieveItemId(item_name, db = None) -> int:
         
     return id
 
-def linkOrderItems(order_id, item_name, quantity, db = None) -> None:
+def retrieveOrderType(db = None) -> list:
+    types = []
+    
+    STATEMENT = f"""
+        SELECT DISTINCT(order_type) as order_type FROM Orders
+    """
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+
+    while query.next():
+        type = str(query.value(query.record().indexOf('order_type'))).strip()
+        types.append(type)
+       
+    return types
+
+def linkOrderItems(order_id, item_name, quantity, offer_id = None, db = None) -> None:
 
     item_id = retrieveItemId(item_name, db=db)
-    STATEMENT = \
-        f"""
-        INSERT INTO Orders_items (order_id, item_id, quantity) VALUES ({order_id}, {item_id}, {quantity})
-        """
-    
+
+    if(offer_id == None):
+        STATEMENT = \
+            f"""
+            INSERT INTO Orders_items (order_id, item_id, quantity) VALUES ({order_id}, {item_id}, {quantity})
+            """
+    elif(offer_id != None):
+        STATEMENT = \
+            f"""
+            INSERT INTO Orders_items (order_id, item_id, offer_id, quantity) VALUES ({order_id}, {item_id}, {offer_id}, {quantity})
+            """
+
+            
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
     return query
@@ -947,6 +1013,7 @@ def retrieveOrderItems(order_id = None, db = None):
         items.append([item_id, quantity])
 
     return items
+
 
 
 #############
@@ -1188,12 +1255,12 @@ def linkShiftSupervisor(shift_id, supervisor_name, db = None) -> None:
 ##########
 # Offers #
 ##########
-def linkOfferItems(offer_id, item_name, db = None) -> None:
+def linkOfferItems(offer_id, item_name, quantity, db = None) -> None:
 
     item_id = retrieveItemId(item_name, db=db)
     STATEMENT = \
         f"""
-        INSERT INTO Offers_items (offer_id, item_id) VALUES ({offer_id}, {item_id})
+        INSERT INTO Offers_items (offer_id, item_id, quantity) VALUES ({offer_id}, {item_id}, {quantity})
         """
     
     query = QSqlQuery(db = db)
@@ -1406,6 +1473,22 @@ def finishShift(id, db = None):
 
     return query
 
+def checkShiftActive(db = None):
+
+    count = 0
+
+    STATEMENT = f"""
+        SELECT count(*) as count FROM Shifts WHERE shift_state = 'Active' AND shift_date = date('now')
+    """
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+
+    while query.next():
+        count = int(query.value(query.record().indexOf('count')))
+
+    return count
+
+
 ###########
 # Reports #
 ###########
@@ -1420,14 +1503,20 @@ def updateReports(db = None):
         monthly_subscribtion_income = CASE WHEN (SELECT sum(ticket_monthly_cost) FROM Monthly_customers WHERE start_date = date('now')) NOTNULL THEN (SELECT sum(ticket_monthly_cost) FROM Monthly_customers WHERE start_date = date('now')) ELSE 0 END,
 
         drinks_total_income = CASE 
-        WHEN (SELECT sum(total_price) FROM Warehouse INNER JOIN Orders ON Warehouse.item_id = Orders.warehouse_item_id AND item_type = 'Drink' AND order_date = date('now')) NOTNULL 
-        THEN (SELECT sum(total_price) FROM Warehouse INNER JOIN Orders ON Warehouse.item_id = Orders.warehouse_item_id AND item_type = 'Drink' AND order_date = date('now')) 
+        WHEN (SELECT sum(Orders_items.price) FROM Orders_items INNER JOIN Warehouse ON Warehouse.item_id = Orders_items.item_id AND Orders_items.offer_id ISNULL AND item_type = 'Drink' AND date = date('now')) NOTNULL 
+        THEN (SELECT sum(Orders_items.price) FROM Orders_items INNER JOIN Warehouse ON Warehouse.item_id = Orders_items.item_id AND Orders_items.offer_id ISNULL AND item_type = 'Drink' AND date = date('now')) 
         ELSE 0 
         END, 
 
         food_total_income = CASE 
-        WHEN (SELECT sum(total_price) FROM Warehouse INNER JOIN Orders ON Warehouse.item_id = Orders.warehouse_item_id AND item_type = 'Food' AND order_date = date('now')) NOTNULL 
-        THEN (SELECT sum(total_price) FROM Warehouse INNER JOIN Orders ON Warehouse.item_id = Orders.warehouse_item_id AND item_type = 'Food' AND order_date = date('now')) 
+        WHEN (SELECT sum(Orders_items.price) FROM Orders_items INNER JOIN Warehouse ON Warehouse.item_id = Orders_items.item_id AND Orders_items.offer_id ISNULL AND item_type = 'Food' AND date = date('now')) NOTNULL 
+        THEN (SELECT sum(Orders_items.price) FROM Orders_items INNER JOIN Warehouse ON Warehouse.item_id = Orders_items.item_id AND Orders_items.offer_id ISNULL AND item_type = 'Food' AND date = date('now')) 
+        ELSE 0 
+        END,
+
+        offers_total_income = CASE 
+        WHEN (SELECT sum(Offers.offer_price) FROM Orders_items INNER JOIN Offers ON Orders_items.offer_id = Offers.offer_id GROUP BY Orders_items.offer_id HAVING date = date('now')) NOTNULL 
+        THEN (SELECT sum(Offers.offer_price) FROM Orders_items INNER JOIN Offers ON Orders_items.offer_id = Offers.offer_id GROUP BY Orders_items.offer_id HAVING date = date('now')) 
         ELSE 0 
         END,
 

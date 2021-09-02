@@ -381,11 +381,15 @@ class OrdersModel(QSqlRelationalTableModel):
     def addOrder(self, data : list):
 
         order_data = data[0]
+        offer_id = order_data[2]
         customer_id = retrieveDailyId(order_data[0], db = self.db)
+        order_type = order_data[1]
         order_price = data[2]
-        order_data = [customer_id, order_data[1], order_price]
-
         items_data = data[1]
+
+        data = [customer_id, order_data[1], order_price]
+        
+
 
         #     # Handle exceed quantity error
         #     available = retrieveItemAvailabelQuantity(item_id, self.db)
@@ -411,7 +415,7 @@ class OrdersModel(QSqlRelationalTableModel):
 
         # Take only the colums that suitable for data list length
         columns = ['daily_name', 'order_type', 'order_price']
-        for col_ind, field in enumerate(order_data):
+        for col_ind, field in enumerate(data):
             col = self.fieldIndex(columns[col_ind])
             self.setData(self.index(row, col), field, Qt.EditRole)
             
@@ -421,8 +425,8 @@ class OrdersModel(QSqlRelationalTableModel):
         # Link order with its items
         order_id = self.query().lastInsertId()
         for item_name, quantity in items_data:
-            linkOrderItems(order_id, item_name, quantity, db=self.db)
-
+            linkOrderItems(order_id, item_name, quantity, offer_id, db=self.db)
+        
         self.select()
 
         return ret
@@ -643,7 +647,7 @@ class OffersModel(QSqlTableModel):
     def addOffer(self, data : list):
         
         offer_data = data[0]
-        items_name = data[1]
+        items_quantities = data[1]
         
         # Insert new row
         row = self.rowCount()
@@ -661,8 +665,8 @@ class OffersModel(QSqlTableModel):
 
         # Link offer with related items
         offer_id = self.query().lastInsertId()
-        for item_name in items_name:
-            linkOfferItems(offer_id, item_name, db = self.db)
+        for item_name, quantity in items_quantities:
+            linkOfferItems(offer_id, item_name, quantity, db = self.db)
 
         self.select()
 
@@ -1038,23 +1042,24 @@ class ReportsModel(QSqlQueryModel):
 
         elif(filter == 'يومي'):
             # headers = ('اليوم','زبون يومي','اشتراكات يومية','مشترك شهري','اشتراكات شهرية','إيراد المشروب','إيراد الطعام','الاجمالي')
-            headers = ('Day','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue','Total')
+            headers = ('Day','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue', 'Total', 'Offers total income')
           
             STATEMENT = \
                 """
-                    SELECT date, numbers_of_daily_customers, daily_subscribtion_income, numbers_of_monthly_customers, monthly_subscribtion_income, drinks_total_income, food_total_income, total_income FROM Reports WHERE 1
+                SELECT date, numbers_of_daily_customers, daily_subscribtion_income, numbers_of_monthly_customers, monthly_subscribtion_income, drinks_total_income, food_total_income, total_income, offers_total_income FROM Reports WHERE 1
                 """
 
         elif (filter == 'شهري'):
             # headers = ('الشهر','زبون يومي','اشتراكات يومية','مشترك شهري','اشتراكات شهرية','إيراد المشروب','إيراد الطعام','الاجمالي')
-            headers = ('Month','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue','Total')
+            headers = ('Month','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue','Total', 'Offers total income')
     
             STATEMENT = \
                 """
                 
                 SELECT strftime('%m', Reports.date) AS month, sum(numbers_of_daily_customers), sum(daily_subscribtion_income), 
                     sum(numbers_of_monthly_customers), sum(monthly_subscribtion_income),
-                    sum(drinks_total_income), sum(food_total_income), sum(total_income)
+                    sum(drinks_total_income), sum(food_total_income), sum(total_income),
+                    sum(offers_total_income)
                 
                 FROM Reports GROUP BY strftime('%m', Reports.date)
 
@@ -1063,14 +1068,15 @@ class ReportsModel(QSqlQueryModel):
         
         elif (filter == 'سنوي'):
             # headers = ('السنة','زبون يومي','اشتراكات يومية','مشترك شهري','اشتراكات شهرية','إيراد المشروب','إيراد الطعام','الاجمالي')
-            headers = ('Year','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue','Total')
+            headers = ('Year','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue','Total', 'Offers total income')
 
             STATEMENT = \
                 """
                 
                 SELECT strftime('%Y', Reports.date) AS year, sum(numbers_of_daily_customers), sum(daily_subscribtion_income), 
                     sum(numbers_of_monthly_customers), sum(monthly_subscribtion_income),
-                    sum(drinks_total_income), sum(food_total_income), sum(total_income)
+                    sum(drinks_total_income), sum(food_total_income), sum(total_income),
+                    sum(offers_total_income)
                 FROM Reports
 
 

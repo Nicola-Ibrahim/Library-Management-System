@@ -853,7 +853,7 @@ QPushButton:pressed{
         <widget class="QStackedWidget" name="buttons_stackedWidget">
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>300</width>
            <height>0</height>
           </size>
          </property>
@@ -868,7 +868,7 @@ border-color: rgb(244, 154, 32);
 }</string>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="dailyAndarchive_buttons_tab">
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -918,8 +918,8 @@ border-color: rgb(244, 154, 32);
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -975,8 +975,8 @@ QPushButton:disabled{
                <widget class="QPushButton" name="monthly_subscrib_btn">
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1033,8 +1033,8 @@ QPushButton:disabled{
                <widget class="QPushButton" name="orders_btn">
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1147,8 +1147,8 @@ QPushButton:disabled{
                <widget class="QPushButton" name="warehouse_btn">
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1204,8 +1204,8 @@ QPushButton:disabled{
                <widget class="QPushButton" name="reports_btn">
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1261,8 +1261,8 @@ QPushButton:disabled{
                <widget class="QPushButton" name="employees_btn">
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1318,8 +1318,8 @@ QPushButton:disabled{
                <widget class="QPushButton" name="offers_btn">
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1375,8 +1375,8 @@ QPushButton:disabled{
                <widget class="QPushButton" name="shifts_btn">
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1432,8 +1432,8 @@ QPushButton:disabled{
                <widget class="QPushButton" name="copy_delete_btn">
                 <property name="minimumSize">
                  <size>
-                  <width>70</width>
-                  <height>70</height>
+                  <width>300</width>
+                  <height>75</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -1624,6 +1624,46 @@ QPushButton:pressed{
         </widget>
        </item>
        <item>
+        <widget class="QFrame" name="Shift_error_frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QFrame{
+	border:2px solid rgb(244, 154, 32);
+	border-radius: 20px;
+}
+
+QLabel{
+	border:none;
+	font: 20pt &quot;MS Shell Dlg 2&quot;;
+	color: rgb(244, 154, 32);
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_47">
+          <item>
+           <widget class="QLabel" name="label_46">
+            <property name="text">
+             <string>Please start a new shift </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QFrame" name="frame_29">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1662,7 +1702,7 @@ QPushButton:pressed{
              <enum>QFrame::Plain</enum>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>6</number>
             </property>
             <widget class="QWidget" name="daily_customers_properties_panel">
              <property name="styleSheet">
@@ -4223,7 +4263,7 @@ QPushButton:pressed{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>8</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -4254,9 +4294,25 @@ QPushButton:pressed{
               <property name="horizontalSpacing">
                <number>0</number>
               </property>
-              <property name="verticalSpacing">
-               <number>50</number>
-              </property>
+              <item row="4" column="1">
+               <widget class="QLabel" name="label_17">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
+	color:rgb(244, 154, 32);
+	
+	font: 100 italic 13pt &quot;Segoe UI&quot;;
+	padding:5px;
+	background-color: rgba(255, 255, 255, 40);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Created by Eng. Nicola Ibrahim</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
               <item row="1" column="1" alignment="Qt::AlignHCenter|Qt::AlignTop">
                <widget class="QFrame" name="frame_9">
                 <property name="minimumSize">
@@ -4284,28 +4340,10 @@ image: url(:/icons/icons/studyzone-logo.png);
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
+                <layout class="QGridLayout" name="gridLayout_5"/>
                </widget>
               </item>
-              <item row="3" column="1">
-               <widget class="QLabel" name="label_17">
-                <property name="styleSheet">
-                 <string notr="true">QLabel{
-	color:rgb(244, 154, 32);
-	
-	font: 100 italic 13pt &quot;Segoe UI&quot;;
-	padding:5px;
-	background-color: rgba(255, 255, 255, 40);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Created by Eng. Nicola Ibrahim</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1" alignment="Qt::AlignHCenter">
+              <item row="3" column="1" alignment="Qt::AlignHCenter">
                <widget class="QFrame" name="frame">
                 <property name="minimumSize">
                  <size>
@@ -4627,6 +4665,19 @@ QPushButton:pressed{
                  </item>
                 </layout>
                </widget>
+              </item>
+              <item row="2" column="1">
+               <spacer name="verticalSpacer_28">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </widget>
@@ -5570,8 +5621,8 @@ QPushButton:pressed{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
-                      <height>500</height>
+                      <width>45</width>
+                      <height>479</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -5861,48 +5912,6 @@ background-color: rgb(244, 154, 32);
                         </layout>
                        </item>
                        <item>
-                        <layout class="QVBoxLayout" name="verticalLayout_47">
-                         <property name="spacing">
-                          <number>7</number>
-                         </property>
-                         <item>
-                          <widget class="QLabel" name="label_46">
-                           <property name="styleSheet">
-                            <string notr="true">QLabel{
-	color: rgb(200, 200, 200);
-}</string>
-                           </property>
-                           <property name="text">
-                            <string>By Item Name</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <layout class="QHBoxLayout" name="horizontalLayout_27">
-                           <property name="spacing">
-                            <number>4</number>
-                           </property>
-                           <item>
-                            <widget class="QLineEdit" name="orders_item_name_filter_txt">
-                             <property name="minimumSize">
-                              <size>
-                               <width>300</width>
-                               <height>40</height>
-                              </size>
-                             </property>
-                             <property name="maximumSize">
-                              <size>
-                               <width>300</width>
-                               <height>16777215</height>
-                              </size>
-                             </property>
-                            </widget>
-                           </item>
-                          </layout>
-                         </item>
-                        </layout>
-                       </item>
-                       <item>
                         <layout class="QVBoxLayout" name="verticalLayout_43">
                          <property name="spacing">
                           <number>7</number>
@@ -5915,7 +5924,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Item Type</string>
+                            <string>By Order Type</string>
                            </property>
                           </widget>
                          </item>
@@ -5925,7 +5934,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QComboBox" name="orders_item_type_filter_comboBox">
+                            <widget class="QComboBox" name="orders_type_filter_comboBox">
                              <property name="minimumSize">
                               <size>
                                <width>300</width>
@@ -7312,14 +7321,11 @@ background-color: rgb(244, 154, 32);
                     <bool>true</bool>
                    </property>
                    <property name="selectionBehavior">
-                    <enum>QAbstractItemView::SelectRows</enum>
+                    <enum>QAbstractItemView::SelectColumns</enum>
                    </property>
-                   <attribute name="verticalHeaderDefaultSectionSize">
-                    <number>40</number>
-                   </attribute>
-                   <attribute name="verticalHeaderMinimumSectionSize">
-                    <number>40</number>
-                   </attribute>
+                   <property name="cornerButtonEnabled">
+                    <bool>false</bool>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -8232,8 +8238,8 @@ QPushButton:pressed{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
-                      <height>500</height>
+                      <width>45</width>
+                      <height>479</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_41">
@@ -8658,7 +8664,7 @@ background-color: rgb(244, 154, 32);
                <widget class="QFrame" name="frame_69">
                 <property name="maximumSize">
                  <size>
-                  <width>500</width>
+                  <width>0</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -8832,36 +8838,83 @@ QPushButton:pressed{
                   </layout>
                  </item>
                  <item>
-                  <widget class="QFrame" name="frame_70">
+                  <widget class="QScrollArea" name="scrollArea_3">
                    <property name="minimumSize">
                     <size>
-                     <width>450</width>
-                     <height>0</height>
+                     <width>500</width>
+                     <height>400</height>
                     </size>
                    </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
+                   <property name="widgetResizable">
+                    <bool>true</bool>
                    </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_98">
-                    <property name="spacing">
-                     <number>0</number>
+                   <widget class="QWidget" name="scrollAreaWidgetContents_3">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>0</y>
+                      <width>500</width>
+                      <height>400</height>
+                     </rect>
                     </property>
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
-                   </layout>
+                    <layout class="QVBoxLayout" name="verticalLayout_57">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>25</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QFrame" name="shift_employees_frame">
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QVBoxLayout" name="verticalLayout_98">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="verticalSpacer_29">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </widget>
                   </widget>
                  </item>
                  <item>
@@ -9186,43 +9239,10 @@ background-color: rgb(244, 154, 32);
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="frame_43">
-                   <property name="maximumSize">
-                    <size>
-                     <width>400</width>
-                     <height>16777215</height>
-                    </size>
+                  <widget class="QTreeView" name="shifts_supervisors_treeView">
+                   <property name="locale">
+                    <locale language="English" country="UnitedStates"/>
                    </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_102">
-                    <property name="spacing">
-                     <number>11</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
-                    <item>
-                     <widget class="QTreeView" name="shifts_supervisors_treeView">
-                      <property name="locale">
-                       <locale language="English" country="UnitedStates"/>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
                   </widget>
                  </item>
                 </layout>

@@ -17,7 +17,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSql import QSqlRelationalDelegate
 
 
-from .database import changeSubsCost, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveItemsOfferId, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveSuperviosrsJobType, retrieveSupervisorsNames, startShift, updateReports
+from .database import changeSubsCost, checkShiftActive, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveItemsOfferId, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveOrderType, retrieveSuperviosrsJobType, retrieveSupervisorsNames, startShift, updateReports
 from .model import *
 
 # from PyQt5.uic import loadUiType
@@ -39,15 +39,17 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.supervisor_job_type = "Manager"
-
+        self.offer_id = None
+        
         # DB connections
         self.daily_conn = daily_conn
         self.archive_conn = archive_conn
         
+        
         # Flags
-        self.DAILY_TABLES_FLAG = False
-        self.ARCHIVE_TABLES_FLAG = False
-        self.SETTINGS_TABLES_FLAG = False
+        self._DAILY_TABLES_FLAG = False
+        self._ARCHIVE_TABLES_FLAG = False
+        self._SETTINGS_TABLES_FLAG = False
 
         # Create model obejects 
         self.daily_customers_model = None
@@ -141,9 +143,11 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.employees_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
         self.employees_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
         
-        self.reports_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        self.reports_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+        self.reports_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
         self.reports_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
         self.reports_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
+        # self.reports_tableView.resizeColumnsToContents()
 
 
         self.shifts_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
@@ -178,7 +182,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customer_edit_cost_btn.setEnabled(self.supervisor_job_type == 'Manager')
         self.monthly_customer_export_btn.setEnabled(self.supervisor_job_type == 'Manager')
         self.settings_btn.setEnabled(self.supervisor_job_type == 'Manager')
-               
+      
+        
     def regexValidation(self):
         """Apply regular expression to some UI elements"""
         # Arabic names regular expression
@@ -220,9 +225,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customer_subsState_filter_comboBox.addItems(['']+ retrieveMonthlySubsState(db))
         self.monthly_customer_subsState_filter_comboBox.setCurrentIndex(0)
         
-        self.orders_item_type_filter_comboBox.clear()
-        self.orders_item_type_filter_comboBox.addItems(['']+ retrieveItemType(db))
-        self.orders_item_type_filter_comboBox.setCurrentIndex(0)
+        self.orders_type_filter_comboBox.clear()
+        self.orders_type_filter_comboBox.addItems(['']+ retrieveOrderType(db))
+        self.orders_type_filter_comboBox.setCurrentIndex(0)
 
     def initialSettingsComboBoxs(self):
         self.warehouse_item_type_filter_comboBox.clear()
@@ -291,7 +296,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.logout_btn.clicked.connect(self.BackToMain)
         self.exit_btn.clicked.connect(self.close)
 
-        self.menu_btn.clicked.connect(lambda : self.toggleMainButtonsMenu(self.main_buttons_frame,310,True))
+        self.menu_btn.clicked.connect(lambda : self.toggleMainButtonsMenu(self.main_buttons_frame,300,True))
 
         # tabWidget buttons
         self.daily_customers_btn.clicked.connect(self.showDailyCustomers)
@@ -338,10 +343,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.plus_order_btn.clicked.connect(self.plusOrder)
         self.order_search_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.date_treeview_panel, 300, True))
         self.orders_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name : self.orders_sort_model.setCustomerNameFilter(customer_name))
-        self.orders_item_name_filter_txt.textChanged['QString'].connect(lambda item_name : self.orders_sort_model.setItemNameFilter(item_name))
-        self.orders_item_type_filter_comboBox.currentTextChanged['QString'].connect(lambda item_type : self.orders_sort_model.setItemTypeFilter(item_type))
+        self.orders_type_filter_comboBox.currentTextChanged['QString'].connect(lambda item_type : self.orders_sort_model.setItemTypeFilter(item_type))
         self.order_clear_btn.clicked.connect(self.clearOrderFitlers)
-        
+        self.order_sell_type_comboBox.currentTextChanged['QString'].connect(self.setTotalOrderPrice)
 
         # Warehouse tab buttons
         self.warehouse_item_add_btn2.clicked.connect(lambda : self.toggleMenuMaxWidth(self.frame_24,500, True))
@@ -416,7 +420,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             self.animation.start()
 
-  
     def toggleMainButtonsMenu(self, frame, maxWidth, enable):
         if enable:
     
@@ -467,28 +470,54 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
             self.animation.start()
             
-            
-
-    def toggleMenuMinHeight(self, frame, minHeight, enable):
+    def toggleMenuMaxHeight(self, frame, maxHeight, enable):
         if enable:
+            standard_height = 0
     
             # GET WIDTH
             height = frame.height()
-            standard_height = 0
 
             # SET MAX WIDTH
             if height == 100:
-                heightExtended = minHeight
+                heightExtended = maxHeight
+            
+            elif(maxHeight == 0):
+                heightExtended = 0
+
             else:
                 heightExtended = standard_height
             
+           
             #  height ANIMATION
-            self.animation = QtCore.QPropertyAnimation(frame, b"minimumHeight")
+            self.animation = QtCore.QPropertyAnimation(frame, b"maximumHeight")
             self.animation.setDuration(250)
             self.animation.setStartValue(height)
             self.animation.setEndValue(heightExtended)
             self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
-            self.animation.start()
+            self.group = QtCore.QSequentialAnimationGroup(self)
+            self.group.addAnimation(self.animation)
+            self.group.start()
+
+    def slideShiftErrorFrame(self, maxHeight, enable):
+        if enable:
+    
+            # GET WIDTH
+            height = self.Shift_error_frame.height()
+
+            # SET MAX WIDTH
+            heightExtended = maxHeight
+
+            # width ANIMATION
+            self.animation = QtCore.QPropertyAnimation(self.Shift_error_frame, b"maximumHeight")
+            self.animation.setDuration(250)
+            self.animation.setStartValue(height)
+            self.animation.setEndValue(heightExtended)
+            self.animation.setEasingCurve(QtCore.QEasingCurve.OutQuad)
+
+            self.group = QtCore.QSequentialAnimationGroup(self)
+            self.group.addAnimation(self.animation)
+            self.group.start()
+
 
     ##########
     # BackToMain # 
@@ -509,9 +538,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.blur.setBlurRadius(0)
 
         # Reset the FLAGS
-        self.DAILY_TABLES_FLAG = False
-        self.ARCHIVE_TABLES_FLAG = False
-        self.SETTINGS_TABLES_FLAG = False
+        self._DAILY_TABLES_FLAG = False
+        self._ARCHIVE_TABLES_FLAG = False
+        self._SETTINGS_TABLES_FLAG = False
 
     ###################
     # Copy and Delete #
@@ -532,8 +561,12 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     ##########
     def dailyPanel(self):
         """Open daily panel"""
+        
+        # Check if any shift is started or not
+        if(not self.isAnyShiftActive()):
+            return
 
-        self.DAILY_TABLES_FLAG = True
+        self._DAILY_TABLES_FLAG = True
         self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
         self.panel_title_lbl.setText('Daily')
         
@@ -567,7 +600,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def archivePanel(self):
         """Open acrchive panel"""
 
-        self.ARCHIVE_TABLES_FLAG = True
+        # hide shift error frame
+        self.slideShiftErrorFrame(0, True)
+
+        self._ARCHIVE_TABLES_FLAG = True
         self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
         self.panel_title_lbl.setText('Archive')  
 
@@ -602,7 +638,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def settingsPanel(self):
         """Open settings panel"""
 
-        self.SETTINGS_TABLES_FLAG = True
+        # hide shift error frame
+        self.slideShiftErrorFrame(0, True)
+        
+        self._SETTINGS_TABLES_FLAG = True
         self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
         self.panel_title_lbl.setText('Settings')  
         
@@ -623,7 +662,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def setViewModel(self):
         
-        if(self.DAILY_TABLES_FLAG == True):
+        if(self._DAILY_TABLES_FLAG == True):
             self.daily_customers_model = DailyCustomersModel(self.daily_conn, self)
             self.monthly_customers_model = MonthlyCustomersModel(self.daily_conn)
             self.orders_model = OrdersModel(self.daily_conn)
@@ -632,7 +671,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.monthly_customers_sort_model = MonthlyCustomersSortModel(self.monthly_customers_model)
             self.orders_sort_model = OrdersSortModel(self.orders_model)
 
-        elif(self.ARCHIVE_TABLES_FLAG == True):
+        elif(self._ARCHIVE_TABLES_FLAG == True):
             self.daily_customers_model = DailyCustomersModel(self.archive_conn)
             self.monthly_customers_model = MonthlyCustomersModel(self.archive_conn)
             self.orders_model = OrdersModel(self.archive_conn)
@@ -641,7 +680,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.monthly_customers_sort_model = MonthlyCustomersSortModel(self.monthly_customers_model)
             self.orders_sort_model = OrdersSortModel(self.orders_model)
 
-        elif(self.SETTINGS_TABLES_FLAG == True):
+        elif(self._SETTINGS_TABLES_FLAG == True):
             self.warehouse_model = WarehouseModel(self.daily_conn)
             self.employees_model = EmployeesModel(self.daily_conn)
             self.shifts_model = ShiftsModel(self.daily_conn)
@@ -662,7 +701,18 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.settings_btn.setEnabled(False)
         self.exit_btn.setEnabled(False)
     
-    
+    def isAnyShiftActive(self):
+        ret = checkShiftActive(db = self.daily_conn)
+        if(ret == 1):
+            self.slideShiftErrorFrame(0, True)
+            return True
+
+        elif(ret == 0):
+            self.slideShiftErrorFrame(100, True)
+            return False
+        
+        
+
     ###################
     # Daily customers #
     ###################
@@ -679,14 +729,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.setViewModel()
 
-        if(self.ARCHIVE_TABLES_FLAG):
+        if(self._ARCHIVE_TABLES_FLAG):
             self.showYMDs(self.archive_conn, 'Daily_customers', 'daily_date')
 
         self.daily_customers_tableView.setModel(self.daily_customers_sort_model)
         self.daily_customers_tableView.setItemDelegate(QSqlRelationalDelegate(self.daily_customers_tableView))
         self.daily_customers_tableView.hideColumn(0)
         self.daily_customers_tableView.hideColumn(4)
-        # self.daily_customers_tableView.resizeColumnsToContents()
 
         # Set on Daily customers tab widget
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'daily_customers_tab'))
@@ -718,9 +767,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             updateReports(db =self.daily_conn)
 
             # Reinitial the comboBoxs
-            if(self.DAILY_TABLES_FLAG == True):
+            if(self._DAILY_TABLES_FLAG == True):
                 self.initialComboBoxs(self.daily_conn)
-            elif(self.ARCHIVE_TABLES_FLAG == True):
+            elif(self._ARCHIVE_TABLES_FLAG == True):
                 self.initialComboBoxs(self.archive_conn)
 
         else:
@@ -753,9 +802,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
             
                 # Create a worker thread
-                if(self.DAILY_TABLES_FLAG):
+                if(self._DAILY_TABLES_FLAG):
                     con = self.daily_conn
-                elif(self.ARCHIVE_TABLES_FLAG):
+                elif(self._ARCHIVE_TABLES_FLAG):
                     con = self.archive_conn
 
                 worker = Worker(con, 'Daily_customers', 'daily_id', rows_indices)
@@ -838,7 +887,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Show all monthly customers from Monthly table"""
         self.setViewModel()
 
-        if(self.ARCHIVE_TABLES_FLAG):
+        if(self._ARCHIVE_TABLES_FLAG):
             self.showYMDs(self.archive_conn, 'Monthly_customers', 'start_date')
 
         self.monthly_customers_tableView.setModel(self.monthly_customers_sort_model)
@@ -879,9 +928,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             updateReports(db =self.daily_conn)
 
             # Reinitial the comboBoxs
-            if(self.DAILY_TABLES_FLAG == True):
+            if(self._DAILY_TABLES_FLAG == True):
                 self.initialComboBoxs(self.daily_conn)
-            elif(self.ARCHIVE_TABLES_FLAG == True):
+            elif(self._ARCHIVE_TABLES_FLAG == True):
                 self.initialComboBoxs(self.archive_conn)
 
 
@@ -915,9 +964,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 
 
                 # Create a worker thread
-                if(self.DAILY_TABLES_FLAG):
+                if(self._DAILY_TABLES_FLAG):
                     con = self.daily_conn
-                elif(self.ARCHIVE_TABLES_FLAG):
+                elif(self._ARCHIVE_TABLES_FLAG):
                     con = self.archive_conn
 
                 worker = Worker(con, 'Monthly_customers', 'monthly_id', rows_indices)
@@ -984,7 +1033,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Show all Orders from Orders table"""  
         self.setViewModel()
 
-        if(self.ARCHIVE_TABLES_FLAG):
+        if(self._ARCHIVE_TABLES_FLAG):
             self.showYMDs(self.archive_conn, 'Orders', 'order_date')
 
 
@@ -1038,7 +1087,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Iterate to add customer's orders_model
         items_data = [(order_comboBox.currentText(), quantity_txt.text()) for order_comboBox, quantity_txt in zip(order_comboBox_lst, order_quantity_txt_lst)]
         
-        data = [(self.customer_name_txt2.text(), self.order_sell_type_comboBox.currentText()), items_data, int(self.total_price_lbl.text())]
+        data = [(self.customer_name_txt2.text(), self.order_sell_type_comboBox.currentText(), self.offer_id), items_data, int(self.total_price_lbl.text())]
 
         ret = self.orders_model.addOrder(data)
 
@@ -1058,6 +1107,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             # Resest orders_number variable
             self._order_item_number = 0
+            self.offer_id = None
 
             # Insert an empty order
             self.plusOrder()
@@ -1066,16 +1116,15 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             updateReports(db =self.daily_conn)
 
             # Reinitial the comboBoxs
-            if(self.DAILY_TABLES_FLAG == True):
+            if(self._DAILY_TABLES_FLAG == True):
                 self.initialComboBoxs(self.daily_conn)
-            elif(self.ARCHIVE_TABLES_FLAG == True):
+            elif(self._ARCHIVE_TABLES_FLAG == True):
                 self.initialComboBoxs(self.archive_conn)
 
             # Reset total price label and customer name
             self.total_price_lbl.setText(str(0))
             self.customer_name_txt2.setText('')
-
-   
+ 
     def removeOrder(self):
         """Remove order from Orders table"""
         rows_indices = self.orders_tableView.selectionModel().selectedRows()
@@ -1095,9 +1144,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 
             
                 # Create a worker thread
-                if(self.DAILY_TABLES_FLAG):
+                if(self._DAILY_TABLES_FLAG):
                     con = self.daily_conn
-                elif(self.ARCHIVE_TABLES_FLAG):
+                elif(self._ARCHIVE_TABLES_FLAG):
                     con = self.archive_conn
 
                 worker = Worker(con, 'Orders', 'order_id', rows_indices)
@@ -1253,18 +1302,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "}\n"
             "")
 
-        # icon = QtGui.QIcon()
-        # icon.addPixmap(QtGui.QPixmap(":/icons/icons/cancel.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        # delete_btn.setIcon(icon)
-        # delete_btn.setIconSize(QtCore.QSize(20, 20))
         horizontalLayout.addWidget(delete_btn)
 
-
-        # # Create vertical spacer and add it to main frame 
-        # spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-
-        # # Add layout to the order panel
-        # order_frame_verticalLayout.addItem(spacerItem)
+        # Add layout to the order panel
         order_frame_verticalLayout.addLayout(horizontalLayout)
         
 
@@ -1318,19 +1358,19 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if the item is selected previously 
         selected_items_name = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
 
-        if(retrieveItemId(selected_item.currentText(), db = self.daily_conn) is None):
-            QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Not found")
-            selected_item.setStyleSheet(
-            "QComboBox{\n"
-            "border-width:0px 0px 4px 0px;\n"
-            "border-style: solid;\n"
-            "border-radius:0px;\n"
-            "border-color: rgb(255, 255, 0);\n"
-            "}"
-            )
-            quntity_txtBox.setEnabled(False)
+        # if(retrieveItemId(selected_item.currentText(), db = self.daily_conn) is None):
+        #     QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Not found")
+        #     selected_item.setStyleSheet(
+        #     "QComboBox{\n"
+        #     "border-width:0px 0px 4px 0px;\n"
+        #     "border-style: solid;\n"
+        #     "border-radius:0px;\n"
+        #     "border-color: rgb(255, 255, 0);\n"
+        #     "}"
+        #     )
+        #     quntity_txtBox.setEnabled(False)
 
-        elif(selected_item.currentText()==''):
+        if(selected_item.currentText()==''):
             selected_item.setStyleSheet(
             "QComboBox{\n"
             "border-width:0px 0px 4px 0px;\n"
@@ -1356,6 +1396,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # Disable editing quantity text 
             quntity_txtBox.setEnabled(False)
             quntity_txtBox.setText('')
+        
+        else:
+            self.checkOfferAvailable()
  
     def setOrderItemPrice(self, combo_selected_item, price_lbl, quntity_txt):
         """Get the item price and add it to label"""
@@ -1375,7 +1418,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         quntity_txt.setEnabled(True)
 
     def checkOrderItemQauntity(self, combo_selected_item, quantity_txt):
-        offer_id = None
         if(quantity_txt.text() ==''):
             return
 
@@ -1406,56 +1448,64 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "")
             self.order_add_btn.setEnabled(True)
 
-            
-            # Check if the selected items have an offer
-            selected_items_name = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
-            selected_items_ids = [retrieveItemId(item_name, self.daily_conn) for item_name in selected_items_name]
-            
-            quans = self.orders_items_frame.findChildren(QtWidgets.QLineEdit)
+            self.checkOfferAvailable()
 
-            # Check if all quantities text box are enabled
-            enabled = list(map(lambda x : x.isEnabled(), quans))
-            if(False in enabled):
-                return
-                
-            quantities = [quans[i].text() for i in range(len(quans)) if (i%2 != 0)]
-            quantities_int = [int(quantity) for quantity in quantities if(quantity.isdigit())]
+    def checkOfferAvailable(self): 
 
+        # Check if the selected items have an offer
+        selected_items_name = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
+        selected_items_ids = [retrieveItemId(item_name, self.daily_conn) for item_name in selected_items_name]
+        
+        quans = self.orders_items_frame.findChildren(QtWidgets.QLineEdit)
+
+        # Check if all quantities text box are enabled
+        enabled = list(map(lambda x : x.isEnabled(), quans))
+        if(False in enabled):
+            self.offer_id = None
+            return
             
-            for offer_key, items_key in retrieveOffersItems(with_date= False, with_quantity=True, db = self.daily_conn).items():
-                
-                quan = [item for sublist in list(items_key.values()) for item in sublist]
-                if(list(items_key.keys()) == sorted(selected_items_ids)):
-                    if(quan == sorted(quantities_int)):
-                        offer_id = offer_key
-                            
-                        for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
-                            item.setStyleSheet(
-                            "QComboBox{\n"
-                            "border-width:0px 0px 4px 0px;\n"
-                            "border-style: solid;\n"
-                            "border-radius:0px;\n"
-                            "border-color: rgb(0, 255, 0);\n"
-                            "}"
-                            )
+        quantities = [quans[i].text() for i in range(len(quans)) if (i%2 != 0)]
+        quantities_int = [int(quantity) for quantity in quantities if(quantity.isdigit())]
+
+        
+        for offer_key, items_key in retrieveOffersItems(with_date= False, with_quantity=True, db = self.daily_conn).items():
+            
+            quan = [item for sublist in list(items_key.values()) for item in sublist]
+            if(list(items_key.keys()) == sorted(selected_items_ids)):
+                if(quan == quantities_int):
+                    self.offer_id = offer_key
                         
-                    else:
-                        offer_id = None
-                        for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
-                            item.setStyleSheet(
-                            "QComboBox{\n"
-                            "border-width:0px 0px 4px 0px;\n"
-                            "border-style: solid;\n"
-                            "border-radius:0px;\n"
-                            "border-color: rgb(255, 170, 0);\n"
-                            "}"
-                            )
+                    for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
+                        item.setStyleSheet(
+                        "QComboBox{\n"
+                        "border-width:0px 0px 4px 0px;\n"
+                        "border-style: solid;\n"
+                        "border-radius:0px;\n"
+                        "border-color: rgb(0, 255, 0);\n"
+                        "}"
+                        )
+                    
+                else:
+                    self.offer_id = None
+                    for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
+                        item.setStyleSheet(
+                        "QComboBox{\n"
+                        "border-width:0px 0px 4px 0px;\n"
+                        "border-style: solid;\n"
+                        "border-radius:0px;\n"
+                        "border-color: rgb(255, 170, 0);\n"
+                        "}"
+                        )
 
             # Change the total price
-            self.setTotalOrderPrice(offer_id)
+            self.setTotalOrderPrice(self.offer_id)
 
     def setTotalOrderPrice(self, offer_id = None):
         """Calculate the items selected total price"""
+        
+        if(self.order_sell_type_comboBox.currentText()=='ضيافة'):
+            self.total_price_lbl.setText('0')
+            return
 
         # Take children of order register panel (Items and quantities)
         selected_items_name = self.orders_items_frame.findChildren(QtWidgets.QComboBox)
@@ -1483,8 +1533,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def clearOrderFitlers(self):
     
         self.orders_customer_name_filter_txt.setText('')
-        self.orders_item_name_filter_txt.setText('')
-        self.orders_item_type_filter_comboBox.setCurrentText('')
+        self.orders_type_filter_comboBox.setCurrentText('')
         self.orders_sort_model.setDateFilter('')
 
     def deleteOrderFrame(self, frame):
@@ -1554,7 +1603,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Show all items from Warehouse table"""
 
         # If Daily panel is opend then we can make change to date (add, edit, ...)
-        if(self.SETTINGS_TABLES_FLAG == True):
+        if(self._SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'warehouse_properties_panel'))
             self.toggleStackWidget(75, True)
 
@@ -1687,7 +1736,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def showOffers(self):        
         """Show all items from offers table"""
 
-        if(self.SETTINGS_TABLES_FLAG == True):
+        if(self._SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'offers_properties_panel'))
             self.toggleStackWidget(75, True)
 
@@ -1726,20 +1775,33 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.offer_price_txt.setFocus()
             QtWidgets.QToolTip.showText(self.offer_price_txt.mapToGlobal(QtCore.QPoint(0,30)),"Enter offer price")
             return
-    
+        
         # Take children of offer register panel 
         selected_items = self.offers_items_frame.findChildren(QtWidgets.QComboBox)
+        quantities = self.offers_items_frame.findChildren(QtWidgets.QLineEdit)
+
+        # Split quantity texts from other texts
+        quantities = [quantities[i] for i in range(len(quantities))if i%2 != 0]
+
 
         # Iterate to check if any Item name or quantity is empty
-        for selected_item in selected_items:
+        for selected_item, quantity in zip(selected_items,quantities):
+
             # Check if the item comboBox is empty
             if(selected_item.currentText()==""):
                 selected_item.setFocus()
                 QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Select item")
-                return   
+                return
+
+            # Check if the quantity field is empty
+            elif(quantity.text()==""):
+                quantity.setFocus()
+                QtWidgets.QToolTip.showText(quantity.mapToGlobal(QtCore.QPoint(0,30)),"Enter quantity")
+                return      
 
         # Iterate to add customer's orders_model
-        data = [(self.offer_name_txt.text(), self.offer_price_txt.text()),(selected_item.currentText() for selected_item in selected_items)]
+        items_quantities = tuple([(selected_item.currentText(), quantity.text()) for selected_item, quantity in zip(selected_items, quantities)])
+        data = [(self.offer_name_txt.text(), self.offer_price_txt.text()),items_quantities]
 
         ret = self.offers_model.addOffer(data)
         
@@ -1826,9 +1888,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         horizontalLayout.addWidget(item_number_lbl)
 
         # Add item comboBox to the layout 
-        item_comboBox = QtWidgets.QComboBox(offer_frame)
-        item_comboBox.setMinimumSize(QtCore.QSize(90, 40))
-        item_comboBox.setStyleSheet(
+        offer_item_comboBox = QtWidgets.QComboBox(offer_frame)
+        offer_item_comboBox.setMinimumSize(QtCore.QSize(90, 40))
+        offer_item_comboBox.setStyleSheet(
             "QComboBox{\n"
             "border-width:0px 0px 4px 0px;\n"
             "border-style: solid;\n"
@@ -1836,10 +1898,43 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "border-color: rgb(255, 170, 0);\n"
             "}"
             )
-        item_comboBox.setEditable(True)
-        item_comboBox.setObjectName("item_comboBox")
-        item_comboBox.setEditable(True)
-        horizontalLayout.addWidget(item_comboBox) 
+        offer_item_comboBox.setEditable(True)
+        offer_item_comboBox.setObjectName("offer_item_comboBox")
+        offer_item_comboBox.setEditable(True)
+        # Set validator on item
+        validator = QtGui.QRegularExpressionValidator(QRegularExpression("[a-zA-Zء-ي|\s]+"))
+        offer_item_comboBox.setValidator(validator)
+        horizontalLayout.addWidget(offer_item_comboBox) 
+
+        # Add quantity text to the layout
+        offer_quantity_txt = QtWidgets.QLineEdit(offer_frame)
+        offer_quantity_txt.setMinimumSize(QtCore.QSize(60, 40))
+        offer_quantity_txt.setMaximumSize(QtCore.QSize(60, 16777215))
+        offer_quantity_txt.setStyleSheet(
+            "QLineEdit{\n"
+            "    border-style: solid;\n"
+            "    border-width: 0px 0px 4px 0px;\n"
+            "    border-radius: 0px;    \n"
+            "    border-color:  rgb(244, 154, 32);\n"
+            "}\n"
+            "QLineEdit:disabled{\n"
+            "    border-style: solid;\n"
+            "    border-width: 0px 0px 4px 0px;\n"
+            "    border-radius: 0px;\n"
+            "    border-color:  rgb(244, 154, 32);\n"
+            "    background-color: rgb(142,142,142);\n"
+            "}"
+           
+
+            "")
+        offer_quantity_txt.setObjectName("offer_quantity_txt")
+        offer_quantity_txt.setEnabled(False)
+
+        # Set validator on quantity
+        validator = QtGui.QRegExpValidator(QtCore.QRegExp(r"[0-9]+"))
+        offer_quantity_txt.setValidator(validator)
+
+        horizontalLayout.addWidget(offer_quantity_txt)
 
         # Add delete current input item button to the layout
         delete_btn = QtWidgets.QPushButton(offer_frame)
@@ -1872,20 +1967,21 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.verticalLayout_45.addWidget(offer_frame)
         
         # pass on items comboBox
-        item_comboBox.addItems([''] + retrieveItemNames(db = self.daily_conn))
+        offer_item_comboBox.addItems([''] + retrieveItemNames(db = self.daily_conn))
 
         # Connect each comboBox with its label.
-        item_comboBox.currentTextChanged['QString'].connect(lambda : self.isItemExists(item_comboBox))
+        offer_item_comboBox.currentTextChanged['QString'].connect(lambda : self.isOfferItemExists(offer_item_comboBox, offer_quantity_txt))
        
 
         # pass on delete buttons to connect it with its frame.
         delete_btn.clicked.connect(lambda : self.deleteOfferFrame(offer_frame))
     
-    def isItemExists(self, item_comboBox):
+    def isOfferItemExists(self, selected_item, quntity_txtBox):
         # Check if the item is selected previously 
-        combo_selected_items = [emp.currentText() for emp in self.offers_items_frame.findChildren(QtWidgets.QComboBox)]
-        if(item_comboBox.currentText()==''):
-            item_comboBox.setStyleSheet(
+        selected_items = [emp.currentText() for emp in self.offers_items_frame.findChildren(QtWidgets.QComboBox)]
+
+        if(selected_item.currentText()==''):
+            selected_item.setStyleSheet(
             "QComboBox{\n"
             "border-width:0px 0px 4px 0px;\n"
             "border-style: solid;\n"
@@ -1893,27 +1989,36 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "border-color: rgb(255, 170, 0);\n"
             "}"
             )
+            quntity_txtBox.setEnabled(False)
+            
 
         # Check if the currently selected item is previously existed
-        elif(combo_selected_items.count(item_comboBox.currentText()) > 1):
-            QtWidgets.QToolTip.showText(item_comboBox.mapToGlobal(QtCore.QPoint(0,30)),"Selected previously")
-            item_comboBox.setStyleSheet(
+        elif(selected_items.count(selected_item.currentText()) > 1):
+            QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Selected previously")
+            selected_item.setStyleSheet(
             "border-width: 0px 0px 4px 0px;\n"
             "border-style: solid;\n"
             "border-radius:0px;\n"
             "border-color: rgb(255, 0, 0);")
+
             self.offer_add_btn.setEnabled(False)
+
+            # Disable editing quantity text 
+            quntity_txtBox.setEnabled(False)
+            quntity_txtBox.setText('')
+        
           
         # If the selected item is not selected previously
         else:
-            item_comboBox.setStyleSheet(
+            selected_item.setStyleSheet(
             "border-width: 0px 0px 4px 0px;\n"
             "border-style: solid;\n"
             "border-radius:0px;\n"
             "border-color: rgb(255, 170, 0);")
             
             self.offer_add_btn.setEnabled(True)
-  
+            quntity_txtBox.setEnabled(True)
+
     def deleteOfferFrame(self, frame):
         """Delete frame after clicking"""
 
@@ -1944,7 +2049,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setViewModel()
 
         # # If Daily panel is opend then we can make change to date (add, edit, ...)
-        if(self.SETTINGS_TABLES_FLAG == True):
+        if(self._SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'employees_properties_panel'))
 
         self.employees_tableView.setModel(self.employees_sort_model)
@@ -2055,7 +2160,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.setViewModel()
 
-        if(self.SETTINGS_TABLES_FLAG == True):
+        if(self._SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'shifts_properties_panel'))
 
         self.shifts_tableView.setModel(self.shifts_sort_model)
@@ -2081,7 +2186,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         # Take children of order register panel 
         # Item and quantity
-        combo_selected_employees = self.frame_70.findChildren(QtWidgets.QComboBox)
+        combo_selected_employees = self.shift_employees_frame.findChildren(QtWidgets.QComboBox)
 
         # Iterate to check if any Item name or quantity is empty
         for combo_selected_employee in combo_selected_employees:
@@ -2097,7 +2202,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.shifts_model.addShift(data)
         
         # Delete shift registring panel 
-        self.clearLayout(self.frame_70.layout())
+        self.clearLayout(self.shift_employees_frame.layout())
 
         # Resest employee numbers variable
         self._employee_number = 0
@@ -2116,7 +2221,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Create register order panel 
 
-        employee_frame = QtWidgets.QFrame(self.frame_70)
+        employee_frame = QtWidgets.QFrame(self.shift_employees_frame)
         employee_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
         employee_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         employee_frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -2159,7 +2264,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Add delete current input order button to the layout
         delete_btn = QtWidgets.QPushButton(employee_frame)
         delete_btn.setMinimumSize(QtCore.QSize(50, 50))
-        delete_btn.setMaximumSize(QtCore.QSize(50, 16777215))
+        delete_btn.setMaximumSize(QtCore.QSize(50, 50))
         delete_btn.setStyleSheet(
             "QPushButton{\n"
             "\n"
@@ -2202,7 +2307,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             
     def isEmpExists(self, employee_comboBox):
         # Check if the item is selected previously 
-        combo_selected_employees = [emp.currentText() for emp in self.frame_70.findChildren(QtWidgets.QComboBox)]
+        combo_selected_employees = [emp.currentText() for emp in self.shift_employees_frame.findChildren(QtWidgets.QComboBox)]
         if(employee_comboBox.currentText()==''):
             employee_comboBox.setStyleSheet(
             "QComboBox{\n"
@@ -2238,7 +2343,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Delete frame after clicking"""
 
         # Keep at least one order that shouldn't be deleted
-        if len(self.frame_70.findChildren(QtWidgets.QComboBox)) > 1:
+        if len(self.shift_employees_frame.findChildren(QtWidgets.QComboBox)) > 1:
 
             sip.delete(frame) 
 
@@ -2247,7 +2352,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             # Reset item labels name
             _translate = QtCore.QCoreApplication.translate
-            labels = [label for label in self.frame_70.findChildren(QtWidgets.QLabel) if(label.objectName() == 'employee_name_lbl')]
+            labels = [label for label in self.shift_employees_frame.findChildren(QtWidgets.QLabel) if(label.objectName() == 'employee_name_lbl')]
             for num, label in zip(range(1, self._employee_number+1),labels): 
                 label.setText(_translate("MainWindow", f"Employee : {num} "))
     
@@ -2278,6 +2383,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 worker.finished.connect(lambda : resetCounting(table = 'Shifts', column = 'shift_id', db1 = self.daily_conn))
                 worker.finished.connect(self.initialSettingsComboBoxs)
                 worker.finished.connect(self.showShiftsEmployees)
+                worker.finished.connect(self.reinitialAvailableEmpComboBox)
                 worker.finished.connect(self.Completers)
                 
                 # Start the thread
@@ -2290,6 +2396,12 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 worker.row_num_changed.connect(prog.progressBar.setValue)
                 worker.finished.connect(prog.close)
                 prog.exec()
+    
+    def reinitialAvailableEmpComboBox(self):
+        
+        employees_comboBox = self.shift_employees_frame.findChildren(QtWidgets.QComboBox)
+        for employee_comboBox in employees_comboBox:
+            employee_comboBox.addItems([''] + retrieveSupervisorsNames(db = self.daily_conn))
 
     def startShift(self):
         """Start selected shift and stop other shifts"""
@@ -2312,6 +2424,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             )
             if messageBox == QtWidgets.QMessageBox.Ok:
                 startShift(shift_id, db=self.daily_conn)
+                self.isAnyShiftActive()
                 self.showShifts()
 
     def finishShift(self):
@@ -2347,7 +2460,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
         # If Daily panel is opend then we can make change to date (add, edit, ...)
-        if(self.SETTINGS_TABLES_FLAG == True):
+        if(self._SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'reports_properties_panel'))
             self.toggleStackWidget(75, True)
             self.showYMDs(self.daily_conn, 'Reports', 'date')
@@ -2358,7 +2471,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.report_search_type_comboBox.setCurrentText('')
 
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'reports_tab'))
-        self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'reports_properties_panel'))
 
     def reportType(self, report_type):
         """Determine report type"""
@@ -2478,12 +2590,12 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # # Convert fromated date to string
         # english_date = locale.toString(date, "yyyy-MM-dd")
 
-        if(self.ARCHIVE_TABLES_FLAG):
+        if(self._ARCHIVE_TABLES_FLAG):
             self.daily_customers_sort_model.setDateFilter(date)
             self.monthly_customers_sort_model.setDateFilter(date)
             self.orders_sort_model.setDateFilter(date)
 
-        elif(self.SETTINGS_TABLES_FLAG):
+        elif(self._SETTINGS_TABLES_FLAG):
             if(self.report_search_type_comboBox.currentText() in ['شهري','معدل الزبائن']):
                 self.reports_sort_model.setDateFilter(date.split('-')[-1])
             else:
@@ -2504,9 +2616,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # get current date
         currnet_date = datetime.datetime.now().strftime('%Y-%m-%d') # or %B %d, %Y
         
-        if(self.DAILY_TABLES_FLAG):
+        if(self._DAILY_TABLES_FLAG):
             type = 'Daily'
-        elif(self.ARCHIVE_TABLES_FLAG):
+        elif(self._ARCHIVE_TABLES_FLAG):
             type = 'Archive'
 
         
