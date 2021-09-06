@@ -4263,7 +4263,7 @@ QPushButton:pressed{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>8</number>
+             <number>6</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -4683,7 +4683,7 @@ QPushButton:pressed{
             </widget>
             <widget class="QWidget" name="daily_customers_tab">
              <attribute name="title">
-              <string>الزبائن اليومية</string>
+              <string>Daily customers</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_3">
               <property name="leftMargin">
@@ -5302,7 +5302,7 @@ background-color: rgb(244, 154, 32);
             </widget>
             <widget class="QWidget" name="orders_tab">
              <attribute name="title">
-              <string>الطلبات</string>
+              <string>Orders</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_8">
               <property name="leftMargin">
@@ -6044,7 +6044,7 @@ background-color: rgb(244, 154, 32);
             </widget>
             <widget class="QWidget" name="monthly_tab">
              <attribute name="title">
-              <string>اشتراكات شهرية</string>
+              <string>Monthly customers</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_18">
               <property name="leftMargin">
@@ -6608,7 +6608,7 @@ color: rgb(255, 255, 255);
             </widget>
             <widget class="QWidget" name="warehouse_tab">
              <attribute name="title">
-              <string>المستودع</string>
+              <string>Warehouse</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_10">
               <property name="leftMargin">
@@ -6770,7 +6770,7 @@ background-color: rgb(244, 154, 32);
                            </property>
                            <property name="maximumSize">
                             <size>
-                             <width>250</width>
+                             <width>300</width>
                              <height>16777215</height>
                             </size>
                            </property>
@@ -7126,7 +7126,7 @@ padding: 2px;
             </widget>
             <widget class="QWidget" name="reports_tab">
              <attribute name="title">
-              <string>الجرد</string>
+              <string>Reports</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_11">
               <property name="leftMargin">
@@ -7400,9 +7400,6 @@ background-color: rgb(244, 154, 32);
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -7417,10 +7414,10 @@ background-color: rgb(244, 154, 32);
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>20</number>
+                  <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>0</number>
+                  <number>20</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
@@ -7551,6 +7548,49 @@ padding: 2px;
                       </widget>
                      </item>
                     </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_40">
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QLabel" name="label_53">
+                     <property name="minimumSize">
+                      <size>
+                       <width>200</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>200</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Gender</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="employee_gender_comboBox">
+                     <property name="minimumSize">
+                      <size>
+                       <width>250</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Male</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Female</string>
+                      </property>
+                     </item>
+                    </widget>
                    </item>
                   </layout>
                  </item>

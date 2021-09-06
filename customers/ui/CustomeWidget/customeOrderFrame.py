@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 
 class CustomeOrderFrame(QtWidgets.QFrame):
-    def __init__(self):
+    def __init__(self, ):
         # Create register order panel 
         order_frame = QtWidgets.QFrame(self.orders_items_frame)
         order_frame.setMinimumSize(QtCore.QSize(0, 16777215))

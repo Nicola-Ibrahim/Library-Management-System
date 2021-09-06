@@ -127,6 +127,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.daily_customers_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.daily_customers_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
         self.daily_customers_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
+
         
         self.monthly_customers_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.monthly_customers_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
@@ -735,8 +736,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.daily_customers_tableView.setModel(self.daily_customers_sort_model)
         self.daily_customers_tableView.setItemDelegate(QSqlRelationalDelegate(self.daily_customers_tableView))
-        self.daily_customers_tableView.hideColumn(0)
-        self.daily_customers_tableView.hideColumn(4)
+        # self.daily_customers_tableView.hideColumn(0)
+        # self.daily_customers_tableView.hideColumn(4)
 
         # Set on Daily customers tab widget
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'daily_customers_tab'))
@@ -2093,9 +2094,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         data = [
             self.employee_name_txt.text().strip(),
+            self.employee_gender_comboBox.currentText(),
             job_type,
-            self.employee_username_txt.text(), 
-            self.employee_password_txt.text()
+            self.employee_username_txt.text().strip(), 
+            self.employee_password_txt.text().strip()
         ]
     
         ret = self.employees_model.addEmployee(data)
@@ -2108,6 +2110,14 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.employee_name_txt.setText('')
             self.employee_username_txt.setText('')
             self.employee_password_txt.setText('')
+
+        else:
+            QtWidgets.QMessageBox.warning(
+            self,
+            "Info",
+            "Record exists...!",
+            QtWidgets.QMessageBox.Ok ,
+            )   
 
     def removeEmployees(self):
         """Remove employee/s from Supervisors table"""

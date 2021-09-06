@@ -94,14 +94,15 @@ def _createCustomersTables(db_1, db_2):
                                   UNIQUE
                                   NOT NULL,
             supervisor_name VARCHAR (255) NOT NULL,
+            gender          VARCHAR (255) NOT NULL,
+            job_type        VARCHAR (255) NOT NULL
+                                        CHECK (job_type IN ('Manager', 'Employee') ),
             username        VARCHAR (255) NOT NULL
                                         UNIQUE,
             password        VARCHAR (255) NOT NULL
                                         UNIQUE,
-            job_type        VARCHAR (255) NOT NULL
-                                        CHECK (job_type IN ('Manager', 'Employee') ),
-            num_workdays    INTEGER (10)  NOT NULL
-                                        DEFAULT (0) 
+            num_workdays    INTEGER (10)  DEFAULT (0) 
+                                        NOT NULL
                 
         """
 
@@ -1703,6 +1704,40 @@ def retrieveArchiveDays(month, db, table, field):
     return days
 
 
+###############################
+# Available id for any table #
+###############################
+def retrieveAvailableId(id_column, table_name, db = None):
+
+    # Get Available ids for inserting
+    table_ids = []
+
+
+    STATEMENT = f"""
+        SELECT {id_column} FROM {table_name}
+    """
+
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+    while (query.next()):
+        table_ids.append(query.value(0))
+    
+    if(len(table_ids) == 1):
+        if(table_ids[0] > 1):
+            return 1
+
+    elif(len(table_ids) >= 2):
+        table_ids = set(table_ids) # ids in the monthly table
+        ids = set(list(range(min(table_ids),max(table_ids)+1))) # range from min to max ids
+
+        # Take the difference between two sets to get available ids to use
+        available_ids = list(ids.difference(table_ids))
+
+
+        if(len(available_ids) > 0):
+            return str(available_ids[0])
+    
+    return None
 
 def updateDB():
     import sqlite3

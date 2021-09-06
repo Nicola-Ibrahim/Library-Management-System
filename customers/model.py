@@ -1,9 +1,8 @@
-from datetime import date
 import typing
 from PyQt5 import QtCore, QtGui
-from customers.database import linkOfferItems, linkOrderItems, linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveDailyId, retrieveItemAvailabelQuantity, retrieveItemId, retrieveOffersItems, retrieveShiftsSupervisors, updateSubsState
-from PyQt5.QtSql import  QSqlDatabase, QSqlError, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
-from PyQt5.QtCore import QAbstractTableModel, QDate, QLocale, QRegularExpression, Qt
+from customers.database import linkOfferItems, linkOrderItems, linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveItemAvailabelQuantity, retrieveItemId, retrieveOffersItems, retrieveShiftsSupervisors, updateSubsState
+from PyQt5.QtSql import  QSqlDatabase, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
+from PyQt5.QtCore import QAbstractTableModel, QLocale, QRegularExpression, Qt
 
 
 
@@ -20,6 +19,7 @@ class DailyCustomersModel(QSqlRelationalTableModel):
     def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject]= None):
         super().__init__(parent=parent, db=db)
         self.db = db
+        self._ADD_FLAG = False
         self.showDailyCustomers()
 
     def showDailyCustomers(self):
@@ -27,8 +27,7 @@ class DailyCustomersModel(QSqlRelationalTableModel):
         self.setTable("Daily_customers")
         self.setEditStrategy(QSqlTableModel.OnFieldChange)   
         
-        # headers = ('رقم الزبون','اسم الزبون','قيمة القطع','حالة الاشتراك الشهري','انتهاء الاشتراك الشهري','التاريخ')
-        headers = ('Id','Name','Fee','Monthly subscription state','End monthly subscription','Date')
+        headers = ('Id','Name','Fee','Subscription state','Ending subscription','Date')
         for ind, header in enumerate(headers):
             self.setHeaderData(ind, Qt.Horizontal,header)
         
@@ -38,6 +37,8 @@ class DailyCustomersModel(QSqlRelationalTableModel):
         self.select()
 
     def addDailyCustomer(self, data : list) -> bool:
+        
+        self._ADD_FLAG = True
 
         # Check if the the customer exists previously
         result = None
@@ -55,13 +56,22 @@ class DailyCustomersModel(QSqlRelationalTableModel):
         # If the record doesn't exist then insert it
         if(result == 0):
             
+            
+            available_id = retrieveAvailableId('daily_id', 'Daily_customers', self.db)
+
+            # Take only the colums that suitable for data list length
+            if(available_id !=None):
+                columns = ['daily_id', 'daily_name','subscription_state', 'end_date']
+                data = [available_id] + data
+
+            elif(available_id == None):
+                columns = ['daily_name','subscription_state', 'end_date']
+
             # Insert new row
             row = self.rowCount()
             self.insertRows(row, 1)
 
-            # Take only the colums that suitable for data list length
-            columns = ['daily_name','subscription_state', 'end_date']
-
+            
             for col_ind, field in enumerate(data):
                 col = self.fieldIndex(columns[col_ind])
                 self.setData(self.index(row, col), field, Qt.EditRole)            
@@ -70,6 +80,8 @@ class DailyCustomersModel(QSqlRelationalTableModel):
             # Submit all changes
             ret = self.submitAll()
             self.select()
+
+            self._ADD_FLAG = False
 
             return ret
         
@@ -101,22 +113,18 @@ class DailyCustomersModel(QSqlRelationalTableModel):
         col = index.column()
 
         if(self.db.databaseName().split('/')[-1] == 'Daily.db'):
-            if (col in [self.fieldIndex('daily_id'), 
-                        self.fieldIndex('daily_ticket_cost'),
-                        self.fieldIndex('daily_date')]):
-                return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
+
+            if(self._ADD_FLAG == False):
+                if (col in [self.fieldIndex('daily_id'), 
+                            self.fieldIndex('daily_ticket_cost'),
+                            self.fieldIndex('subscription_state'),
+                            self.fieldIndex('daily_date')]):
+                    return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
         
         if(self.db.databaseName().split('/')[-1] == 'Archive.db'):
-            if (col in [self.fieldIndex('daily_id'), 
-                        self.fieldIndex('daily_name'),
-                        self.fieldIndex('daily_ticket_cost'),
-                        self.fieldIndex('subscription_state'),
-                        self.fieldIndex('end_date'), 
-                        self.fieldIndex('daily_date')]):
-                return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
-        
-
-        return Qt.ItemFlags(QAbstractTableModel.flags(self, index) | Qt.ItemIsEditable)
+            return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
+    
+        return super().flags(index)
     
 class DailyCustomersSortModel(QtCore.QSortFilterProxyModel):
     """ Daily customers sorting model"""
@@ -178,6 +186,7 @@ class MonthlyCustomersModel(QSqlTableModel):
     def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
         super().__init__(parent=parent, db=db)
         self.db = db
+        self._ADD_FLAG = False    
         self.showMonthlyCustomers()
     
     def showMonthlyCustomers(self):
@@ -197,6 +206,7 @@ class MonthlyCustomersModel(QSqlTableModel):
         
     def addMonthlyCustomer(self, data : str):
         
+        
         # Check if the the customer exists previously
         result = None
         STATEMENT = f"""
@@ -213,54 +223,46 @@ class MonthlyCustomersModel(QSqlTableModel):
         # If the record doesn't exist then insert it
         if(result == 0):
 
+            self._ADD_FLAG = True
+
             # Get Available ids for inserting
-            table_ids = []
-            columns = ['monthly_name' , 'subsription_type']
-
-            STATEMENT = f"""
-                SELECT monthly_id FROM Monthly_customers
-            """
-
-            query = QSqlQuery(db = self.db)
-            query.exec(STATEMENT)
-            while (query.next()):
-                table_ids.append(query.value(0))
-            
-            if(len(table_ids) >= 2):
-                table_ids = set(table_ids) # ids in the monthly table
-                ids = set(list(range(min(table_ids),max(table_ids)+1))) # range from min to max ids
-
-                # Take the difference between two sets to get available ids to use
-                available_ids = list(ids.difference(table_ids))
-
-
-                if(len(available_ids) > 0):
-                    # Change data sturcture by adding id field value
-                    columns = ['monthly_id', 'monthly_name' , 'subsription_type']
-                    data = [str(available_ids[0])] + data
-
-        
-
-            record = self.record()
+            available_id = retrieveAvailableId('monthly_id', 'Monthly_customers', self.db)
 
             # Take only the colums that suitable for data list length
-            for col_ind, field in enumerate(data):
-                col = record.indexOf(columns[col_ind])
-                record.setValue(col, field)
+            if(available_id !=None):
+                columns = ['monthly_id', 'monthly_name' , 'subsription_type']
+                data = [available_id] + data
 
-            self.insertRecord(-1,record)
+            elif(available_id == None):
+                columns = ['monthly_name' , 'subsription_type']
+
+            # Insert new row
+            row = self.rowCount()
+            self.insertRows(row, 1)
+
+            for col_ind, field in enumerate(data):
+                col = self.fieldIndex(columns[col_ind])
+                self.setData(self.index(row, col), field, Qt.EditRole)    
+
+            # record = self.record()
+
+            # # Take only the colums that suitable for data list length
+            # for col_ind, field in enumerate(data):
+            #     col = record.indexOf(columns[col_ind])
+            #     record.setValue(col, field)
+
+            # self.insertRecord(-1,record)
 
             # Submit all changes
             ret = self.submitAll()
             self.select()
+
+            self._ADD_FLAG = False
             return ret
         
         return False
        
     def data(self, index: QtCore.QModelIndex, role: int):
-        row = index.row()
-        col = index.column()
-
         
         if(role == Qt.TextAlignmentRole):
             return Qt.AlignHCenter
@@ -279,20 +281,18 @@ class MonthlyCustomersModel(QSqlTableModel):
         col = index.column()
 
         if(self.db.databaseName().split('/')[-1] == 'Daily.db'):
-            if (col in [ 
-                        self.fieldIndex('ticket_monthly_cost'),
-                        self.fieldIndex('start_date'),
-                        self.fieldIndex('end_date'), self.fieldIndex('subscribtion_state')]):
-                return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
+            if(self._ADD_FLAG == False):
+                if (col in [ 
+                            self.fieldIndex('monthly_id'),
+                            self.fieldIndex('ticket_monthly_cost'),
+                            self.fieldIndex('start_date'),
+                            self.fieldIndex('end_date'), 
+                            self.fieldIndex('subscription_state'),
+                            self.fieldIndex('subsription_type')]):
+                    return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
         
         elif(self.db.databaseName().split('/')[-1] == 'Archive.db'):
-            if (col in [
-                        self.fieldIndex('monthly_name'),
-                        self.fieldIndex('ticket_monthly_cost'),
-                        self.fieldIndex('start_date'),
-                        self.fieldIndex('end_date'), 
-                        self.fieldIndex('subscribtion_state')]):
-                return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
+            return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
 
         return super().flags(index)
 
@@ -364,6 +364,7 @@ class OrdersModel(QSqlRelationalTableModel):
     def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
         super().__init__(parent=parent, db=db)
         self.db = db
+        self._ADD_FLAG = False
         self.showOrders()
     
     def showOrders(self):
@@ -382,6 +383,8 @@ class OrdersModel(QSqlRelationalTableModel):
         self.select()
         
     def addOrder(self, data : list):
+        
+        self._ADD_FLAG = True
 
         order_data = data[0]
         offer_id = order_data[2]
@@ -392,7 +395,6 @@ class OrdersModel(QSqlRelationalTableModel):
 
         data = [customer_id, order_data[1], order_price]
         
-
 
         #     # Handle exceed quantity error
         #     available = retrieveItemAvailabelQuantity(item_id, self.db)
@@ -412,12 +414,24 @@ class OrdersModel(QSqlRelationalTableModel):
         #     # Set SQL Error to Null
         #     self.setLastError(QSqlError(driverText=''))
 
+
+        # Get Available ids for inserting
+        available_id = retrieveAvailableId('order_id', 'Orders', self.db)
+
+        # Take only the colums that suitable for data list length
+        if(available_id !=None):
+            columns = ['order_id', 'daily_name', 'order_type', 'order_price']
+            data = [available_id] + data
+
+        elif(available_id == None):
+            columns = ['daily_name', 'order_type', 'order_price']
+
+
         # Insert new row
         row = self.rowCount()
         self.insertRows(row, 1)
 
         # Take only the colums that suitable for data list length
-        columns = ['daily_name', 'order_type', 'order_price']
         for col_ind, field in enumerate(data):
             col = self.fieldIndex(columns[col_ind])
             self.setData(self.index(row, col), field, Qt.EditRole)
@@ -432,6 +446,7 @@ class OrdersModel(QSqlRelationalTableModel):
         
         self.select()
 
+        self._ADD_FLAG = False
         return ret
             
             
@@ -446,18 +461,15 @@ class OrdersModel(QSqlRelationalTableModel):
         col = index.column()
 
         if(self.db.databaseName().split('/')[-1] == 'Daily.db'):
-            if (col in [self.fieldIndex('order_id'),
-                        self.fieldIndex('total_price'),
-                        self.fieldIndex('order_date')]):
-                return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
+            if(self._ADD_FLAG == False):
+                if (col in [self.fieldIndex('order_id'),
+                            self.fieldIndex('order_price'),
+                            self.fieldIndex('order_type'),
+                            self.fieldIndex('order_date')]):
+                    return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
         
         elif(self.db.databaseName().split('/')[-1] == 'Archive.db'):
-            if (col in [self.fieldIndex('order_id'),
-                        self.fieldIndex('daily_name'),
-                        self.fieldIndex('total_price'),
-                        self.fieldIndex('order_type'),
-                        self.fieldIndex('order_date')]):
-                return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
+            return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
 
         return super().flags(index)
 
@@ -745,7 +757,7 @@ class EmployeesModel(QSqlTableModel):
         self.setEditStrategy(self.OnFieldChange)
         
         # headers = ('رقم المشرف','اسم المشرف','طبيعة العمل','اسم المستخدم','كلمة السر')
-        headers = ('Id','Name','Username','password','Job type','Number workdays')
+        headers = ('Id','Name','Gender','Job type','Username','password','Number workdays')
         for ind, header in enumerate(headers):
             self.setHeaderData(ind, Qt.Horizontal,header)
 
@@ -777,12 +789,13 @@ class EmployeesModel(QSqlTableModel):
             self.insertRows(row, 1)
 
             # Take only the colums that suitable for data list length
-            columns = ['supervisor_name','job_type','username','password']
+            columns = ['supervisor_name', 'gender', 'job_type', 'username','password']
 
             for col_ind, field in enumerate(data):
                 col = self.fieldIndex(columns[col_ind])
                 self.setData(self.index(row, col), field, Qt.EditRole)
-                
+            
+
             # Submit all changes
             ret = self.submitAll()
             self.select()
