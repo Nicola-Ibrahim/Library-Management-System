@@ -212,9 +212,11 @@ class MonthlyCustomersModel(QSqlTableModel):
 
         # If the record doesn't exist then insert it
         if(result == 0):
-            
+
             # Get Available ids for inserting
             table_ids = []
+            columns = ['monthly_name' , 'subsription_type']
+
             STATEMENT = f"""
                 SELECT monthly_id FROM Monthly_customers
             """
@@ -224,19 +226,20 @@ class MonthlyCustomersModel(QSqlTableModel):
             while (query.next()):
                 table_ids.append(query.value(0))
             
-            if(len(table_ids) > 2):
+            if(len(table_ids) >= 2):
                 table_ids = set(table_ids) # ids in the monthly table
                 ids = set(list(range(min(table_ids),max(table_ids)+1))) # range from min to max ids
 
                 # Take the difference between two sets to get available ids to use
                 available_ids = list(ids.difference(table_ids))
 
-                # Change data sturcture by adding id field value
-                columns = ['monthly_id', 'monthly_name' , 'subsription_type']
-                data = [str(available_ids[0])]+ data
 
-            else:
-                columns = ['monthly_name' , 'subsription_type']
+                if(len(available_ids) > 0):
+                    # Change data sturcture by adding id field value
+                    columns = ['monthly_id', 'monthly_name' , 'subsription_type']
+                    data = [str(available_ids[0])] + data
+
+        
 
             record = self.record()
 

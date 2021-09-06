@@ -819,7 +819,7 @@ def retrieveMonthlyid(name = None, db = None) -> int:
     
 def retrieveMonthlySubsType(db = None):
     STATEMENT = f"""
-        SELECT DISTINCT subsription_type from "Monthly_customers"
+        SELECT DISTINCT subsription_type from Monthly_customers
     """
 
     query = QSqlQuery(db = db)
@@ -833,7 +833,7 @@ def retrieveMonthlySubsType(db = None):
 
 def retrieveMonthlySubsState(db = None):
     STATEMENT = f"""
-        SELECT DISTINCT subscription_state from "Monthly_customers"
+        SELECT DISTINCT subscription_state from Monthly_customers
     """
 
     query = QSqlQuery(db = db)

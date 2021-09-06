@@ -32,6 +32,7 @@ from .model import *
 # MainWindowBase = QtWidgets.QMainWindow
 
 
+
 class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, daily_conn, archive_conn, supervisor_job_type, parent=None):
         QtWidgets.QMainWindow.__init__(self,parent)
@@ -365,7 +366,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.employee_add_btn2.clicked.connect(lambda : self.toggleMenuMaxWidth(self.frame_22,500,True))
         self.employee_add_btn.clicked.connect(self.addEmployees)
         self.employee_remove_btn.clicked.connect(self.removeEmployees)
-        self.employees_employee_name_filter_txt.textChanged['QString'].connect(lambda employee_name : self.employees_sort_model.setSupervisorNameFilter(employee_name))
+        self.employees_employee_name_filter_txt.textChanged['QString'].connect(lambda employee_name : self.employees_sort_model.setEmployeeNameFilter(employee_name))
         self.employees_job_type_filter_comberoBox.currentTextChanged['QString'].connect(lambda job_type : self.employees_sort_model.setJobTypeFilter(job_type))
         self.employees_clear_btn.clicked.connect(self.clearEmployeesFilters)
 
@@ -391,7 +392,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.offer_add_btn.clicked.connect(self.addOffer)
         self.offer_remove_btn.clicked.connect(self.removeOffer)
         self.plus_item_btn.clicked.connect(self.plusOffer)
-        self.offers_item_name_filter_txt.textChanged['QString'].connect(lambda date : self.offers_sort_model.setItemNameFilter(date))
+        self.offers_item_name_filter_txt.textChanged['QString'].connect(lambda offer_name : self.offers_sort_model.setItemNameFilter(offer_name))
         self.offers_date_filter_dateEdit1.dateChanged['QDate'].connect(lambda date : self.offers_sort_model.setDateFilter(date))
         self.offers_clear_btn.clicked.connect(self.clearOffersFitlers)
 
@@ -935,7 +936,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
         else:
-            rep = QtWidgets.QMessageBox.warning(
+            QtWidgets.QMessageBox.warning(
             self,
             "Info",
             "Record exists...!",
