@@ -94,7 +94,7 @@ def _createCustomersTables(db_1, db_2):
                                   UNIQUE
                                   NOT NULL,
             supervisor_name VARCHAR (255) NOT NULL,
-            gender          VARCHAR (255) NOT NULL,
+            gender          VARCHAR (255) ,
             job_type        VARCHAR (255) NOT NULL
                                         CHECK (job_type IN ('Manager', 'Employee') ),
             username        VARCHAR (255) NOT NULL
@@ -671,6 +671,11 @@ def _createCustomersTables(db_1, db_2):
     INSERT2_META_STATEMENT = \
         """
         INSERT OR IGNORE INTO Meta (key, value) VALUES ('last version', '0.1.0')
+        """
+        
+    INSERT3_META_STATEMENT = \
+        """
+        INSERT OR IGNORE INTO Meta (key, value) VALUES ('initial', '0.1.0')
         """
         
     

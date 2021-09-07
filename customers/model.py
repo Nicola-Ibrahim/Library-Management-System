@@ -598,6 +598,15 @@ class WarehouseModel(QSqlTableModel):
 
         return super().data(index, role=role)
 
+    def flags(self, index: QtCore.QModelIndex):
+        col = index.column()
+
+        if(self.db.databaseName().split('/')[-1] == 'Daily.db'):
+            if (col in [self.fieldIndex('item_id'),
+                        self.fieldIndex('item_consumed_quantity')]):
+                return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
+
+        return super().flags(index)
 class WarehouseSortModel(QtCore.QSortFilterProxyModel):
     """ Warehouse sorting model"""
     def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):

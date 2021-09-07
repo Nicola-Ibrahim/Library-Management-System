@@ -35,7 +35,7 @@ class LoginDialog(QtWidgets.QDialog, Ui_Dialog):
         self.setGeometry(r)
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        # self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         # Add shadow to login panel
         # creating a QGraphicsDropShadowEffect object

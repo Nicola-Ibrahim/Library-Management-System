@@ -7,26 +7,54 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>733</height>
+    <height>750</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>750</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*
-Aqua Style Sheet for QT Applications
-Author: Jaime A. Quiroga P.
-Company: GTRONICK
-Last updated: 22/01/2019, 07:55.
-Available at: https://github.com/GTRONICK/QSS/blob/master/Aqua.qss
-*/
+   <string notr="true"/>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="horizontalSpacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QFrame" name="frame">
+     <property name="styleSheet">
+      <string notr="true">#frame{
 
-
-QDialog{
+	border: 2px solid transparent;
+	border-radius: 15px;
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.107955 rgba(0, 31, 98, 255), stop:1 rgba(255, 255, 255, 255));
 
 }
+
 
 QLineEdit {
 background-color: rgba(197, 197, 197,30);
@@ -74,33 +102,6 @@ QMessageBox QPushButton {
 
 
 </string>
-  </property>
-  <property name="sizeGripEnabled">
-   <bool>false</bool>
-  </property>
-  <property name="modal">
-   <bool>false</bool>
-  </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
-   <property name="horizontalSpacing">
-    <number>0</number>
-   </property>
-   <item row="0" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -141,11 +142,7 @@ QMessageBox QPushButton {
         <property name="styleSheet">
          <string notr="true">
 QFrame{
-
-	
-image: url(:/icons/icons/background-removebg-preview (2).png) 2 2 2 2 streatch ;
-   
-
+	image: url(:/icons/icons/studyzone-logo.png) ;
 }
 </string>
         </property>

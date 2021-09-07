@@ -1,3 +1,5 @@
+from customers.ui.CustomeWidget.customeOrderFrame import CustomeOrderFrame
+from enum import Flag
 from customers.ui.OrderDialog.orderDialogMain import OrderDialog
 from customers.ui.LoginDialog.LoginMain import LoginDialog
 from customers.threads import ReportsWorker, Worker
@@ -84,7 +86,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Apply desire changing to Main widnow
         self.uiCahnges()
-        self.handleButtons()
+        self.handleSignals()
         self.Completers()
         self.regexValidation()
         
@@ -184,8 +186,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customer_edit_cost_btn.setEnabled(self.supervisor_job_type == 'Manager')
         self.monthly_customer_export_btn.setEnabled(self.supervisor_job_type == 'Manager')
         self.settings_btn.setEnabled(self.supervisor_job_type == 'Manager')
-      
-        
+       
     def regexValidation(self):
         """Apply regular expression to some UI elements"""
         # Arabic names regular expression
@@ -287,7 +288,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.daily_customer_name_txt.setCompleter(addCompleter(retrieveMonthlyNames(db  = self.daily_conn)))
         self.customer_name_txt2.setCompleter(addCompleter(retrieveDailyNames(db =self.daily_conn)))
 
-    def handleButtons(self):
+    def handleSignals(self):
         """ handle all buttons """
 
         #Main window button
@@ -324,6 +325,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.daily_customer_name_filter_txt.textChanged['QString'].connect(lambda name: self.daily_customers_sort_model.setCustomerNameFilter(name))
         self.daily_customer_subsType_filter_comboBox.currentTextChanged['QString'].connect(lambda sub_state: self.daily_customers_sort_model.setSubsStateFilter(sub_state))
         self.daily_customer_clear_btn.clicked.connect(self.clearDailyFilters)
+
         
         # Monthly customers tab buttons
         self.monthly_customer_add_btn2.clicked.connect(lambda: self.toggleMenuMaxWidth(self.frame_21,500,True))
@@ -737,13 +739,14 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.daily_customers_tableView.setModel(self.daily_customers_sort_model)
         self.daily_customers_tableView.setItemDelegate(QSqlRelationalDelegate(self.daily_customers_tableView))
         # self.daily_customers_tableView.hideColumn(0)
-        # self.daily_customers_tableView.hideColumn(4)
 
         # Set on Daily customers tab widget
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'daily_customers_tab'))
         self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'daily_customers_properties_panel'))
         self.toggleStackWidget(75, True)
 
+        self.daily_customers_tableView.selectionModel().selectionChanged.connect(lambda : self.daily_customers_count_lbl.setText(str(len(self.daily_customers_tableView.selectionModel().selectedRows()))))
+        
     def addDailyCustomer(self):
         """Add new daily customer to daily table"""
         # Check if the customer name field is empty
@@ -756,7 +759,17 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         data = [self.daily_customer_name_txt.text().strip(),self.daily_customer_cusType_comboBox.currentText(), self.daily_customer_monthID_txt.text().strip()]
 
         ret = self.daily_customers_model.addDailyCustomer(data)
+
         if(ret):
+            # # scroll to inserted row
+            # flags = QtCore.QItemSelectionModel.ClearAndSelect | QtCore.QItemSelectionModel.Rows
+            # print(self.daily_customers_model.query().lastInsertId())
+            # print(type(self.daily_customers_model.query().lastInsertId)())
+            # index = self.daily_customers_tableView.model().index(self.daily_customers_model.query().lastInsertId(), 0)       
+            # self.daily_customers_tableView.scrollTo(index)
+            # # self.daily_customers_tableView.scrollToBottom()
+            # self.daily_customers_tableView.selectionModel().select(index, flags)
+
             # Reset texts
             self.daily_customer_name_txt.setText('')
             self.daily_customer_monthID_txt.setText('')
@@ -855,6 +868,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             id = retrieveMonthlyid(name = str(name).strip(), db  = self.daily_conn)
             if(id != None):
                 self.daily_customer_monthID_txt.setText(str(id))
+            
+            elif( id == None):
+                self.daily_customer_monthID_txt.setText('')
     
     def addOrderDirectly(self):
         """Add order directly by selecting customer from daily table"""
@@ -882,6 +898,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.daily_customer_subsType_filter_comboBox.setCurrentText('')
         self.daily_customers_sort_model.setDateFilter('')
 
+
     #####################
     # Monthly customers #
     #####################
@@ -898,6 +915,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'monthly_tab'))
         self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'monthly_customers_properties_panel'))
         self.toggleStackWidget(75, True)
+
+        self.monthly_customers_tableView.selectionModel().selectionChanged.connect(lambda : self.monthly_customers_count_lbl.setText(str(len(self.monthly_customers_tableView.selectionModel().selectedRows()))))
 
     def addMonthlyCustomer(self):
         """Add new monthly customer to Monthly table"""
@@ -1028,6 +1047,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.monthly_customers_sort_model.setDateFilter('')
 
+
     ##########
     # Orders #
     ##########
@@ -1047,7 +1067,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'orders_tab'))
         self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'orders_properties_panel'))
         self.toggleStackWidget(75, True)
-            
+        
+        self.orders_tableView.selectionModel().selectionChanged.connect(lambda : self.orders_count_lbl.setText(str(len(self.orders_tableView.selectionModel().selectedRows()))))
+
     def addOrder(self):
 
         """Add new order to Orders table"""
@@ -1178,159 +1200,29 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def plusOrder(self):
         """Adding new order to orders list"""
         self._order_item_number += 1
-
-        # Create register order panel 
-        order_frame = QtWidgets.QFrame(self.orders_items_frame)
-        order_frame.setMinimumSize(QtCore.QSize(0, 16777215))
-        order_frame.setMaximumSize(QtCore.QSize(1000, 16777215))
-        order_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
-        order_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        order_frame.setFrameShape(QtWidgets.QFrame.NoFrame)
-        order_frame.setObjectName(f"order_frame_{self._order_item_number}")
-
-        order_frame_verticalLayout = QtWidgets.QVBoxLayout(order_frame)
-        order_frame_verticalLayout.setContentsMargins(0, 0, 0, 0)
-        order_frame_verticalLayout.setSpacing(2)
-        order_frame_verticalLayout.setObjectName("order_frame_verticalLayout")
         
-        # Add label to the panel for item number
-        item_number_lbl = QtWidgets.QLabel(order_frame)
-        item_number_lbl.setStyleSheet("QLabel{\n"
-            "\n"
-            "color: rgb(255, 255, 255);\n"
-            "}")
-        item_number_lbl.setObjectName("item_number_lbl")
-
-        _translate = QtCore.QCoreApplication.translate
-        item_number_lbl.setText(_translate("MainWindow", f"Item : {self._order_item_number} "))
-        order_frame_verticalLayout.addWidget(item_number_lbl)
-
-        # Add layout to the panel
-        horizontalLayout = QtWidgets.QHBoxLayout()
-        horizontalLayout.setSpacing(7)
-        horizontalLayout.setObjectName("horizontalLayout")
-        
-        
-
-        # Add item comboBox to the layout 
-        order_item_comboBox = QtWidgets.QComboBox(order_frame)
-        order_item_comboBox.setMinimumSize(QtCore.QSize(90, 40))
-        order_item_comboBox.setStyleSheet(
-            "QComboBox{\n"
-            "border-width:0px 0px 4px 0px;\n"
-            "border-style: solid;\n"
-            "border-radius:0px;\n"
-            "border-color: rgb(255, 170, 0);\n"
-            "}"
-            )
-        order_item_comboBox.setEditable(False)
-        order_item_comboBox.setObjectName("order_item_comboBox")
-        order_item_comboBox.setEditable(True)
-        # Set validator on item
-        validator = QtGui.QRegularExpressionValidator(QRegularExpression("[a-zA-Zء-ي|\s]+"))
-        order_item_comboBox.setValidator(validator)
-
-        horizontalLayout.addWidget(order_item_comboBox)
-
-        # Add price label to the layout
-        order_item_price_lbl = QtWidgets.QLabel(order_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(0)
-        # sizePolicy.setHeightForWidth(order_item_price_lbl.sizePolicy().hasHeightForWidth())
-        # order_item_price_lbl.setSizePolicy(sizePolicy)
-        # order_item_price_lbl.setMinimumSize(QtCore.QSize(0, 40))
-        order_item_price_lbl.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        order_item_price_lbl.setStyleSheet("color:rgb(244, 154, 32);")
-        order_item_price_lbl.setFrameShape(QtWidgets.QFrame.NoFrame)
-        order_item_price_lbl.setText("")
-        order_item_price_lbl.setAlignment(Qt.AlignHCenter)
-        order_item_price_lbl.setObjectName("order_item_price_lbl")
-        horizontalLayout.addWidget(order_item_price_lbl)
-        
-        # Add quantity text to the layout
-        order_quantity_txt = QtWidgets.QLineEdit(order_frame)
-        order_quantity_txt.setMinimumSize(QtCore.QSize(60, 40))
-        order_quantity_txt.setMaximumSize(QtCore.QSize(60, 16777215))
-        order_quantity_txt.setStyleSheet(
-            "QLineEdit{\n"
-            "    border-style: solid;\n"
-            "    border-width: 0px 0px 4px 0px;\n"
-            "    border-radius: 0px;    \n"
-            "    border-color:  rgb(244, 154, 32);\n"
-            "}\n"
-            "QLineEdit:disabled{\n"
-            "    border-style: solid;\n"
-            "    border-width: 0px 0px 4px 0px;\n"
-            "    border-radius: 0px;\n"
-            "    border-color:  rgb(244, 154, 32);\n"
-            "    background-color: rgb(142,142,142);\n"
-            "}"
-           
-
-            "")
-        order_quantity_txt.setObjectName("order_quantity_txt")
-        order_quantity_txt.setEnabled(False)
-
-        # Set validator on quantity
-        validator = QtGui.QRegExpValidator(QtCore.QRegExp(r"[0-9]+"))
-        order_quantity_txt.setValidator(validator)
-
-        horizontalLayout.addWidget(order_quantity_txt)
-        
-
-        # Add delete current input order button to the layout
-        delete_btn = QtWidgets.QPushButton(order_frame)
-        delete_btn.setMinimumSize(QtCore.QSize(50, 50))
-        delete_btn.setMaximumSize(QtCore.QSize(50, 50))
-        delete_btn.setStyleSheet(
-            "QPushButton{\n"
-            "\n"
-            "    border-style: solid;\n"
-            "    border-width: 4px 4px 4px 4px;\n"
-            "    border-radius: 25px;    \n"
-            "    border-color: rgb(174, 174, 174);\n"
-            "    background-color: rgb(255, 255, 255);\n"
-            "    image: url(:/icons/icons/letter-x2.svg);\n"
-            "    padding:9px;\n"
-            "}\n"
-            "QPushButton:hover{\n"
-            "    image: url(:/icons/icons/letter-x1.svg);\n"
-
-           
-            "}\n"
-            "QPushButton:pressed{\n"
-            "    padding:14px;\n"
-            "}\n"
-            "")
-
-        horizontalLayout.addWidget(delete_btn)
-
-        # Add layout to the order panel
-        order_frame_verticalLayout.addLayout(horizontalLayout)
-        
+        order_frame = CustomeOrderFrame(self._order_item_number, self.orders_items_frame)
 
         # Add the container frame into parent frame layout
         self.verticalLayout_70.addWidget(order_frame)
 
         
         # pass on items comboBox
-        
-        order_item_comboBox.addItems(['']+retrieveItemNames(name_filter=('',''), db = self.daily_conn))
+        order_frame.order_item_comboBox.addItems(['']+retrieveItemNames(name_filter=('',''), db = self.daily_conn))
 
-        # self.changeComboItems(order_item_comboBox)
-        # order_item_comboBox.currentTextChanged['QString'].connect(lambda : self.changeComboItems2(order_item_comboBox))
+        # self.changeComboItems(order_frame.order_item_comboBox)
+        # order_frame.order_item_comboBox.currentTextChanged['QString'].connect(lambda : self.changeComboItems2(order_frame.order_item_comboBox))
 
         # Connect each comboBox with its label.
-        order_item_comboBox.currentTextChanged['QString'].connect(lambda : self.setOrderItemPrice(order_item_comboBox, order_item_price_lbl, order_quantity_txt))
-        order_item_comboBox.currentTextChanged['QString'].connect(lambda : self.isOrderItemExist(order_item_comboBox, order_quantity_txt))
+        order_frame.order_item_comboBox.currentTextChanged['QString'].connect(lambda : self.setOrderItemPrice(order_frame.order_item_comboBox, order_frame.order_item_price_lbl, order_frame.order_quantity_txt))
+        order_frame.order_item_comboBox.currentTextChanged['QString'].connect(lambda : self.isOrderItemExist(order_frame.order_item_comboBox, order_frame.order_quantity_txt))
        
         # pass on items comboBox to connect it with its label.
-        order_quantity_txt.textEdited['QString'].connect(lambda : self.checkOrderItemQauntity(order_item_comboBox, order_quantity_txt))
+        order_frame.order_quantity_txt.textEdited['QString'].connect(lambda : self.checkOrderItemQauntity(order_frame.order_item_comboBox, order_frame.order_quantity_txt))
         
         
         # pass on delete buttons to connect it with its frame.
-        delete_btn.clicked.connect(lambda : self.deleteOrderFrame(order_frame))
+        order_frame.delete_btn.clicked.connect(lambda : self.deleteOrderFrame(order_frame))
 
     def changeComboItems(self, order_item_comboBox):
         # Check if the item is selected previously 
@@ -2568,8 +2460,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.date_treeView.setHeaderHidden(True)
         self.date_treeView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         
-        selection_model = self.date_treeView.selectionModel()
-        selection_model.selectionChanged.connect(self.selectionChangedSlot)
+        self.date_treeView.selectionModel().selectionChanged.connect(self.selectionChangedSlot)
             
     def selectionChangedSlot(self, newSelection : QtCore.QItemSelection, oldSelection : QtCore.QItemSelection):
         """pyqtSlot to get the selection text"""

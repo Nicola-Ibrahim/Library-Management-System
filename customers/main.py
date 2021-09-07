@@ -71,17 +71,17 @@ def main():
     # Create the main window if the connection succeeded
     login_win = LoginDialog(daily_con)
 
-    # if(login_win.exec_() == QDialog.Accepted):    
+    if(login_win.exec_() == QDialog.Accepted):    
     
-    #     main_win = CustomersMainWindow(daily_con, archive_con, login_win.getSupervisorJobType())
-    #     main_win.show()
+        main_win = CustomersMainWindow(daily_con, archive_con, login_win.getSupervisorJobType())
+        main_win.show()
 
    
-    # else:
-    #     QtCore.QTimer.singleShot(0, lambda : app.exit(1))
+    else:
+        QtCore.QTimer.singleShot(0, lambda : app.exit(1))
     
-    main_win = CustomersMainWindow(daily_con, archive_con, login_win.getSupervisorJobType())
-    main_win.show()
+    # main_win = CustomersMainWindow(daily_con, archive_con, login_win.getSupervisorJobType())
+    # main_win.show()
 
 
     # Run the event loop

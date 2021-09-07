@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIIKQWey.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIExQQag.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -22,12 +22,7 @@ class Ui_MainWindow(object):
 "Available at: https://github.com/GTRONICK/QSS/blob/master/Aqua.qss\n"
 "*/\n"
 "QMainWindow {\n"
-"\n"
-"    \n"
-"    /*background-color: qlineargradient(spread:pad, x1:0.006, y1:0.818182, x2:1, y2:0.8125, stop:0 rgba(255, 128, 0, 255), stop:1 rgba(255, 255, 255, 255));*/\n"
-"    \n"
 "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.107955 rgba(0, 31, 98, 255), stop:1 rgba(255, 255, 255, 255));\n"
-" \n"
 "}\n"
 "\n"
 "QMessageBox {\n"
@@ -1054,49 +1049,6 @@ class Ui_MainWindow(object):
 "}")
         self.reports_btn.setObjectName("reports_btn")
         self.verticalLayout_26.addWidget(self.reports_btn)
-        self.employees_btn = QtWidgets.QPushButton(self.frame_18)
-        self.employees_btn.setMinimumSize(QtCore.QSize(300, 75))
-        self.employees_btn.setStyleSheet("QPushButton{\n"
-"    \n"
-"    padding-left:70px;\n"
-"    background-color:  none;\n"
-"    background-image: url(:/icons/icons/employee1.png);\n"
-"    background-repeat:none;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-image: url(:/icons/icons/employee2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"QPushButton:pressed{\n"
-"    background-image: url(:/icons/icons/employee2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"QPushButton:focus{\n"
-"    background-image: url(:/icons/icons/employee2.png);\n"
-"    background-repeat:none;\n"
-"    color:  rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    border-style: solid;\n"
-"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
-"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
-"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
-"    border-width: 0px 5px 0px 0px;\n"
-"    border-radius: 2px;\n"
-"    color: #808086;\n"
-"    padding-right: 2px;\n"
-"    background-color: rgb(142,142,142);\n"
-"}")
-        self.employees_btn.setObjectName("employees_btn")
-        self.verticalLayout_26.addWidget(self.employees_btn)
         self.offers_btn = QtWidgets.QPushButton(self.frame_18)
         self.offers_btn.setMinimumSize(QtCore.QSize(300, 75))
         self.offers_btn.setStyleSheet("QPushButton{\n"
@@ -1140,6 +1092,49 @@ class Ui_MainWindow(object):
 "}")
         self.offers_btn.setObjectName("offers_btn")
         self.verticalLayout_26.addWidget(self.offers_btn)
+        self.employees_btn = QtWidgets.QPushButton(self.frame_18)
+        self.employees_btn.setMinimumSize(QtCore.QSize(300, 75))
+        self.employees_btn.setStyleSheet("QPushButton{\n"
+"    \n"
+"    padding-left:70px;\n"
+"    background-color:  none;\n"
+"    background-image: url(:/icons/icons/employee1.png);\n"
+"    background-repeat:none;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-image: url(:/icons/icons/employee2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    background-image: url(:/icons/icons/employee2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"QPushButton:focus{\n"
+"    background-image: url(:/icons/icons/employee2.png);\n"
+"    background-repeat:none;\n"
+"    color:  rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:disabled{\n"
+"    border-style: solid;\n"
+"    border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));\n"
+"    border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));\n"
+"    border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));\n"
+"    border-width: 0px 5px 0px 0px;\n"
+"    border-radius: 2px;\n"
+"    color: #808086;\n"
+"    padding-right: 2px;\n"
+"    background-color: rgb(142,142,142);\n"
+"}")
+        self.employees_btn.setObjectName("employees_btn")
+        self.verticalLayout_26.addWidget(self.employees_btn)
         self.shifts_btn = QtWidgets.QPushButton(self.frame_18)
         self.shifts_btn.setMinimumSize(QtCore.QSize(300, 75))
         self.shifts_btn.setStyleSheet("QPushButton{\n"
@@ -3413,6 +3408,24 @@ class Ui_MainWindow(object):
         self.daily_customers_tableView.verticalHeader().setDefaultSectionSize(40)
         self.daily_customers_tableView.verticalHeader().setMinimumSectionSize(40)
         self.verticalLayout_25.addWidget(self.daily_customers_tableView)
+        self.horizontalLayout_41 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_41.setObjectName("horizontalLayout_41")
+        self.label_54 = QtWidgets.QLabel(self.frame_3)
+        self.label_54.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.label_54.setStyleSheet("QLabel{\n"
+"    color:rgb(244, 154, 32);\n"
+"    \n"
+"}")
+        self.label_54.setObjectName("label_54")
+        self.horizontalLayout_41.addWidget(self.label_54)
+        self.daily_customers_count_lbl = QtWidgets.QLabel(self.frame_3)
+        self.daily_customers_count_lbl.setStyleSheet("QLabel{\n"
+"    color:rgb(244, 154, 32);\n"
+"    \n"
+"}")
+        self.daily_customers_count_lbl.setObjectName("daily_customers_count_lbl")
+        self.horizontalLayout_41.addWidget(self.daily_customers_count_lbl)
+        self.verticalLayout_25.addLayout(self.horizontalLayout_41)
         self.gridLayout_3.addWidget(self.frame_3, 2, 4, 2, 1)
         spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_3.addItem(spacerItem22, 3, 2, 1, 1)
@@ -3439,7 +3452,6 @@ class Ui_MainWindow(object):
         self.gridLayout_8.addWidget(self.label, 0, 1, 1, 1)
         self.frame_11 = QtWidgets.QFrame(self.orders_tab)
         self.frame_11.setMaximumSize(QtCore.QSize(0, 16777215))
-        self.frame_11.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.frame_11.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_11.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_11.setObjectName("frame_11")
@@ -3616,7 +3628,6 @@ class Ui_MainWindow(object):
         spacerItem25 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_8.addItem(spacerItem25, 2, 0, 1, 1)
         self.frame_12 = QtWidgets.QFrame(self.orders_tab)
-        self.frame_12.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.frame_12.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_12.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_12.setObjectName("frame_12")
@@ -3719,6 +3730,24 @@ class Ui_MainWindow(object):
         self.orders_tableView.verticalHeader().setDefaultSectionSize(40)
         self.orders_tableView.verticalHeader().setMinimumSectionSize(40)
         self.verticalLayout_20.addWidget(self.orders_tableView)
+        self.horizontalLayout_42 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_42.setObjectName("horizontalLayout_42")
+        self.label_57 = QtWidgets.QLabel(self.frame_12)
+        self.label_57.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.label_57.setStyleSheet("QLabel{\n"
+"    color:rgb(244, 154, 32);\n"
+"    \n"
+"}")
+        self.label_57.setObjectName("label_57")
+        self.horizontalLayout_42.addWidget(self.label_57)
+        self.orders_count_lbl = QtWidgets.QLabel(self.frame_12)
+        self.orders_count_lbl.setStyleSheet("QLabel{\n"
+"    color:rgb(244, 154, 32);\n"
+"    \n"
+"}")
+        self.orders_count_lbl.setObjectName("orders_count_lbl")
+        self.horizontalLayout_42.addWidget(self.orders_count_lbl)
+        self.verticalLayout_20.addLayout(self.horizontalLayout_42)
         self.gridLayout_8.addWidget(self.frame_12, 1, 1, 2, 1)
         self.tabWidget.addTab(self.orders_tab, "")
         self.monthly_tab = QtWidgets.QWidget()
@@ -3845,6 +3874,24 @@ class Ui_MainWindow(object):
         self.monthly_customers_tableView.verticalHeader().setDefaultSectionSize(40)
         self.monthly_customers_tableView.verticalHeader().setMinimumSectionSize(40)
         self.verticalLayout_24.addWidget(self.monthly_customers_tableView)
+        self.horizontalLayout_43 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_43.setObjectName("horizontalLayout_43")
+        self.label_69 = QtWidgets.QLabel(self.frame_15)
+        self.label_69.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.label_69.setStyleSheet("QLabel{\n"
+"    color:rgb(244, 154, 32);\n"
+"    \n"
+"}")
+        self.label_69.setObjectName("label_69")
+        self.horizontalLayout_43.addWidget(self.label_69)
+        self.monthly_customers_count_lbl = QtWidgets.QLabel(self.frame_15)
+        self.monthly_customers_count_lbl.setStyleSheet("QLabel{\n"
+"    color:rgb(244, 154, 32);\n"
+"    \n"
+"}")
+        self.monthly_customers_count_lbl.setObjectName("monthly_customers_count_lbl")
+        self.horizontalLayout_43.addWidget(self.monthly_customers_count_lbl)
+        self.verticalLayout_24.addLayout(self.horizontalLayout_43)
         self.gridLayout_18.addWidget(self.frame_15, 1, 1, 2, 1)
         self.frame_21 = QtWidgets.QFrame(self.monthly_tab)
         self.frame_21.setMinimumSize(QtCore.QSize(0, 0))
@@ -5150,7 +5197,7 @@ class Ui_MainWindow(object):
 "\n"
 "}")
         self.employee_image_lbl.setText("")
-        self.employee_image_lbl.setPixmap(QtGui.QPixmap("20170416_113030.jpg"))
+        self.employee_image_lbl.setPixmap(QtGui.QPixmap("../../employees_image/unknown_male.jpg"))
         self.employee_image_lbl.setScaledContents(True)
         self.employee_image_lbl.setObjectName("employee_image_lbl")
         self.verticalLayout_72.addWidget(self.employee_image_lbl)
@@ -5164,11 +5211,6 @@ class Ui_MainWindow(object):
         self.employee_job_type_lbl.setAlignment(QtCore.Qt.AlignCenter)
         self.employee_job_type_lbl.setObjectName("employee_job_type_lbl")
         self.verticalLayout_72.addWidget(self.employee_job_type_lbl)
-        self.label_51 = QtWidgets.QLabel(self.employee_detail_frame)
-        self.label_51.setStyleSheet("color:rgb(0, 31, 98) ;")
-        self.label_51.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_51.setObjectName("label_51")
-        self.verticalLayout_72.addWidget(self.label_51)
         self.horizontalLayout_27.addLayout(self.verticalLayout_72)
         self.line_4 = QtWidgets.QFrame(self.employee_detail_frame)
         self.line_4.setStyleSheet("border:4px solid rgb(255, 255, 255);\n"
@@ -5177,18 +5219,33 @@ class Ui_MainWindow(object):
         self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_4.setObjectName("line_4")
         self.horizontalLayout_27.addWidget(self.line_4)
+        self.verticalLayout_76 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_76.setObjectName("verticalLayout_76")
         self.verticalLayout_73 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_73.setSpacing(0)
         self.verticalLayout_73.setObjectName("verticalLayout_73")
         self.label_56 = QtWidgets.QLabel(self.employee_detail_frame)
+        self.label_56.setMinimumSize(QtCore.QSize(0, 0))
+        self.label_56.setMaximumSize(QtCore.QSize(16777215, 40))
         self.label_56.setObjectName("label_56")
         self.verticalLayout_73.addWidget(self.label_56)
         self.employee_username_lbl = QtWidgets.QLabel(self.employee_detail_frame)
+        self.employee_username_lbl.setMinimumSize(QtCore.QSize(0, 0))
+        self.employee_username_lbl.setMaximumSize(QtCore.QSize(16777215, 40))
         self.employee_username_lbl.setObjectName("employee_username_lbl")
         self.verticalLayout_73.addWidget(self.employee_username_lbl)
+        self.verticalLayout_76.addLayout(self.verticalLayout_73)
+        self.verticalLayout_74 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_74.setSpacing(0)
+        self.verticalLayout_74.setObjectName("verticalLayout_74")
         self.label_65 = QtWidgets.QLabel(self.employee_detail_frame)
+        self.label_65.setMinimumSize(QtCore.QSize(0, 0))
+        self.label_65.setMaximumSize(QtCore.QSize(16777215, 40))
         self.label_65.setObjectName("label_65")
-        self.verticalLayout_73.addWidget(self.label_65)
+        self.verticalLayout_74.addWidget(self.label_65)
         self.lineEdit = QtWidgets.QLineEdit(self.employee_detail_frame)
+        self.lineEdit.setMinimumSize(QtCore.QSize(0, 0))
+        self.lineEdit.setMaximumSize(QtCore.QSize(16777215, 40))
         self.lineEdit.setStyleSheet("background:transparent;\n"
 "border: none;\n"
 "color: rgb(255, 255, 255);\n"
@@ -5196,14 +5253,23 @@ class Ui_MainWindow(object):
         self.lineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit.setReadOnly(True)
         self.lineEdit.setObjectName("lineEdit")
-        self.verticalLayout_73.addWidget(self.lineEdit)
+        self.verticalLayout_74.addWidget(self.lineEdit)
+        self.verticalLayout_76.addLayout(self.verticalLayout_74)
+        self.verticalLayout_75 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_75.setSpacing(0)
+        self.verticalLayout_75.setObjectName("verticalLayout_75")
         self.label_71 = QtWidgets.QLabel(self.employee_detail_frame)
+        self.label_71.setMinimumSize(QtCore.QSize(0, 0))
+        self.label_71.setMaximumSize(QtCore.QSize(16777215, 40))
         self.label_71.setObjectName("label_71")
-        self.verticalLayout_73.addWidget(self.label_71)
+        self.verticalLayout_75.addWidget(self.label_71)
         self.label_72 = QtWidgets.QLabel(self.employee_detail_frame)
+        self.label_72.setMinimumSize(QtCore.QSize(0, 0))
+        self.label_72.setMaximumSize(QtCore.QSize(16777215, 40))
         self.label_72.setObjectName("label_72")
-        self.verticalLayout_73.addWidget(self.label_72)
-        self.horizontalLayout_27.addLayout(self.verticalLayout_73)
+        self.verticalLayout_75.addWidget(self.label_72)
+        self.verticalLayout_76.addLayout(self.verticalLayout_75)
+        self.horizontalLayout_27.addLayout(self.verticalLayout_76)
         self.gridLayout_12.addWidget(self.employee_detail_frame, 0, 0, 1, 1)
         self.verticalLayout_71.addWidget(self.employees_frame)
         self.scrollArea_4.setWidget(self.scrollAreaWidgetContents_4)
@@ -5219,9 +5285,9 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(MainWindow)
-        self.buttons_stackedWidget.setCurrentIndex(0)
+        self.buttons_stackedWidget.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(6)
-        self.tabWidget.setCurrentIndex(6)
+        self.tabWidget.setCurrentIndex(9)
         self.logout_btn.clicked['bool'].connect(self.daily_btn.setDisabled)
         self.logout_btn.clicked['bool'].connect(self.archive_btn.setDisabled)
         self.logout_btn.clicked['bool'].connect(self.settings_btn.setDisabled)
@@ -5241,10 +5307,10 @@ class Ui_MainWindow(object):
         self.warehouse_btn.setText(_translate("MainWindow", "Warehouse"))
         self.reports_btn.setToolTip(_translate("MainWindow", "Reports"))
         self.reports_btn.setText(_translate("MainWindow", "Reports"))
-        self.employees_btn.setToolTip(_translate("MainWindow", "Employees"))
-        self.employees_btn.setText(_translate("MainWindow", "Employees"))
         self.offers_btn.setToolTip(_translate("MainWindow", "Offers"))
         self.offers_btn.setText(_translate("MainWindow", "Offers"))
+        self.employees_btn.setToolTip(_translate("MainWindow", "Employees"))
+        self.employees_btn.setText(_translate("MainWindow", "Employees"))
         self.shifts_btn.setToolTip(_translate("MainWindow", "Shifts"))
         self.shifts_btn.setText(_translate("MainWindow", "Shifts"))
         self.copy_delete_btn.setToolTip(_translate("MainWindow", "Copy and Delete"))
@@ -5300,6 +5366,8 @@ class Ui_MainWindow(object):
         self.daily_customer_subsType_filter_comboBox.setItemText(3, _translate("MainWindow", "Expired"))
         self.daily_customer_subsType_filter_comboBox.setItemText(4, _translate("MainWindow", "Subscribed to another center"))
         self.daily_customer_clear_btn.setText(_translate("MainWindow", "Clear"))
+        self.label_54.setText(_translate("MainWindow", "Count"))
+        self.daily_customers_count_lbl.setText(_translate("MainWindow", "0"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.daily_customers_tab), _translate("MainWindow", "Daily customers"))
         self.label.setText(_translate("MainWindow", "ORDERS"))
         self.label_7.setText(_translate("MainWindow", "Adding Order"))
@@ -5319,12 +5387,16 @@ class Ui_MainWindow(object):
         self.orders_type_filter_comboBox.setItemText(1, _translate("MainWindow", "عام"))
         self.orders_type_filter_comboBox.setItemText(2, _translate("MainWindow", "ضيافة"))
         self.order_clear_btn.setText(_translate("MainWindow", "Clear"))
+        self.label_57.setText(_translate("MainWindow", "Count"))
+        self.orders_count_lbl.setText(_translate("MainWindow", "0"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.orders_tab), _translate("MainWindow", "Orders"))
         self.label_26.setText(_translate("MainWindow", "Search and Filter"))
         self.label_27.setText(_translate("MainWindow", "By Customer"))
         self.label_33.setText(_translate("MainWindow", "By Subscribtion State"))
         self.label_34.setText(_translate("MainWindow", "By Subscribtion Type"))
         self.monthly_customer_clear_btn.setText(_translate("MainWindow", "Clear"))
+        self.label_69.setText(_translate("MainWindow", "Count"))
+        self.monthly_customers_count_lbl.setText(_translate("MainWindow", "0"))
         self.label_18.setText(_translate("MainWindow", "Adding Monthly Customer"))
         self.label_25.setText(_translate("MainWindow", "Customer Name"))
         self.label_29.setText(_translate("MainWindow", "Subscription Type"))
@@ -5404,7 +5476,6 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.shifts_tab), _translate("MainWindow", "Shifts"))
         self.employee_name_lbl.setText(_translate("MainWindow", "Nicola Ibrahim"))
         self.employee_job_type_lbl.setText(_translate("MainWindow", "Employee"))
-        self.label_51.setText(_translate("MainWindow", "Excutive manager"))
         self.label_56.setText(_translate("MainWindow", "username:"))
         self.employee_username_lbl.setText(_translate("MainWindow", "ni"))
         self.label_65.setText(_translate("MainWindow", "password:"))

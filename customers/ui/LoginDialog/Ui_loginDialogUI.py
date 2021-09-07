@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/loginDialogUISFirNI.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/loginDialogUIkhKBkf.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -11,21 +11,24 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.setWindowModality(QtCore.Qt.NonModal)
-        Dialog.resize(500, 733)
-        Dialog.setStyleSheet("/*\n"
-"Aqua Style Sheet for QT Applications\n"
-"Author: Jaime A. Quiroga P.\n"
-"Company: GTRONICK\n"
-"Last updated: 22/01/2019, 07:55.\n"
-"Available at: https://github.com/GTRONICK/QSS/blob/master/Aqua.qss\n"
-"*/\n"
+        Dialog.resize(500, 750)
+        Dialog.setMinimumSize(QtCore.QSize(500, 750))
+        Dialog.setStyleSheet("")
+        Dialog.setSizeGripEnabled(False)
+        Dialog.setModal(False)
+        self.gridLayout = QtWidgets.QGridLayout(Dialog)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setHorizontalSpacing(0)
+        self.gridLayout.setObjectName("gridLayout")
+        self.frame = QtWidgets.QFrame(Dialog)
+        self.frame.setStyleSheet("#frame{\n"
 "\n"
-"\n"
-"QDialog{\n"
+"    border: 2px solid transparent;\n"
+"    border-radius: 15px;\n"
 "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.107955 rgba(0, 31, 98, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "\n"
 "}\n"
+"\n"
 "\n"
 "QLineEdit {\n"
 "background-color: rgba(197, 197, 197,30);\n"
@@ -73,14 +76,6 @@ class Ui_Dialog(object):
 "\n"
 "\n"
 "")
-        Dialog.setSizeGripEnabled(False)
-        Dialog.setModal(False)
-        self.gridLayout = QtWidgets.QGridLayout(Dialog)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout.setHorizontalSpacing(0)
-        self.gridLayout.setObjectName("gridLayout")
-        self.frame = QtWidgets.QFrame(Dialog)
-        self.frame.setStyleSheet("")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -93,11 +88,7 @@ class Ui_Dialog(object):
         self.logo_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.logo_frame.setStyleSheet("\n"
 "QFrame{\n"
-"\n"
-"    \n"
-"image: url(:/icons/icons/background-removebg-preview (2).png) 2 2 2 2 streatch ;\n"
-"   \n"
-"\n"
+"    image: url(:/icons/icons/studyzone-logo.png) ;\n"
 "}\n"
 "")
         self.logo_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)

@@ -1,9 +1,9 @@
 from PyQt5 import QtGui, QtWidgets
 
 
-class Label(QtWidgets.QLabel):
+class CustomImgaeLabel(QtWidgets.QLabel):
     def __init__(self, *args, antialiasing=True, **kwargs):
-        super(Label, self).__init__(*args, **kwargs)
+        super(CustomImgaeLabel, self).__init__(*args, **kwargs)
         self.Antialiasing = antialiasing
         self.setMaximumSize(200, 200)
         self.setMinimumSize(200, 200)

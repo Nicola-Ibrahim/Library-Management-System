@@ -28,12 +28,7 @@ Last updated: 22/01/2019, 07:55.
 Available at: https://github.com/GTRONICK/QSS/blob/master/Aqua.qss
 */
 QMainWindow {
-
-	
-	/*background-color: qlineargradient(spread:pad, x1:0.006, y1:0.818182, x2:1, y2:0.8125, stop:0 rgba(255, 128, 0, 255), stop:1 rgba(255, 255, 255, 255));*/
-	
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.107955 rgba(0, 31, 98, 255), stop:1 rgba(255, 255, 255, 255));
- 
 }
 
 QMessageBox {
@@ -868,7 +863,7 @@ border-color: rgb(244, 154, 32);
 }</string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="dailyAndarchive_buttons_tab">
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1258,63 +1253,6 @@ QPushButton:disabled{
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="employees_btn">
-                <property name="minimumSize">
-                 <size>
-                  <width>300</width>
-                  <height>75</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Employees</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton{
-	
-	padding-left:70px;
-	background-color:  none;
-	background-image: url(:/icons/icons/employee1.png);
-	background-repeat:none;
-}
-
-
-QPushButton:hover{
-	background-image: url(:/icons/icons/employee2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-QPushButton:pressed{
-	background-image: url(:/icons/icons/employee2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-QPushButton:focus{
-	background-image: url(:/icons/icons/employee2.png);
-	background-repeat:none;
-	color:  rgb(244, 154, 32);
-}
-
-
-QPushButton:disabled{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
-	border-width: 0px 5px 0px 0px;
-	border-radius: 2px;
-	color: #808086;
-	padding-right: 2px;
-	background-color: rgb(142,142,142);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Employees</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QPushButton" name="offers_btn">
                 <property name="minimumSize">
                  <size>
@@ -1368,6 +1306,63 @@ QPushButton:disabled{
                 </property>
                 <property name="text">
                  <string>Offers</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="employees_btn">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>75</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Employees</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+	
+	padding-left:70px;
+	background-color:  none;
+	background-image: url(:/icons/icons/employee1.png);
+	background-repeat:none;
+}
+
+
+QPushButton:hover{
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+QPushButton:pressed{
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+QPushButton:focus{
+	background-image: url(:/icons/icons/employee2.png);
+	background-repeat:none;
+	color:  rgb(244, 154, 32);
+}
+
+
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(217, 217, 217), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(217, 217, 217));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(215, 215, 215), stop:1 rgb(222, 222, 222));
+	border-width: 0px 5px 0px 0px;
+	border-radius: 2px;
+	color: #808086;
+	padding-right: 2px;
+	background-color: rgb(142,142,142);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Employees</string>
                 </property>
                </widget>
               </item>
@@ -4263,7 +4258,7 @@ QPushButton:pressed{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>6</number>
+             <number>0</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -4313,35 +4308,18 @@ QPushButton:pressed{
                 </property>
                </widget>
               </item>
-              <item row="1" column="1" alignment="Qt::AlignHCenter|Qt::AlignTop">
-               <widget class="QFrame" name="frame_9">
-                <property name="minimumSize">
+              <item row="2" column="1">
+               <spacer name="verticalSpacer_28">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
                  <size>
-                  <width>600</width>
-                  <height>600</height>
+                  <width>20</width>
+                  <height>40</height>
                  </size>
                 </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>600</width>
-                  <height>600</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">#frame_9{
-
-image: url(:/icons/icons/studyzone-logo.png);
-
-}</string>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_5"/>
-               </widget>
+               </spacer>
               </item>
               <item row="3" column="1" alignment="Qt::AlignHCenter">
                <widget class="QFrame" name="frame">
@@ -4666,18 +4644,35 @@ QPushButton:pressed{
                 </layout>
                </widget>
               </item>
-              <item row="2" column="1">
-               <spacer name="verticalSpacer_28">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
+              <item row="1" column="1">
+               <widget class="QFrame" name="frame_9">
+                <property name="minimumSize">
                  <size>
-                  <width>20</width>
-                  <height>40</height>
+                  <width>600</width>
+                  <height>600</height>
                  </size>
                 </property>
-               </spacer>
+                <property name="maximumSize">
+                 <size>
+                  <width>600</width>
+                  <height>600</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">#frame_9{
+
+image: url(:/icons/icons/studyzone-logo.png);
+
+}</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_5"/>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -5282,6 +5277,42 @@ background-color: rgb(244, 154, 32);
                    </attribute>
                   </widget>
                  </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_41">
+                   <item>
+                    <widget class="QLabel" name="label_54">
+                     <property name="maximumSize">
+                      <size>
+                       <width>70</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QLabel{
+	color:rgb(244, 154, 32);
+	
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Count</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="daily_customers_count_lbl">
+                     <property name="styleSheet">
+                      <string notr="true">QLabel{
+	color:rgb(244, 154, 32);
+	
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -5356,9 +5387,6 @@ background-color: rgb(244, 154, 32);
                   <width>0</width>
                   <height>16777215</height>
                  </size>
-                </property>
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -5783,9 +5811,6 @@ QPushButton:pressed{
               </item>
               <item row="1" column="1" rowspan="2">
                <widget class="QFrame" name="frame_12">
-                <property name="layoutDirection">
-                 <enum>Qt::RightToLeft</enum>
-                </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -6036,6 +6061,42 @@ background-color: rgb(244, 154, 32);
                     <number>40</number>
                    </attribute>
                   </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_42">
+                   <item>
+                    <widget class="QLabel" name="label_57">
+                     <property name="maximumSize">
+                      <size>
+                       <width>70</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QLabel{
+	color:rgb(244, 154, 32);
+	
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Count</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="orders_count_lbl">
+                     <property name="styleSheet">
+                      <string notr="true">QLabel{
+	color:rgb(244, 154, 32);
+	
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </widget>
@@ -6341,6 +6402,42 @@ background-color: rgb(244, 154, 32);
                     <number>40</number>
                    </attribute>
                   </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_43">
+                   <item>
+                    <widget class="QLabel" name="label_69">
+                     <property name="maximumSize">
+                      <size>
+                       <width>70</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QLabel{
+	color:rgb(244, 154, 32);
+	
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Count</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="monthly_customers_count_lbl">
+                     <property name="styleSheet">
+                      <string notr="true">QLabel{
+	color:rgb(244, 154, 32);
+	
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </widget>
@@ -9481,7 +9578,7 @@ background-color: rgb(244, 154, 32);
                              <string/>
                             </property>
                             <property name="pixmap">
-                             <pixmap>20170416_113030.jpg</pixmap>
+                             <pixmap>../../employees_image/unknown_male.jpg</pixmap>
                             </property>
                             <property name="scaledContents">
                              <bool>true</bool>
@@ -9514,19 +9611,6 @@ background-color: rgb(244, 154, 32);
                             </property>
                            </widget>
                           </item>
-                          <item>
-                           <widget class="QLabel" name="label_51">
-                            <property name="styleSheet">
-                             <string notr="true">color:rgb(0, 31, 98) ;</string>
-                            </property>
-                            <property name="text">
-                             <string>Excutive manager</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignCenter</set>
-                            </property>
-                           </widget>
-                          </item>
                          </layout>
                         </item>
                         <item>
@@ -9541,60 +9625,153 @@ background-color: rgb(244, 154, 32);
                          </widget>
                         </item>
                         <item>
-                         <layout class="QVBoxLayout" name="verticalLayout_73">
+                         <layout class="QVBoxLayout" name="verticalLayout_76">
                           <item>
-                           <widget class="QLabel" name="label_56">
-                            <property name="text">
-                             <string>username:</string>
+                           <layout class="QVBoxLayout" name="verticalLayout_73">
+                            <property name="spacing">
+                             <number>0</number>
                             </property>
-                           </widget>
+                            <item>
+                             <widget class="QLabel" name="label_56">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>40</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>username:</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="employee_username_lbl">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>40</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>ni</string>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
                           </item>
                           <item>
-                           <widget class="QLabel" name="employee_username_lbl">
-                            <property name="text">
-                             <string>ni</string>
+                           <layout class="QVBoxLayout" name="verticalLayout_74">
+                            <property name="spacing">
+                             <number>0</number>
                             </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QLabel" name="label_65">
-                            <property name="text">
-                             <string>password:</string>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QLineEdit" name="lineEdit">
-                            <property name="styleSheet">
-                             <string notr="true">background:transparent;
+                            <item>
+                             <widget class="QLabel" name="label_65">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>40</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>password:</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QLineEdit" name="employee_password_lbl">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>40</height>
+                               </size>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">background:transparent;
 border: none;
 color: rgb(255, 255, 255);
 </string>
-                            </property>
-                            <property name="text">
-                             <string>n123</string>
-                            </property>
-                            <property name="echoMode">
-                             <enum>QLineEdit::Password</enum>
-                            </property>
-                            <property name="readOnly">
-                             <bool>true</bool>
-                            </property>
-                           </widget>
+                              </property>
+                              <property name="text">
+                               <string>n123</string>
+                              </property>
+                              <property name="echoMode">
+                               <enum>QLineEdit::Password</enum>
+                              </property>
+                              <property name="readOnly">
+                               <bool>true</bool>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
                           </item>
                           <item>
-                           <widget class="QLabel" name="label_71">
-                            <property name="text">
-                             <string>Number of workdays:</string>
+                           <layout class="QVBoxLayout" name="verticalLayout_75">
+                            <property name="spacing">
+                             <number>0</number>
                             </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QLabel" name="label_72">
-                            <property name="text">
-                             <string>22</string>
-                            </property>
-                           </widget>
+                            <item>
+                             <widget class="QLabel" name="label_71">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>40</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>Number of workdays:</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="employee_num_workdays_lbl">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>40</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>22</string>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
                           </item>
                          </layout>
                         </item>
