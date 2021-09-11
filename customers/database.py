@@ -15,15 +15,15 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Daily_customers (
             daily_id           INTEGER       UNIQUE
-                                     PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
-                                     NOT NULL,
+                                            PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
+                                            NOT NULL,
             daily_name         VARCHAR (255) NOT NULL,
             daily_ticket_cost  REAL (10),
             subscription_state VARCHAR,
             monthly_id         INTEGER       CONSTRAINT fk_monthly_id REFERENCES Monthly_customers (monthly_id) ON DELETE SET NULL
                                                                                                                 ON UPDATE NO ACTION,
             daily_date         DATE          NOT NULL
-                                            DEFAULT (date('now') )
+                                            DEFAULT (date('now') ) 
         );
 
         """
@@ -32,8 +32,8 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Orders (
             order_id          INTEGER      PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
-                                   UNIQUE
-                                   NOT NULL,
+                                        UNIQUE
+                                        NOT NULL,
             daily_customer_id INTEGER (10) CONSTRAINT fk_daily_customer_id REFERENCES Daily_customers (daily_id) ON DELETE CASCADE
                                                                                                                 ON UPDATE NO ACTION,
             order_price       REAL (10)    NOT NULL
@@ -51,8 +51,8 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Orders_items (
             id       INTEGER      PRIMARY KEY
-                          NOT NULL
-                          UNIQUE,
+                                NOT NULL
+                                UNIQUE,
             order_id INTEGER (10) REFERENCES Orders (order_id) ON DELETE CASCADE
                                                             ON UPDATE NO ACTION,
             item_id  INTEGER (10) REFERENCES Warehouse (item_id) ON DELETE SET NULL
@@ -62,7 +62,7 @@ def _createCustomersTables(db_1, db_2):
             quantity INTEGER (10) NOT NULL,
             price    REAL (10),
             date     DATE         NOT NULL
-                                DEFAULT (date('now') ) 
+                                DEFAULT (date('now') )  
         );
 
         """
@@ -70,7 +70,7 @@ def _createCustomersTables(db_1, db_2):
     MONTHLYCUSTOMERS_TABLE_STATEMENT = \
         """
         CREATE TABLE IF NOT EXISTS Monthly_customers (
-            monthly_id          INTEGER       PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
+             monthly_id          INTEGER       PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
                                             UNIQUE
                                             NOT NULL,
             monthly_name        VARCHAR (255) NOT NULL,
@@ -82,40 +82,43 @@ def _createCustomersTables(db_1, db_2):
             subscription_state  VARCHAR       NOT NULL
                                             DEFAULT Subscribed
                                             CHECK (subscription_state IN ('Not Subscribed', 'Subscribed', 'Expired') ),
-            subsription_type    VARCHAR (255)   NOT NULL
+            subsription_type    VARCHAR (255) NOT NULL
             );
     
         """
 
     EMPLOYEES_TABLE_STATEMENT = \
         """
-        CREATE TABLE IF NOT EXISTS Supervisors (
-            supervisor_id   INTEGER       PRIMARY KEY AUTOINCREMENT
-                                  UNIQUE
-                                  NOT NULL,
-            supervisor_name VARCHAR (255) NOT NULL,
-            gender          VARCHAR (255) ,
-            job_type        VARCHAR (255) NOT NULL
+        CREATE TABLE IF NOT EXISTS Employees (
+            employee_id   INTEGER       PRIMARY KEY AUTOINCREMENT
+                                        UNIQUE
+                                        NOT NULL,
+            employee_name VARCHAR (255) NOT NULL,
+            gender        VARCHAR (255),
+            job_type      VARCHAR (255) NOT NULL
                                         CHECK (job_type IN ('Manager', 'Employee') ),
-            username        VARCHAR (255) NOT NULL
+            username      VARCHAR (255) NOT NULL
                                         UNIQUE,
-            password        VARCHAR (255) NOT NULL
+            password      VARCHAR (255) NOT NULL
                                         UNIQUE,
-            num_workdays    INTEGER (10)  DEFAULT (0) 
+            num_workdays  INTEGER (10)  DEFAULT (0) 
                                         NOT NULL
+        );
+
                 
         """
 
     SHIFTS_EMPLOYEES_TABEL_STATEMENT = \
         """
-        CREATE TABLE IF NOT EXISTS Shifts_Supervisors (
-            shift_id      INTEGER (10) REFERENCES Shifts (shift_id) ON DELETE CASCADE
-                                                                    ON UPDATE NO ACTION,
-            supervisor_id INTEGER      REFERENCES Supervisors (supervisor_id) ON DELETE CASCADE
-                                                                            ON UPDATE NO ACTION,
-            date          DATE         DEFAULT (date('now') ) 
+        CREATE TABLE IF NOT EXISTS Shifts_employees (
+            shift_id    INTEGER (10) REFERENCES Shifts (shift_id) ON DELETE CASCADE
+                                                                ON UPDATE NO ACTION,
+            employee_id INTEGER      REFERENCES Employees (employee_id) ON DELETE CASCADE
+                                                                        ON UPDATE NO ACTION,
+            date        DATE         DEFAULT (date('now') ) 
                                     NOT NULL
         );
+
 
         """
     
@@ -140,29 +143,31 @@ def _createCustomersTables(db_1, db_2):
     REPORTS_TABLE_STATEMENT = \
         """
         CREATE TABLE IF NOT EXISTS Reports (
-            id                                 INTEGER       PRIMARY KEY AUTOINCREMENT
-                                                     UNIQUE
-                                                     NOT NULL,
-            date                               DATE          DEFAULT (DATE('now') ) 
+            id                                 INTEGER      PRIMARY KEY AUTOINCREMENT
+                                                            UNIQUE
+                                                            NOT NULL,
+            date                               DATE         DEFAULT (DATE('now') ) 
                                                             NOT NULL
                                                             UNIQUE,
-            daily_subscribtion_income          REAL (10)     NOT NULL
+            daily_subscribtion_income          REAL (10)    NOT NULL
                                                             DEFAULT (0),
-            monthly_subscribtion_income        REAL (10)     DEFAULT (0) 
+            monthly_subscribtion_income        REAL (10)    DEFAULT (0) 
                                                             NOT NULL,
-            drinks_total_income                REAL (10)     NOT NULL
+            drinks_total_income                REAL (10)    NOT NULL
                                                             DEFAULT (0),
-            food_total_income                  REAL (10)     NOT NULL
+            food_total_income                  REAL (10)    NOT NULL
                                                             DEFAULT (0),
-            total_income                       REAL (10)     NOT NULL
+            total_income                       REAL (10)    NOT NULL
                                                             DEFAULT (0),
-            numbers_of_daily_customers         INTEGER (10)  DEFAULT (0) 
+            offers_total_income                REAL (10)    NOT NULL
+                                                            DEFAULT (0),
+            numbers_of_daily_customers         INTEGER (10) DEFAULT (0) 
                                                             NOT NULL,
             numbers_of_dailyMonthly_customers  INTEGER (10) NOT NULL
                                                             DEFAULT (0),
             numbers_of_total_customers         INTEGER (10) NOT NULL
                                                             DEFAULT (0),
-            numbers_of_monthly_customers       INTEGER (10)  NOT NULL
+            numbers_of_monthly_customers       INTEGER (10) NOT NULL
                                                             DEFAULT (0),
             average_numbers_of_daily_customers INTEGER (10) NOT NULL
                                                             DEFAULT (0)  
@@ -187,17 +192,17 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Shifts (
             shift_id       INTEGER       PRIMARY KEY
-                                    UNIQUE
-                                    NOT NULL,
+                                        UNIQUE
+                                        NOT NULL,
             shift_name     VARCHAR (255),
             start_shift    TIME,
             finish_shift   TIME,
             shift_duration TIME,
-            total_income   INTEGER,
+            shift_income   INTEGER,
             shift_state    VARCHAR (255) NOT NULL
                                         DEFAULT Inactive
                                         CHECK (shift_state IN ('Active', 'Inactive', 'Finished') ),
-            shift_date           DATE          NOT NULL
+            shift_date     DATE          NOT NULL
                                         DEFAULT (date('now') ) 
         );
 
@@ -222,8 +227,8 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Offers_items (
             item_offer_id INTEGER      PRIMARY KEY
-                               UNIQUE
-                               NOT NULL,
+                                    UNIQUE
+                                    NOT NULL,
             offer_id      INTEGER      REFERENCES Offers (offer_id) ON DELETE CASCADE
                                                                     ON UPDATE NO ACTION,
             item_id       INTEGER (10) REFERENCES Warehouse (item_id) ON DELETE CASCADE
@@ -404,6 +409,7 @@ def _createCustomersTables(db_1, db_2):
             WHERE id = new.id;
         END;
 
+
         """
 
     # Orders_items update item_consumed_quantity after insert trigger
@@ -423,6 +429,7 @@ def _createCustomersTables(db_1, db_2):
             WHERE Warehouse.item_id = new.item_id;
         END;
 
+
         """
     
     # Orders_items update item_consumed_quantity after update of quantity trigger
@@ -430,17 +437,18 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TRIGGER IF NOT EXISTS update_item_consumed_quantity2
                 AFTER UPDATE OF quantity
-                    ON Orders_items
-        BEGIN
-            UPDATE Warehouse
-            SET item_consumed_quantity = CASE WHEN abs(new.quantity - old.quantity) > (
-                                                                                            SELECT item_current_quantity - item_consumed_quantity
-                                                                                            FROM Warehouse
-                                                                                            WHERE item_id = old.item_id
-                                                                                        )
-                THEN RAISE(ABORT, "The item is out of warehouse") WHEN (new.quantity < old.quantity) THEN item_consumed_quantity - abs(new.quantity - old.quantity) WHEN (new.quantity > old.quantity) THEN item_consumed_quantity + abs(new.quantity - old.quantity) END
-            WHERE Warehouse.item_id = new.item_id;
-        END;
+                        ON Orders_items
+            BEGIN
+                UPDATE Warehouse
+                SET item_consumed_quantity = CASE WHEN abs(new.quantity - old.quantity) > (
+                                                                                                SELECT item_current_quantity - item_consumed_quantity
+                                                                                                FROM Warehouse
+                                                                                                WHERE item_id = old.item_id
+                                                                                            )
+                    THEN RAISE(ABORT, "The item is out of warehouse") WHEN (new.quantity < old.quantity) THEN item_consumed_quantity - abs(new.quantity - old.quantity) WHEN (new.quantity > old.quantity) THEN item_consumed_quantity + abs(new.quantity - old.quantity) END
+                WHERE Warehouse.item_id = new.item_id;
+            END;
+
 
         """
 
@@ -456,10 +464,10 @@ def _createCustomersTables(db_1, db_2):
             WHERE item_id = old.item_id;
         END;
 
+
         """
     
-    # Monthly_customers after insert trigger
-    # update monthly_subscribtion_income in Inventroy
+    # Monthly_customers update date after update subscription_state
     TRIGGER1_MONTHLY_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_date
@@ -475,9 +483,7 @@ def _createCustomersTables(db_1, db_2):
 
         """
     
-    
-    # Monthly_customers after insert trigger
-    # update monthly_tickect_cost
+    # Monthly_customers update monthly_tickect_cost after insert trigger
     TRIGGER2_MONTHLY_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_monthly_tickect_cost
@@ -502,8 +508,7 @@ def _createCustomersTables(db_1, db_2):
 
         """
 
-    # Reports after update of any income
-    # update total_income
+    # Reports update total_income after update of any income
     TRIGGER1_REPORTS_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_total_income
@@ -518,13 +523,13 @@ def _createCustomersTables(db_1, db_2):
             WHERE Reports.date = date('now');
         END;
 
+
         """
     
-    # Reports after update of numbers of customers
-    # update average_numbers_of_customers
+    # Reports update average_numbers_of_customers after update of numbers of customers
     TRIGGER2_REPORTS_STATEMENT = \
         """
-        CREATE TRIGGER IF NOT EXISTS update_avg_number_of_customers
+        CREATE TRIGGER IF `NOT EXISTS `update_avg_number_of_customers
                 AFTER UPDATE OF numbers_of_daily_customers
                     ON Reports
         BEGIN
@@ -536,8 +541,11 @@ def _createCustomersTables(db_1, db_2):
                 )
             WHERE strftime('%m', Reports.date) = strftime('%m', new.date);
         END;
+
         """
     
+
+    # Shifts update finish_shift after update of shift_state trigger
     TRIGGER1_SHIFTS_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_finish_shift
@@ -554,6 +562,7 @@ def _createCustomersTables(db_1, db_2):
 
         """
     
+    # Shifts update shift_duration after update of finish_shift trigger
     TRIGGER2_SHIFTS_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_shift_duration
@@ -570,6 +579,7 @@ def _createCustomersTables(db_1, db_2):
 
         """
 
+    # Shifts update start_shift after update of shift_state trigger
     TRIGGER3_SHIFTS_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_start_shift
@@ -586,6 +596,7 @@ def _createCustomersTables(db_1, db_2):
 
         """
 
+    # Shifts update shift_name after insert trigger
     TRIGGER4_SHIFTS_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_shift_name
@@ -606,6 +617,7 @@ def _createCustomersTables(db_1, db_2):
 
         """
     
+    # Shifts update num_workdays after update of shift_state trigger
     TRIGGER5_SHIFTS_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_employee_dayworks
@@ -613,17 +625,18 @@ def _createCustomersTables(db_1, db_2):
                     ON Shifts
                 WHEN new.shift_state = 'Finished'
         BEGIN
-            UPDATE Supervisors
+            UPDATE Employees
             SET num_workdays = num_workdays + 1
-            WHERE supervisor_id IN (
-                SELECT supervisor_id
-                FROM Shifts_Supervisors
+            WHERE employee_id IN (
+                SELECT employee_id
+                FROM Shifts_employees
                 WHERE shift_id = new.shift_id
             );
         END;
 
         """
 
+    # Shifts update shift_income after update of shift_state trigger
     TRIGGER6_SHIFTS_STATEMENT = \
         """
         CREATE TRIGGER IF NOT EXISTS update_shift_income
@@ -659,25 +672,31 @@ def _createCustomersTables(db_1, db_2):
     
     INSERT1_EMPLOYEES_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Supervisors (supervisor_name, job_type, username ,password) VALUES ('admin','Manager','admin','admin')
+        INSERT INTO Employees (employee_name, job_type, username ,password) SELECT 'admin','Manager','admin','admin' WHERE 
+                NOT EXISTS (SELECT 1 FROM Meta WHERE key = 'setting admin' AND value = 1)
         """
     
     INSERT1_META_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Meta (key, value) VALUES ('version', '0.1.1')
+        INSERT OR IGNORE INTO Meta (key, value) VALUES ('current version', '0.1.2')
 
         """
     
     INSERT2_META_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Meta (key, value) VALUES ('last version', '0.1.0')
+        INSERT OR IGNORE INTO Meta (key, value) VALUES ('last version', '0.1.1')
         """
         
     INSERT3_META_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Meta (key, value) VALUES ('initial', '0.1.0')
+        INSERT OR IGNORE INTO Meta (key, value) VALUES ('setting admin', '0')
         """
-        
+    
+
+    UPDATE3_META_STATEMENT = \
+        """
+        UPDATE Meta SET value = 1 WHERE key = 'setting admin'
+        """
     
     sql_statements = (
         DAILYCUSTOMERS_TABLE_STATEMENT,
@@ -724,16 +743,21 @@ def _createCustomersTables(db_1, db_2):
         INSERT2_SUBSCRIPTION_STATEMENT,
         INSERT3_SUBSCRIPTION_STATEMENT,
 
-        INSERT1_EMPLOYEES_STATEMENT,
 
         INSERT1_META_STATEMENT,
-        INSERT2_META_STATEMENT 
-    )
+        INSERT2_META_STATEMENT,
+        INSERT3_META_STATEMENT,
 
+        INSERT1_EMPLOYEES_STATEMENT,
+
+        UPDATE3_META_STATEMENT,
+
+    )
     query = QSqlQuery(db_1)
     for statement in sql_statements:
         query.exec(statement)
     
+
 
     # Archive DataBase Tables
     sql_statements = (
@@ -1176,66 +1200,66 @@ def changeSubsCost(subs_cost, subs_type, db = None):
 
 
 ###############
-# Supervisors #
+# Employees #
 ###############
-def retrieveSupervisorsId(supervisor_name, db = None) -> int:
+def retrieveEmployeesId(employee_name, db = None) -> int:
     id = None
     
     STATEMENT = f"""
-        SELECT supervisor_id FROM Supervisors where supervisor_name = '{supervisor_name}'
+        SELECT employee_id FROM Employees where employee_name = '{employee_name}'
     """
 
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
 
     while query.next():
-        id = query.value(query.record().indexOf('supervisor_id'))
+        id = query.value(query.record().indexOf('employee_id'))
         
     return id
 
-def retrieveSupervisorsIds(db = None) -> list:
+def retrieveEmployeesIds(db = None) -> list:
     
     ids = []
     STATEMENT = f"""
-        SELECT supervisor_id FROM Supervisors
+        SELECT employee_id FROM Employees
     """
 
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
 
     while query.next():
-        id = str(query.value(query.record().indexOf('supervisor_id'))).strip()
+        id = str(query.value(query.record().indexOf('employee_id'))).strip()
         ids.append(id)
 
     return ids
 
-def retrieveSupervisorsNames(id = None, db = None) -> list:
+def retrieveEmployeesNames(id = None, db = None) -> list:
     
     names = []
 
     if(id == None):
         STATEMENT = f"""
-            SELECT supervisor_name FROM Supervisors WHERE supervisor_id NOT IN (SELECT supervisor_id FROM Shifts_Supervisors WHERE date = date('now'))
+            SELECT employee_name FROM Employees WHERE employee_id NOT IN (SELECT employee_id FROM Shifts_employees WHERE date = date('now'))
         """
 
     elif(id != None):
         STATEMENT = f"""
-            SELECT supervisor_name FROM Supervisors WHERE supervisor_id = {id}
+            SELECT employee_name FROM Employees WHERE employee_id = {id}
         """
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
 
     while query.next():
-        name = str(query.value(query.record().indexOf('supervisor_name'))).strip()
+        name = str(query.value(query.record().indexOf('employee_name'))).strip()
         names.append(name)
 
     return names
 
-def retrieveSuperviosrsJobType(db = None) -> list:
+def retrieveEmployeesJobType(db = None) -> list:
     result = []
     
     STATEMENT = f"""
-        SELECT DISTINCT job_type FROM Supervisors
+        SELECT DISTINCT job_type FROM Employees
     """
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
@@ -1246,12 +1270,12 @@ def retrieveSuperviosrsJobType(db = None) -> list:
     
     return result
 
-def linkShiftSupervisor(shift_id, supervisor_name, db = None) -> None:
+def linkShiftSupervisor(shift_id, employee_name, db = None) -> None:
 
-    supervisor_id = retrieveSupervisorsId(supervisor_name, db=db)
+    employee_id = retrieveEmployeesId(employee_name, db=db)
     STATEMENT = \
         f"""
-        INSERT INTO Shifts_Supervisors (shift_id, supervisor_id) VALUES ({shift_id}, {supervisor_id})
+        INSERT INTO Shifts_employees (shift_id, employee_id) VALUES ({shift_id}, {employee_id})
         """
     
     query = QSqlQuery(db = db)
@@ -1422,14 +1446,14 @@ def retrieveShiftNames(id = None, db =None):
 
     return names
 
-def retrieveShiftsSupervisors(db = None):
+def retrieveShiftsEmployees(db = None):
 
     indices_tree = []
 
     # Get available dates
     STATEMENT = \
         """
-        SELECT date, shift_id, supervisor_id FROM Shifts_Supervisors WHERE shift_id NOTNULL
+        SELECT date, shift_id, employee_id FROM Shifts_employees WHERE shift_id NOTNULL
         """
 
     query = QSqlQuery(db)
@@ -1438,10 +1462,10 @@ def retrieveShiftsSupervisors(db = None):
     while(query.next()):
         date = str(query.value(query.record().indexOf('date'))).strip()
         shift_id = int(str(query.value(query.record().indexOf('shift_id'))).strip())
-        supervisor_id = int(str(query.value(query.record().indexOf('supervisor_id'))).strip())
+        employee_id = int(str(query.value(query.record().indexOf('employee_id'))).strip())
         shift_name = retrieveShiftNames(shift_id, db=db)[0]
-        supervisor_name = retrieveSupervisorsNames(supervisor_id, db=db)[0]
-        indices_tree.append([date, shift_name, supervisor_name])
+        employee_name = retrieveEmployeesNames(employee_id, db=db)[0]
+        indices_tree.append([date, shift_name, employee_name])
 
    
     dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
@@ -1549,11 +1573,11 @@ def updateReports(db = None):
 def checkLoging(username, password, db = None):
     USERNAME_STATEMENT = \
         f"""
-            SELECT count(*) from Supervisors where username='{username}'
+            SELECT count(*) from Employees where username='{username}'
         """
     PASSWORD_STATEMENT = \
         f"""
-            SELECT count(*) from Supervisors where  password='{password}' AND username='{username}'
+            SELECT count(*) from Employees where  password='{password}' AND username='{username}'
         """
     
     query = QSqlQuery(db = db)
@@ -1579,7 +1603,7 @@ def checkLoging(username, password, db = None):
         
 def retrieveJobType(username, db = None):
     STATEMENT = f"""
-        SELECT job_type FROM Supervisors WHERE username='{username}'
+        SELECT job_type FROM Employees WHERE username='{username}'
     """
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)

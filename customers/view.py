@@ -19,7 +19,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSql import QSqlRelationalDelegate
 
 
-from .database import changeSubsCost, checkShiftActive, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveItemsOfferId, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveOrderType, retrieveSuperviosrsJobType, retrieveSupervisorsNames, startShift, updateReports
+from .database import changeSubsCost, checkShiftActive, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveOrderType, retrieveEmployeesJobType, retrieveEmployeesNames, startShift, updateReports
 from .model import *
 
 # from PyQt5.uic import loadUiType
@@ -41,7 +41,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.setupUi(self)
 
-        self.supervisor_job_type = "Manager"
+        self.supervisor_job_type = supervisor_job_type
         self.offer_id = None
         
         # DB connections
@@ -82,7 +82,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # insert an empty order and offer and employee previously
         self.plusOrder()
         self.plusOffer()
-        self.plusEmployee()
 
         # Apply desire changing to Main widnow
         self.uiCahnges()
@@ -177,15 +176,19 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Adapt enabling buttons to supervisor type
         self.daily_customer_remove_btn.setEnabled(self.supervisor_job_type == 'Manager')
-        self.daily_customer_export_btn.setEnabled(self.supervisor_job_type == 'Manager')
-        self.daily_customer_edit_price_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        # self.daily_customer_export_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        # self.daily_customer_edit_price_btn.setEnabled(self.supervisor_job_type == 'Manager')
         self.order_remove_btn.setEnabled(self.supervisor_job_type == 'Manager')
-        self.order_export_btn.setEnabled(self.supervisor_job_type == 'Manager')
-        self.monthly_customer_edit_cost_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        # self.order_export_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        # self.monthly_customer_edit_cost_btn.setEnabled(self.supervisor_job_type == 'Manager')
         self.monthly_customer_remove_btn.setEnabled(self.supervisor_job_type == 'Manager')
-        self.monthly_customer_edit_cost_btn.setEnabled(self.supervisor_job_type == 'Manager')
-        self.monthly_customer_export_btn.setEnabled(self.supervisor_job_type == 'Manager')
-        self.settings_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        # self.monthly_customer_edit_cost_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        # self.monthly_customer_export_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        self.warehouse_item_remove_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        self.report_remove_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        self.shift_remove_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        self.employee_remove_btn.setEnabled(self.supervisor_job_type == 'Manager')
+        self.offer_remove_btn.setEnabled(self.supervisor_job_type == 'Manager')
        
     def regexValidation(self):
         """Apply regular expression to some UI elements"""
@@ -237,7 +240,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.warehouse_item_type_filter_comboBox.addItems(['']+ retrieveItemType(self.daily_conn))
 
         self.employees_job_type_filter_comberoBox.clear()
-        self.employees_job_type_filter_comberoBox.addItems(['']+ retrieveSuperviosrsJobType(self.daily_conn))
+        self.employees_job_type_filter_comberoBox.addItems(['']+ retrieveEmployeesJobType(self.daily_conn))
 
     def setCurrentDate(self):
         self.shifts_date_filter_dateEdit1.setDate(QtCore.QDate.currentDate())
@@ -2003,6 +2006,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.employee_username_txt.setText('')
             self.employee_password_txt.setText('')
 
+
         else:
             QtWidgets.QMessageBox.warning(
             self,
@@ -2199,8 +2203,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.verticalLayout_98.addWidget(employee_frame)
         
         # pass on items comboBox
-        employee_comboBox.addItems([''] + retrieveSupervisorsNames(db = self.daily_conn))
-
+        employee_comboBox.addItems([''] + retrieveEmployeesNames(db = self.daily_conn))
+        
         # Connect each comboBox with its label.
         employee_comboBox.currentTextChanged['QString'].connect(lambda : self.isEmpExists(employee_comboBox))
        
@@ -2304,7 +2308,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         employees_comboBox = self.shift_employees_frame.findChildren(QtWidgets.QComboBox)
         for employee_comboBox in employees_comboBox:
-            employee_comboBox.addItems([''] + retrieveSupervisorsNames(db = self.daily_conn))
+            employee_comboBox.addItems([''] + retrieveEmployeesNames(db = self.daily_conn))
 
     def startShift(self):
         """Start selected shift and stop other shifts"""

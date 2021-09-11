@@ -1,6 +1,6 @@
 import typing
 from PyQt5 import QtCore, QtGui
-from customers.database import linkOfferItems, linkOrderItems, linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveItemAvailabelQuantity, retrieveItemId, retrieveOffersItems, retrieveShiftsSupervisors, updateSubsState
+from customers.database import linkOfferItems, linkOrderItems, linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveOffersItems, retrieveShiftsEmployees, updateSubsState
 from PyQt5.QtSql import  QSqlDatabase, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
 from PyQt5.QtCore import QAbstractTableModel, QLocale, QRegularExpression, Qt
 
@@ -762,7 +762,7 @@ class EmployeesModel(QSqlTableModel):
         self.showEmployees()
     
     def showEmployees(self):
-        self.setTable("Supervisors")
+        self.setTable("Employees")
         self.setEditStrategy(self.OnFieldChange)
         
         # headers = ('رقم المشرف','اسم المشرف','طبيعة العمل','اسم المستخدم','كلمة السر')
@@ -770,16 +770,16 @@ class EmployeesModel(QSqlTableModel):
         for ind, header in enumerate(headers):
             self.setHeaderData(ind, Qt.Horizontal,header)
 
-        self.setSort(self.fieldIndex("supervisor_id"), Qt.AscendingOrder)
+        self.setSort(self.fieldIndex("employee_id"), Qt.AscendingOrder)
 
         self.select()
         
     def addEmployee(self, data : list):
 
-        # Check if the the supervisor exists previously
+        # Check if the the employee exists previously
         result = None
         STATEMENT = f"""
-            SELECT count(*) FROM Supervisors WHERE supervisor_name='{data[0]}'
+            SELECT count(*) FROM Employees WHERE employee_name='{data[0]}'
         """
 
         query = QSqlQuery(db=self.db)
@@ -798,7 +798,7 @@ class EmployeesModel(QSqlTableModel):
             self.insertRows(row, 1)
 
             # Take only the colums that suitable for data list length
-            columns = ['supervisor_name', 'gender', 'job_type', 'username','password']
+            columns = ['employee_name', 'gender', 'job_type', 'username','password']
 
             for col_ind, field in enumerate(data):
                 col = self.fieldIndex(columns[col_ind])
@@ -854,14 +854,14 @@ class  EmployeesSortModel(QtCore.QSortFilterProxyModel):
     
     def filterAcceptsRow(self, row_num: int, source_parent: QtCore.QModelIndex):
         
-        supervisor_name_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('supervisor_name'), source_parent)
+        employee_name_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('employee_name'), source_parent)
         job_type_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('job_type'), source_parent)
 
-        supervisor_name = self.sourceModel().data(supervisor_name_index, Qt.DisplayRole)
+        employee_name = self.sourceModel().data(employee_name_index, Qt.DisplayRole)
         job_type = self.sourceModel().data(job_type_index, Qt.DisplayRole)
 
         tests =  [
-            self._employee_name_pattern.match(supervisor_name).hasMatch(),
+            self._employee_name_pattern.match(employee_name).hasMatch(),
             self._employee_job_type_pattern.match(job_type).hasMatch(),
         ]
         
@@ -893,8 +893,8 @@ class ShiftsModel(QSqlTableModel):
     def addShift(self, data : list):
         
         self._ADD_FLAG = True
-        # INSERT INTO Shifts (supervisor_id) 
-        # SELECT 3 WHERE NOT EXISTS (SELECT supervisor_id FROM Shifts WHERE supervisor_id = 3 AND date=date('now'));
+        # INSERT INTO Shifts (employee_id) 
+        # SELECT 3 WHERE NOT EXISTS (SELECT employee_id FROM Shifts WHERE employee_id = 3 AND date=date('now'));
 
         # Insert new row
         row = self.rowCount()
@@ -913,8 +913,8 @@ class ShiftsModel(QSqlTableModel):
 
         # Link the new shift whith related employees
         shift_id = self.query().lastInsertId()
-        for supervisor_name in data:
-            linkShiftSupervisor(shift_id, supervisor_name, db = self.db)
+        for employee_name in data:
+            linkShiftSupervisor(shift_id, employee_name, db = self.db)
 
 
         self.select()
@@ -987,7 +987,7 @@ class  ShiftsSortModel(QtCore.QSortFilterProxyModel):
 
     
 ######################
-# Shifts-Supervisors #
+# Shifts-Employees #
 ######################
 class HierarcicalShiftsSupervisorsModel(QtGui.QStandardItemModel):
 
@@ -998,16 +998,16 @@ class HierarcicalShiftsSupervisorsModel(QtGui.QStandardItemModel):
 
     def showShiftsSupervisors(self):
         
-        ret = retrieveShiftsSupervisors(db = self.db)
+        ret = retrieveShiftsEmployees(db = self.db)
         dates = list(map(lambda x : QtGui.QStandardItem(x), ret.keys()))
 
         for date in dates:
             shift_ids = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()]))
 
             for shift_id in shift_ids:
-                supervisors_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][shift_id.text()]))
+                employees_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][shift_id.text()]))
 
-                shift_id.appendRows(supervisors_names)
+                shift_id.appendRows(employees_names)
 
                 date.appendRow(shift_id)
 
@@ -1035,9 +1035,9 @@ class HierarcicalOffersItemsModel(QtGui.QStandardItemModel):
             offers_ids = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()]))
 
             for offer_id in offers_ids:
-                supervisors_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][offer_id.text()]))
+                employees_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][offer_id.text()]))
 
-                offer_id.appendRows(supervisors_names)
+                offer_id.appendRows(employees_names)
 
                 date.appendRow(offer_id)
 
