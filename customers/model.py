@@ -1,6 +1,6 @@
 import typing
 from PyQt5 import QtCore, QtGui
-from customers.database import linkOfferItems, linkOrderItems, linkShiftSupervisor, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveOffersItems, retrieveShiftsEmployees, updateSubsState
+from customers.database import linkOfferItems, linkOrderItems, linkShiftEmployees, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveOffersItems, retrieveShiftsEmployees, updateSubsState
 from PyQt5.QtSql import  QSqlDatabase, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
 from PyQt5.QtCore import QAbstractTableModel, QLocale, QRegularExpression, Qt
 
@@ -914,7 +914,7 @@ class ShiftsModel(QSqlTableModel):
         # Link the new shift whith related employees
         shift_id = self.query().lastInsertId()
         for employee_name in data:
-            linkShiftSupervisor(shift_id, employee_name, db = self.db)
+            linkShiftEmployees(shift_id, employee_name, db = self.db)
 
 
         self.select()
