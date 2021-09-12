@@ -1628,7 +1628,7 @@ QPushButton:pressed{
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="Shift_error_frame">
+        <widget class="QFrame" name="error_frame">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1655,7 +1655,7 @@ QLabel{
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_47">
           <item>
-           <widget class="QLabel" name="label_46">
+           <widget class="QLabel" name="error_lbl">
             <property name="text">
              <string>Please start a new shift </string>
             </property>
@@ -6862,7 +6862,7 @@ padding: 2px;
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>200</width>
+                       <width>150</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -6904,7 +6904,7 @@ padding: 2px;
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>200</width>
+                       <width>150</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -6917,14 +6917,33 @@ padding: 2px;
                     <widget class="QLineEdit" name="warehouse_item_price_txt">
                      <property name="minimumSize">
                       <size>
-                       <width>300</width>
+                       <width>150</width>
                        <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="clearButtonEnabled">
                       <bool>true</bool>
                      </property>
                     </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_14">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </item>
@@ -6946,7 +6965,7 @@ padding: 2px;
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>200</width>
+                       <width>150</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -6959,14 +6978,33 @@ padding: 2px;
                     <widget class="QLineEdit" name="warehouse_item_quantity_txt">
                      <property name="minimumSize">
                       <size>
-                       <width>300</width>
+                       <width>150</width>
                        <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="clearButtonEnabled">
                       <bool>true</bool>
                      </property>
                     </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_15">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </item>
@@ -6988,7 +7026,7 @@ padding: 2px;
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>200</width>
+                       <width>150</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -8053,6 +8091,12 @@ color: rgb(255, 255, 255);
                        <height>40</height>
                       </size>
                      </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>250</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
                      <property name="clearButtonEnabled">
                       <bool>true</bool>
                      </property>
@@ -8083,9 +8127,15 @@ color: rgb(255, 255, 255);
                    </item>
                    <item>
                     <widget class="QLineEdit" name="offer_price_txt">
+                     <property name="minimumSize">
+                      <size>
+                       <width>140</width>
+                       <height>0</height>
+                      </size>
+                     </property>
                      <property name="maximumSize">
                       <size>
-                       <width>100</width>
+                       <width>140</width>
                        <height>40</height>
                       </size>
                      </property>
@@ -9293,7 +9343,7 @@ background-color: rgb(244, 154, 32);
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1299</width>
+                   <width>1399</width>
                    <height>948</height>
                   </rect>
                  </property>
