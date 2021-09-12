@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/loginDialogUIkhKBkf.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/loginDialogUImAvJjs.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -13,7 +13,20 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(500, 750)
         Dialog.setMinimumSize(QtCore.QSize(500, 750))
-        Dialog.setStyleSheet("")
+        Dialog.setStyleSheet("QMessageBox {\n"
+"    background-color: rgb(100, 100, 100);\n"
+"    color: rgb(255,255,255);\n"
+"}\n"
+"\n"
+"QMessageBox QLabel {\n"
+"    color: rgb(255,255,255);\n"
+"}\n"
+"\n"
+"QMessageBox QPushButton {\n"
+"    color: rgb(255,255,255);\n"
+"    \n"
+"    background-color: rgb(47, 113, 255);\n"
+"}")
         Dialog.setSizeGripEnabled(False)
         Dialog.setModal(False)
         self.gridLayout = QtWidgets.QGridLayout(Dialog)

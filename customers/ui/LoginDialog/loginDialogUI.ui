@@ -20,7 +20,20 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QMessageBox {
+    background-color: rgb(100, 100, 100);
+	color: rgb(255,255,255);
+}
+
+QMessageBox QLabel {
+    color: rgb(255,255,255);
+}
+
+QMessageBox QPushButton {
+    color: rgb(255,255,255);
+	
+	background-color: rgb(47, 113, 255);
+}</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
