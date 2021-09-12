@@ -10,6 +10,21 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 def _createCustomersTables(db_1, db_2):
     """Create database tables if they don't exist"""
 
+    # Updated DateBase
+    CHECK_VERSION_STATEMENT = \
+        """
+        SELECT value FROM Meta WHERE key = 'current version'  
+        """
+    UPDATE_STATEMNET = \
+        """
+        DROP TRIGGER update_finish_shift;
+        DROP TRIGGER update_start_shift;
+        DROP TRIGGER update_shift_income;
+        UPDATE Meta SET value='0.1.3' WHERE key = 'current version';
+        UPDATE Meta SET value='0.1.2' WHERE key = 'last version';
+
+        """
+
     # Daily DateBase Tables and Triggers
     DAILYCUSTOMERS_TABLE_STATEMENT = \
         """
@@ -175,17 +190,16 @@ def _createCustomersTables(db_1, db_2):
       
         """
     
-    SUBSCRIPTION_PRICES_TABLE_STATEMENT = \
+    FEES_TABLE_STATEMENT = \
         """
-        CREATE TABLE IF NOT EXISTS Subscription_prices (
-            subs_id    INTEGER       PRIMARY KEY
+        CREATE TABLE IF NOT EXISTS Fees (
+            fee_id    INTEGER       PRIMARY KEY
                                     UNIQUE
                                     NOT NULL,
-            subs_name  VARCHAR (255) NOT NULL
+            fee_name  VARCHAR (255) NOT NULL
                                     UNIQUE,
-            subs_price INTEGER (10)  NOT NULL
+            fee_value INTEGER (10)  NOT NULL
         );
-
         """
 
     SHIFTS_STATEMENT = \
@@ -303,9 +317,9 @@ def _createCustomersTables(db_1, db_2):
         BEGIN
             UPDATE Daily_customers
             SET daily_ticket_cost = CASE WHEN new.subscription_state IN ('Not Subscribed', 'Expired') THEN (
-                        SELECT subs_price
-                            FROM Subscription_prices
-                            WHERE subs_name = 'Daily fee'
+                        SELECT fee_value
+                            FROM Fees
+                            WHERE fee_name = 'Daily fee'
                     )
                 WHEN new.subscription_state IN ('Subscribed', 'Subscribed to another center') THEN 0 END
             WHERE Daily_customers.daily_id = NEW.daily_id;
@@ -492,14 +506,14 @@ def _createCustomersTables(db_1, db_2):
         BEGIN
             UPDATE Monthly_customers
             SET ticket_monthly_cost = CASE new.subsription_type WHEN 'University fee' THEN (
-                                                SELECT subs_price
-                                                    FROM Subscription_prices
-                                                WHERE subs_name = 'University fee'
+                                                SELECT fee_value
+                                                    FROM Fees
+                                                WHERE fee_name = 'University fee'
                                             )
                 WHEN                       'School fee' THEN (
-                                                SELECT subs_price
-                                                    FROM Subscription_prices
-                                                WHERE subs_name = 'School fee'
+                                                SELECT fee_value
+                                                    FROM Fees
+                                                WHERE fee_name = 'School fee'
                                             )
                 WHEN                       'VIP' THEN 0 END
             WHERE monthly_id = new.monthly_id;
@@ -553,8 +567,8 @@ def _createCustomersTables(db_1, db_2):
                     ON Shifts
         BEGIN
             UPDATE Shifts
-            SET finish_shift = time('now'),
-                shift_duration = round(CAST ( (strftime('%s', finish_shift) - strftime('%s', start_shift) ) AS REAL) / 60 / 60, 3) 
+            SET finish_shift = time('now', 'localtime'),
+                shift_duration = round(CAST((strftime('%s', finish_shift) - strftime('%s', start_shift)) AS REAL) / 60 / 60, 3) 
             WHERE shift_id = old.shift_id AND 
                 shift_date = date('now') AND 
                 shift_state = 'Finished';
@@ -570,7 +584,7 @@ def _createCustomersTables(db_1, db_2):
                     ON Shifts
         BEGIN
             UPDATE Shifts
-            SET shift_duration = round(CAST ( (strftime('%s', finish_shift) - strftime('%s', start_shift) ) AS REAL) / 60 / 60, 3) 
+            SET shift_duration = round(CAST((strftime('%s', finish_shift) - strftime('%s', start_shift) ) AS REAL) / 60 / 60, 3) 
             WHERE shift_id = old.shift_id AND 
                 shift_date = date('now') AND 
                 shift_state = 'Finished';
@@ -587,7 +601,7 @@ def _createCustomersTables(db_1, db_2):
                     ON Shifts
         BEGIN
             UPDATE Shifts
-            SET start_shift = time('now') 
+            SET start_shift = time('now', 'localtime') 
             WHERE shift_state = 'Active' AND 
                 shift_id = new.shift_id AND 
                 shift_date = date('now');
@@ -645,29 +659,34 @@ def _createCustomersTables(db_1, db_2):
                 WHEN new.shift_state = 'Finished'
         BEGIN
             UPDATE Shifts
-            SET shift_income = (
-                    SELECT sum(price) 
-                        FROM Orders_items
-                        WHERE date = date('now') 
-                )
+            SET shift_income = abs( (
+                                        SELECT sum(shift_income) 
+                                            FROM Shifts
+                                    )
+        -                              (
+                                        SELECT sum(price) 
+                                            FROM Orders_items
+                                            WHERE date = date('now') 
+                                    )
+                ) 
             WHERE shift_id = old.shift_id;
         END;
 
         """
 
-    INSERT1_SUBSCRIPTION_STATEMENT = \
+    INSERT1_FEE_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Subscription_prices (subs_name, subs_price) VALUES ('Daily fee','0');
+        INSERT OR IGNORE INTO Fees (fee_name, fee_value) VALUES ('Daily fee','0');
         """
     
-    INSERT2_SUBSCRIPTION_STATEMENT = \
+    INSERT2_FEE_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Subscription_prices (subs_name, subs_price) VALUES ('University fee','0');
+        INSERT OR IGNORE INTO Fees (fee_name, fee_value) VALUES ('University fee','0');
         """
 
-    INSERT3_SUBSCRIPTION_STATEMENT = \
+    INSERT3_FEE_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Subscription_prices (subs_name, subs_price) VALUES ('School fee','0');
+        INSERT OR IGNORE INTO Fees (fee_name, fee_value) VALUES ('School fee','0');
         """
     
     INSERT1_EMPLOYEES_STATEMENT = \
@@ -692,12 +711,23 @@ def _createCustomersTables(db_1, db_2):
         INSERT OR IGNORE INTO Meta (key, value) VALUES ('setting admin', '0')
         """
     
-
     UPDATE3_META_STATEMENT = \
         """
         UPDATE Meta SET value = 1 WHERE key = 'setting admin'
         """
     
+   
+    # Run update statements
+    query = QSqlQuery(db_1)
+    ret = query.exec(CHECK_VERSION_STATEMENT)
+    while query.next():
+        ret = query.value(query.record().indexOf('value'))
+    
+    if(ret == '0.1.2'):
+        for statement in UPDATE_STATEMNET.split(';'):
+            query.exec(statement)
+
+    # Daily DataBase Tables
     sql_statements = (
         DAILYCUSTOMERS_TABLE_STATEMENT,
         ORDERS_TABLE_STATEMENT,
@@ -707,7 +737,7 @@ def _createCustomersTables(db_1, db_2):
         SHIFTS_EMPLOYEES_TABEL_STATEMENT,
         WAREHOUSE_TABLE_STATEMENT,
         REPORTS_TABLE_STATEMENT,
-        SUBSCRIPTION_PRICES_TABLE_STATEMENT,
+        FEES_TABLE_STATEMENT,
         SHIFTS_STATEMENT,
         OFFERS_STATEMENT,
         OFFERS_ITEMS_STATEMENT,
@@ -739,9 +769,9 @@ def _createCustomersTables(db_1, db_2):
         TRIGGER6_SHIFTS_STATEMENT,
 
 
-        INSERT1_SUBSCRIPTION_STATEMENT,
-        INSERT2_SUBSCRIPTION_STATEMENT,
-        INSERT3_SUBSCRIPTION_STATEMENT,
+        INSERT1_FEE_STATEMENT,
+        INSERT2_FEE_STATEMENT,
+        INSERT3_FEE_STATEMENT,
 
 
         INSERT1_META_STATEMENT,
@@ -1174,24 +1204,24 @@ def resetCounting(table = None, column = None, db1 = None , db2 = None):
         )
     
 #######################
-# Subscription_prices #
+# Fees #
 #######################
 def retrieveSubsCost(subs_type, db = None) -> int:
     STATEMENT = f"""
-        SELECT subs_price FROM Subscription_prices WHERE subs_name = '{subs_type}'
+        SELECT fee_value FROM Fees WHERE fee_name = '{subs_type}'
     """
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
 
     while query.next():
-        cost = query.value(query.record().indexOf('subs_price'))
+        cost = query.value(query.record().indexOf('fee_value'))
         return cost
     
     return ''
 
 def changeSubsCost(subs_cost, subs_type, db = None):
     STATEMENT = f"""
-        UPDATE Subscription_prices SET subs_price = {subs_cost} WHERE subs_name = '{subs_type}'
+        UPDATE Fees SET fee_value = {subs_cost} WHERE fee_name = '{subs_type}'
     """
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
@@ -1270,7 +1300,7 @@ def retrieveEmployeesJobType(db = None) -> list:
     
     return result
 
-def linkShiftSupervisor(shift_id, employee_name, db = None) -> None:
+def linkShiftEmployees(shift_id, employee_name, db = None) -> None:
 
     employee_id = retrieveEmployeesId(employee_name, db=db)
     STATEMENT = \
@@ -1567,6 +1597,27 @@ def updateReports(db = None):
     return query
 
 
+
+
+######################
+# Subscriptions fees #
+######################
+def checkFeesValue(db = None):
+
+    count = 0
+
+    STATEMENT = f"""
+        SELECT count(fee_value) as count FROM Fees WHERE fee_value = 0
+    """
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+
+    while query.next():
+        count = int(query.value(query.record().indexOf('count')))
+
+    return count
+
+
 #########
 # Login #
 #########
@@ -1833,9 +1884,9 @@ def updateDB():
         BEGIN
             UPDATE Daily_customers
             SET daily_ticket_cost = CASE WHEN new.subscription_state IN ('Not Subscribed', 'Expired') THEN (
-                        SELECT subs_price
-                            FROM Subscription_prices
-                            WHERE subs_name = 'Daily fee'
+                        SELECT fee_value
+                            FROM Fees
+                            WHERE fee_name = 'Daily fee'
                     )
                 WHEN new.subscription_state IN ('Subscribed', 'Subscribed to another center') THEN 0 END
             WHERE Daily_customers.daily_id = NEW.daily_id;
