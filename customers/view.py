@@ -1,26 +1,26 @@
-from customers.ui.CustomeWidget.customeOrderFrame import CustomeOrderFrame
-from enum import Flag
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtSql import QSqlRelationalDelegate
+
+from customers.ui.CustomWidget.customOfferFrame import CustomOfferFrame
+from customers.ui.CustomWidget.customOrderFrame import CustomOrderFrame
 from customers.ui.OrderDialog.orderDialogMain import OrderDialog
 from customers.ui.LoginDialog.LoginMain import LoginDialog
 from customers.threads import ReportsWorker, Worker
-import datetime
-import os
-import re
-import sip
-
-
-import openpyxl
-
 from customers.ui.MainUI.ui_mainUI import Ui_MainWindow
 from customers.ui.ProgressBarDialog.ProgressBarMain import PorgressBarDialog
 from customers.ui.PriceDialog.PriceDialogMain import PriceDialog
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtSql import QSqlRelationalDelegate
+
+import datetime
+import os
+import re
+import sip
+import openpyxl
 
 
-from .database import changeSubsCost, checkShiftActive, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveOrderType, retrieveEmployeesJobType, retrieveEmployeesNames, startShift, updateReports
-from .model import *
+
+from customers.database import changeSubsCost, checkFeesValue, checkShiftActive, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState, retrieveItemAvailabelQuantity, retrieveItemId,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveOrderType, retrieveEmployeesJobType, retrieveEmployeesNames, startShift, updateReports
+from customers.model import *
 
 # from PyQt5.uic import loadUiType
 
@@ -102,10 +102,24 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def closeEvent(self, event):
         """UI close envet handler"""
+
+        title = None
+        text = None
+
+        # Check if any shift is started or not
+        if(self.isAnyShiftActive(exit_event = True)):
+            title = "Shift active alert"
+            text = "There is still a shift is running\nConfirm exiting"
+        
+        else:
+            title = "Closing window"
+            text = "Confirm"
+
+        
         reply = QtWidgets.QMessageBox.question(
             self,
-            "Closing window",
-            "Confirm",
+            title,
+            text,
             QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
         )
         if reply == QtWidgets.QMessageBox.Yes:
@@ -505,17 +519,19 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.group.addAnimation(self.animation)
             self.group.start()
 
-    def slideShiftErrorFrame(self, maxHeight, enable):
+    def slideErrorFrame(self, maxHeight, error_msg, enable):
         if enable:
-    
+            # set error msg in error label            
+            self.error_lbl.setText(error_msg)
+
             # GET WIDTH
-            height = self.Shift_error_frame.height()
+            height = self.error_frame.height()
 
             # SET MAX WIDTH
             heightExtended = maxHeight
 
             # width ANIMATION
-            self.animation = QtCore.QPropertyAnimation(self.Shift_error_frame, b"maximumHeight")
+            self.animation = QtCore.QPropertyAnimation(self.error_frame, b"maximumHeight")
             self.animation.setDuration(250)
             self.animation.setStartValue(height)
             self.animation.setEndValue(heightExtended)
@@ -608,7 +624,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open acrchive panel"""
 
         # hide shift error frame
-        self.slideShiftErrorFrame(0, True)
+        self.slideErrorFrame(0, '', True)
 
         self._ARCHIVE_TABLES_FLAG = True
         self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
@@ -646,7 +662,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Open settings panel"""
 
         # hide shift error frame
-        self.slideShiftErrorFrame(0, True)
+        self.slideErrorFrame(0, '', True)
         
         self._SETTINGS_TABLES_FLAG = True
         self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
@@ -708,14 +724,16 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.settings_btn.setEnabled(False)
         self.exit_btn.setEnabled(False)
     
-    def isAnyShiftActive(self):
+    def isAnyShiftActive(self, exit_event=False):
         ret = checkShiftActive(db = self.daily_conn)
         if(ret == 1):
-            self.slideShiftErrorFrame(0, True)
+            if(exit_event == False):
+                self.slideErrorFrame(0, '', True)
             return True
 
         elif(ret == 0):
-            self.slideShiftErrorFrame(100, True)
+            if(exit_event == False):
+                self.slideErrorFrame(100,'Please start a new shift', True)
             return False
         
         
@@ -752,6 +770,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
     def addDailyCustomer(self):
         """Add new daily customer to daily table"""
+
+        if(not self.isAnyFeeZero()):
+            return
+
         # Check if the customer name field is empty
         if(self.daily_customer_name_txt.text()==""):
             self.daily_customer_name_txt.setFocus()
@@ -923,6 +945,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def addMonthlyCustomer(self):
         """Add new monthly customer to Monthly table"""
+
+        if(not self.isAnyFeeZero()):
+            return
 
         # Check if the customer name field is empty
         if(self.monthly_customer_name_txt.text()==""):
@@ -1204,7 +1229,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Adding new order to orders list"""
         self._order_item_number += 1
         
-        order_frame = CustomeOrderFrame(self._order_item_number, self.orders_items_frame)
+        order_frame = CustomOrderFrame(self._order_item_number, self.orders_items_frame)
 
         # Add the container frame into parent frame layout
         self.verticalLayout_70.addWidget(order_frame)
@@ -1225,6 +1250,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         
         # pass on delete buttons to connect it with its frame.
+        order_frame.delete_btn.clicked.connect(self.checkOfferAvailable)
         order_frame.delete_btn.clicked.connect(lambda : self.deleteOrderFrame(order_frame))
 
     def changeComboItems(self, order_item_comboBox):
@@ -1255,19 +1281,19 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Check if the item is selected previously 
         selected_items_name = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
 
-        # if(retrieveItemId(selected_item.currentText(), db = self.daily_conn) is None):
-        #     QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Not found")
-        #     selected_item.setStyleSheet(
-        #     "QComboBox{\n"
-        #     "border-width:0px 0px 4px 0px;\n"
-        #     "border-style: solid;\n"
-        #     "border-radius:0px;\n"
-        #     "border-color: rgb(255, 255, 0);\n"
-        #     "}"
-        #     )
-        #     quntity_txtBox.setEnabled(False)
+        if(retrieveItemId(selected_item.currentText(), db = self.daily_conn) is None):
+            QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Not found")
+            selected_item.setStyleSheet(
+            "QComboBox{\n"
+            "border-width:0px 0px 4px 0px;\n"
+            "border-style: solid;\n"
+            "border-radius:0px;\n"
+            "border-color: rgb(255, 255, 0);\n"
+            "}"
+            )
+            quntity_txtBox.setEnabled(False)
 
-        if(selected_item.currentText()==''):
+        elif(selected_item.currentText()==''):
             selected_item.setStyleSheet(
             "QComboBox{\n"
             "border-width:0px 0px 4px 0px;\n"
@@ -1353,23 +1379,25 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         selected_items_name = [item.currentText() for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox)]
         selected_items_ids = [retrieveItemId(item_name, self.daily_conn) for item_name in selected_items_name]
         
-        quans = self.orders_items_frame.findChildren(QtWidgets.QLineEdit)
+        quantities = self.orders_items_frame.findChildren(QtWidgets.QLineEdit)
 
         # Check if all quantities text box are enabled
-        enabled = list(map(lambda x : x.isEnabled(), quans))
+        enabled = list(map(lambda x : x.isEnabled(), quantities))
         if(False in enabled):
             self.offer_id = None
             return
             
-        quantities = [quans[i].text() for i in range(len(quans)) if (i%2 != 0)]
-        quantities_int = [int(quantity) for quantity in quantities if(quantity.isdigit())]
+        entered_quantities = [quantities[i].text() for i in range(len(quantities)) if (i%2 != 0)]
+        entered_quantities = [int(quantity) for quantity in entered_quantities if(quantity.isdigit())]
 
-        
-        for offer_key, items_key in retrieveOffersItems(with_date= False, with_quantity=True, db = self.daily_conn).items():
+        offers_items = retrieveOffersItems(with_date= False, with_quantity=True, db = self.daily_conn).items()
+        for offer_key, items_key in offers_items:
             
+            # get offer's items quantities
             quan = [item for sublist in list(items_key.values()) for item in sublist]
+
             if(list(items_key.keys()) == sorted(selected_items_ids)):
-                if(quan == quantities_int):
+                if(quan == entered_quantities):
                     self.offer_id = offer_key
                         
                     for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
@@ -1382,19 +1410,23 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         "}"
                         )
                     
-                else:
-                    self.offer_id = None
-                    for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
-                        item.setStyleSheet(
-                        "QComboBox{\n"
-                        "border-width:0px 0px 4px 0px;\n"
-                        "border-style: solid;\n"
-                        "border-radius:0px;\n"
-                        "border-color: rgb(255, 170, 0);\n"
-                        "}"
-                        )
+            else:
+                self.offer_id = None
+                for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
+                    item.setStyleSheet(
+                    "QComboBox{\n"
+                    "border-width:0px 0px 4px 0px;\n"
+                    "border-style: solid;\n"
+                    "border-radius:0px;\n"
+                    "border-color: rgb(255, 170, 0);\n"
+                    "}"
+                    )
 
             # Change the total price
+            self.setTotalOrderPrice(self.offer_id)
+
+
+        if(not offers_items):
             self.setTotalOrderPrice(self.offer_id)
 
     def setTotalOrderPrice(self, offer_id = None):
@@ -1451,7 +1483,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 label.setText(_translate("MainWindow", f"Item : {num} "))
             
             # Recalculate the total order price
-            self.setTotalOrderPrice()
+            self.checkOfferAvailable()
  
     def clearLayout(self, layout):
         """Clear frame layout after insert new order to tabel"""
@@ -1711,9 +1743,17 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             # Insert an empty order
             self.plusOffer()
+
+            # Reset offer name and price textboxes
+            self.offer_name_txt.setText('')
+            self.offer_price_txt.setText('')
+
             
             # Reinitial items
             self.initialSettingsComboBoxs()
+
+            # Redisplay offers
+            self.showOffers()
 
     def removeOffer(self):
         """Remove offer/s from offers table"""
@@ -1759,125 +1799,39 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._item_number += 1
 
         # Create register order panel 
-
-        offer_frame = QtWidgets.QFrame()
-        offer_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
-        offer_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        offer_frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        offer_frame.setObjectName("offer_frame")
-
-        # Add layout to the panel
-        horizontalLayout = QtWidgets.QHBoxLayout(offer_frame)
-        horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        horizontalLayout.setSpacing(11)
-        horizontalLayout.setObjectName("horizontalLayout")
-
-        # Add label to the panel for item number
-        item_number_lbl = QtWidgets.QLabel(offer_frame)
-        item_number_lbl.setStyleSheet("QLabel{\n"
-            "\n"
-            "color: rgb(255, 255, 255);\n"
-            "}")
-        item_number_lbl.setObjectName("item_number_lbl")
-
-        _translate = QtCore.QCoreApplication.translate
-        item_number_lbl.setText(_translate("MainWindow", f"Item : {self._item_number} "))
-        horizontalLayout.addWidget(item_number_lbl)
-
-        # Add item comboBox to the layout 
-        offer_item_comboBox = QtWidgets.QComboBox(offer_frame)
-        offer_item_comboBox.setMinimumSize(QtCore.QSize(90, 40))
-        offer_item_comboBox.setStyleSheet(
-            "QComboBox{\n"
-            "border-width:0px 0px 4px 0px;\n"
-            "border-style: solid;\n"
-            "border-radius:0px;\n"
-            "border-color: rgb(255, 170, 0);\n"
-            "}"
-            )
-        offer_item_comboBox.setEditable(True)
-        offer_item_comboBox.setObjectName("offer_item_comboBox")
-        offer_item_comboBox.setEditable(True)
-        # Set validator on item
-        validator = QtGui.QRegularExpressionValidator(QRegularExpression("[a-zA-Zء-ي|\s]+"))
-        offer_item_comboBox.setValidator(validator)
-        horizontalLayout.addWidget(offer_item_comboBox) 
-
-        # Add quantity text to the layout
-        offer_quantity_txt = QtWidgets.QLineEdit(offer_frame)
-        offer_quantity_txt.setMinimumSize(QtCore.QSize(60, 40))
-        offer_quantity_txt.setMaximumSize(QtCore.QSize(60, 16777215))
-        offer_quantity_txt.setStyleSheet(
-            "QLineEdit{\n"
-            "    border-style: solid;\n"
-            "    border-width: 0px 0px 4px 0px;\n"
-            "    border-radius: 0px;    \n"
-            "    border-color:  rgb(244, 154, 32);\n"
-            "}\n"
-            "QLineEdit:disabled{\n"
-            "    border-style: solid;\n"
-            "    border-width: 0px 0px 4px 0px;\n"
-            "    border-radius: 0px;\n"
-            "    border-color:  rgb(244, 154, 32);\n"
-            "    background-color: rgb(142,142,142);\n"
-            "}"
-           
-
-            "")
-        offer_quantity_txt.setObjectName("offer_quantity_txt")
-        offer_quantity_txt.setEnabled(False)
-
-        # Set validator on quantity
-        validator = QtGui.QRegExpValidator(QtCore.QRegExp(r"[0-9]+"))
-        offer_quantity_txt.setValidator(validator)
-
-        horizontalLayout.addWidget(offer_quantity_txt)
-
-        # Add delete current input item button to the layout
-        delete_btn = QtWidgets.QPushButton(offer_frame)
-        delete_btn.setMinimumSize(QtCore.QSize(50, 50))
-        delete_btn.setMaximumSize(QtCore.QSize(50, 50))
-        delete_btn.setStyleSheet(
-            "QPushButton{\n"
-            "\n"
-            "    border-style: solid;\n"
-            "    border-width: 4px 4px 4px 4px;\n"
-            "    border-radius: 25px;    \n"
-            "    border-color: rgb(174, 174, 174);\n"
-            "    background-color: rgb(255, 255, 255);\n"
-            "    image: url(:/icons/icons/letter-x2.svg);\n"
-            "    padding:9px;\n"
-            "}\n"
-            "QPushButton:hover{\n"
-            "    image: url(:/icons/icons/letter-x1.svg);\n"
-
-           
-            "}\n"
-            "QPushButton:pressed{\n"
-            "    padding:14px;\n"
-            "}\n"
-            "")
-
-        horizontalLayout.addWidget(delete_btn)
+        offer_frame = CustomOfferFrame(self._item_number, self.offers_items_frame)
         
         # Add the container frame into parent frame layout
         self.verticalLayout_45.addWidget(offer_frame)
         
         # pass on items comboBox
-        offer_item_comboBox.addItems([''] + retrieveItemNames(db = self.daily_conn))
+        offer_frame.offer_item_comboBox.addItems([''] + retrieveItemNames(db = self.daily_conn))
 
         # Connect each comboBox with its label.
-        offer_item_comboBox.currentTextChanged['QString'].connect(lambda : self.isOfferItemExists(offer_item_comboBox, offer_quantity_txt))
+        offer_frame.offer_item_comboBox.currentTextChanged['QString'].connect(lambda : self.isOfferItemExists(offer_frame.offer_item_comboBox, offer_frame.offer_quantity_txt))
        
 
         # pass on delete buttons to connect it with its frame.
-        delete_btn.clicked.connect(lambda : self.deleteOfferFrame(offer_frame))
+        offer_frame.delete_btn.clicked.connect(lambda : self.deleteOfferFrame(offer_frame))
     
     def isOfferItemExists(self, selected_item, quntity_txtBox):
         # Check if the item is selected previously 
         selected_items = [emp.currentText() for emp in self.offers_items_frame.findChildren(QtWidgets.QComboBox)]
 
-        if(selected_item.currentText()==''):
+        if(retrieveItemId(selected_item.currentText(), db = self.daily_conn) is None):
+            QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Not found")
+            selected_item.setStyleSheet(
+            "QComboBox{\n"
+            "border-width:0px 0px 4px 0px;\n"
+            "border-style: solid;\n"
+            "border-radius:0px;\n"
+            "border-color: rgb(255, 255, 0);\n"
+            "}"
+            )
+            quntity_txtBox.setEnabled(False)
+
+        # if the selected item is null
+        elif(selected_item.currentText()==''):
             selected_item.setStyleSheet(
             "QComboBox{\n"
             "border-width:0px 0px 4px 0px;\n"
@@ -1889,7 +1843,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             quntity_txtBox.setEnabled(False)
             
 
-        # Check if the currently selected item is previously existed
+        # Check if the selected item is previously existed
         elif(selected_items.count(selected_item.currentText()) > 1):
             QtWidgets.QToolTip.showText(selected_item.mapToGlobal(QtCore.QPoint(0,30)),"Selected previously")
             selected_item.setStyleSheet(
@@ -2386,7 +2340,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def removeReport(self):
         rows_indices = self.reports_tableView.selectionModel().selectedRows()
         
-        if len(rows_indices) < 0:
+        if (len(rows_indices) <= 0):
             QtWidgets.QToolTip.showText(self.order_remove_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select report/s")
 
         else:
@@ -2437,11 +2391,14 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #     graph.draw(date, total)
         #     graph.show()
     
-    #################
-    # Subscribtions C#
-    #################
+    ######################
+    # Subscriptions fees #
+    ######################
     def openPriceDialog(self):
         """Open change price dialog"""
+
+        self.slideErrorFrame(0, '', True)
+        
         price_diag = PriceDialog(db = self.daily_conn)
         if(price_diag.exec() == QtWidgets.QDialog.Accepted):
             """Change subscription price"""
@@ -2449,10 +2406,16 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             price = price_diag.data[1]
             changeSubsCost(price, subs_type, self.daily_conn)    
 
+    def isAnyFeeZero(self):
+        ret = checkFeesValue(db = self.daily_conn)
+        if(ret == 0):
+            self.slideErrorFrame(0, '',True)
+            return True
 
-   
-        
-    
+        elif(ret > 0 ):
+            self.slideErrorFrame(100, 'Please set all fees value before starting', True)
+            return False
+
     ############
     # Archieve #
     ############
@@ -2520,12 +2483,14 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             table_name = 'Report'
         
         # get current date
-        currnet_date = datetime.datetime.now().strftime('%Y-%m-%d') # or %B %d, %Y
+        currnet_date = datetime.datetime.now().strftime("%Y-%m-%d") # or %B %d, %Y
         
         if(self._DAILY_TABLES_FLAG):
             type = 'Daily'
         elif(self._ARCHIVE_TABLES_FLAG):
             type = 'Archive'
+        elif(self._SETTINGS_TABLES_FLAG):
+            type = 'Daily'
 
         
         # get the file name which is saved
@@ -2543,9 +2508,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # create excel file
             excel_file = openpyxl.Workbook(write_only=False)
             
-
-            # excel_file = openpyxl.load_workbook(fname)
-
             # # create sheet inside excel file
             # sheet = excel_file.active
             
