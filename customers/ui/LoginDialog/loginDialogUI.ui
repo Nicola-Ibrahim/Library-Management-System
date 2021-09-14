@@ -35,6 +35,9 @@ QMessageBox QPushButton {
 	background-color: rgb(47, 113, 255);
 }</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
@@ -158,6 +161,9 @@ QFrame{
 	image: url(:/icons/icons/studyzone-logo.png) ;
 }
 </string>
+        </property>
+        <property name="locale">
+         <locale language="English" country="UnitedStates"/>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
