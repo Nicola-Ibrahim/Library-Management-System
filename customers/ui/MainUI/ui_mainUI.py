@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIPcVaNS.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIufDQHW.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -610,6 +610,14 @@ class Ui_MainWindow(object):
 "    margin: 20px 0px 20px 0px;\n"
 "}\n"
 "\n"
+"QScrollBar:vertical {\n"
+"    max-width: 30px;\n"
+"    border: 1px transparent black;\n"
+"    margin: 20px 0px 20px 0px;\n"
+"}\n"
+"\n"
+"\n"
+"\n"
 "QScrollBar::handle:horizontal {\n"
 "    background: rgb(150,150,150);\n"
 "    border-style: solid;\n"
@@ -618,16 +626,6 @@ class Ui_MainWindow(object):
 "    border-radius: 7px;\n"
 "    min-height: 25px;\n"
 "}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"    background: rgb(244, 154, 32);\n"
-"}\n"
-"\n"
-"QScrollBar:vertical {\n"
-"    max-width: 30px;\n"
-"    border: 1px transparent black;\n"
-"    margin: 20px 0px 20px 0px;\n"
-"}\n"
-"\n"
 "\n"
 "QScrollBar::handle:vertical {\n"
 "    background: rgb(150,150,150);\n"
@@ -637,59 +635,26 @@ class Ui_MainWindow(object):
 "    border-radius: 7px;\n"
 "    min-height: 25px;\n"
 "}\n"
+"\n"
+"\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"    background: rgb(244, 154, 32);\n"
+"}\n"
+"\n"
 "QScrollBar::handle:vertical:hover {\n"
 "    background: rgb(244, 154, 32);\n"
 "}\n"
 "\n"
 "QScrollBar::add-line:horizontal {\n"
-"   border: 2px transparent grey;\n"
-"   border-top-right-radius: 7px;\n"
-"   border-bottom-right-radius: 7px;\n"
-"   background: rgba(34, 142, 255, 255);\n"
-"   width: 20px;\n"
-"   subcontrol-position: right;\n"
-"   subcontrol-origin: margin;\n"
-"}\n"
-"QScrollBar::add-line:horizontal:pressed {\n"
-"   border: 2px transparent grey;\n"
-"   border-top-right-radius: 7px;\n"
-"   border-bottom-right-radius: 7px;\n"
-"   background: rgb(181,181,181);\n"
-"   width: 20px;\n"
-"   subcontrol-position: right;\n"
-"   subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"   border: 2px transparent grey;\n"
-"   border-top-left-radius: 7px;\n"
-"   border-bottom-left-radius: 7px;\n"
-"   background: rgba(34, 142, 255, 255);\n"
-"   width: 20px;\n"
-"   subcontrol-position: left;\n"
-"   subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal:pressed {\n"
-"   border: 2px transparent grey;\n"
-"   border-top-left-radius: 7px;\n"
-"   border-bottom-left-radius: 7px;\n"
-"   background: rgb(181,181,181);\n"
-"   width: 20px;\n"
-"   subcontrol-position: left;\n"
-"   subcontrol-origin: margin;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"   border: 2px transparent grey;\n"
-"   border-top-left-radius: 3px;\n"
+"    border: 2px transparent grey;\n"
+"      border-top-left-radius: 3px;\n"
 "   border-top-right-radius: 3px;\n"
 "   background: rgb(150,150,150);\n"
 "   height: 20px;\n"
-"   subcontrol-position: top;\n"
+"   subcontrol-position: bottom;\n"
 "   subcontrol-origin: margin;\n"
 "}\n"
-"QScrollBar::sub-line:vertical:pressed {\n"
+"QScrollBar::add-line:horizontal:pressed {\n"
 "   background: rgb(244, 154, 32);\n"
 "}\n"
 "\n"
@@ -706,20 +671,50 @@ class Ui_MainWindow(object):
 "   background: rgb(244, 154, 32);\n"
 "}\n"
 "\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"    border: 2px transparent grey;\n"
+"   border-top-left-radius: 3px;\n"
+"   border-top-right-radius: 3px;\n"
+"   background: rgb(150,150,150);\n"
+"   height: 20px;\n"
+"   subcontrol-position: top;\n"
+"   subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal:pressed {\n"
+"   background: rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"   border: 2px transparent grey;\n"
+"   border-top-left-radius: 3px;\n"
+"   border-top-right-radius: 3px;\n"
+"   background: rgb(150,150,150);\n"
+"   height: 20px;\n"
+"   subcontrol-position: top;\n"
+"   subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:pressed {\n"
+"   background: rgb(244, 154, 32);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
 "QScrollBar::left-arrow:horizontal {\n"
 "   border: 1px transparent grey;\n"
 "   border-top-left-radius: 3px;\n"
-"   border-bottom-left-radius: 3px;\n"
-"   width: 6px;\n"
-"   height: 6px;\n"
+"   border-top-right-radius: 3px;\n"
+"   width: 8px;\n"
+"   height: 8px;\n"
 "   background: white;\n"
 "}\n"
 "QScrollBar::right-arrow:horizontal {\n"
 "   border: 1px transparent grey;\n"
+"   border-top-left-radius: 3px;\n"
 "   border-top-right-radius: 3px;\n"
-"   border-bottom-right-radius: 3px;\n"
-"   width: 6px;\n"
-"   height: 6px;\n"
+"   width: 8px;\n"
+"   height: 8px;\n"
 "   background: white;\n"
 "}\n"
 "QScrollBar::up-arrow:vertical {\n"
@@ -1325,6 +1320,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_47.addWidget(self.error_lbl)
         self.verticalLayout_55.addWidget(self.error_frame)
         self.frame_29 = QtWidgets.QFrame(self.frame_5)
+        self.frame_29.setMinimumSize(QtCore.QSize(40, 40))
         self.frame_29.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_29.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_29.setObjectName("frame_29")
@@ -1638,25 +1634,36 @@ class Ui_MainWindow(object):
         self.order_remove_btn = QtWidgets.QPushButton(self.frame_17)
         self.order_remove_btn.setMinimumSize(QtCore.QSize(70, 70))
         self.order_remove_btn.setStyleSheet("QPushButton{\n"
+"\n"
 "    border-style: solid;    \n"
 "    border-width: 5px;\n"
 "    border-radius:35px;\n"
 "    border-color: rgb(174, 174, 174);\n"
+"\n"
 "    padding: 10px;\n"
+"\n"
+"    \n"
+"    image: url(:/icons/icons/trash-can-with-cover.svg) ;\n"
 "    background-color: rgb(255, 255, 255);\n"
-"    image:url(:/icons/icons/minus-sign.svg);\n"
+"     \n"
+"\n"
 "    \n"
 "}\n"
 "\n"
 "\n"
 "QPushButton:hover{\n"
+"\n"
+"    image: url(:/icons/icons/trash-can-with-cover.svg);\n"
+"    background-color: rgb(200, 200, 200);\n"
 "    \n"
-"    image: url(:/icons/icons/minus-sign2.svg);\n"
 "}\n"
+"\n"
+"\n"
 "QPushButton:pressed{\n"
-"    \n"
+"\n"
 "    background-color: rgb(100, 100, 100);\n"
-"    image: url(:/icons/icons/minus-sign2.svg);\n"
+"    image: url(:/icons/icons/open-trash-can.svg);\n"
+"\n"
 "}\n"
 "\n"
 "QPushButton:disabled{\n"
@@ -1909,31 +1916,15 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "QPushButton:hover{\n"
-"    border-style:  solid;\n"
-"    border-color: rgb(174, 174, 174);\n"
-"    border-width: 5px;\n"
-"    border-radius: 35px;\n"
-"    padding: 10px;\n"
-"    \n"
 "    image: url(:/icons/icons/refresh2.svg)\n"
 "}\n"
 "QPushButton:pressed{\n"
 "    \n"
-"    border-style:  solid;\n"
-"    border-width: 5px;\n"
-"    border-radius: 35px;\n"
-"    padding: 10px;\n"
 "    background-color: rgb(100, 100, 100);\n"
 "    image: url(:/icons/icons/refresh2.svg)\n"
 "}\n"
 "\n"
 "QPushButton:disabled{\n"
-"    border-style:  solid;\n"
-"    border-color: rgb(174, 174, 174);\n"
-"    border-width: 5px;\n"
-"    border-radius: 35px;\n"
-"    padding: 10px;\n"
-"    padding: 10px;\n"
 "    background-color: rgb(142,142,142);\n"
 "}\n"
 "")
@@ -1959,30 +1950,16 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "QPushButton:hover{\n"
-"    border-style:  solid;\n"
-"    border-color: rgb(174, 174, 174);\n"
-"    border-width: 5px;\n"
-"    border-radius: 35px;\n"
-"    padding: 10px;\n"
 "    \n"
 "    image: url(:/icons/icons/loupe2.svg);\n"
 "}\n"
 "QPushButton:pressed{\n"
 "    \n"
-"    border-style:  solid;\n"
-"    border-width: 5px;\n"
-"    border-radius: 35px;\n"
-"    padding: 10px;\n"
 "    background-color: rgb(100, 100, 100);\n"
 "    image: url(:/icons/icons/loupe2.svg);\n"
 "}\n"
 "QPushButton:disabled{\n"
-"    border-style:  solid;\n"
-"    border-color: rgb(174, 174, 174);\n"
-"    border-width: 5px;\n"
-"    border-radius: 35px;\n"
-"    padding: 10px;\n"
-"    padding: 10px;\n"
+"\n"
 "    background-color: rgb(142,142,142);\n"
 "}")
         self.monthly_customer_search_btn.setText("")
@@ -2168,6 +2145,47 @@ class Ui_MainWindow(object):
         self.warehouse_item_remove_btn.setIconSize(QtCore.QSize(30, 30))
         self.warehouse_item_remove_btn.setObjectName("warehouse_item_remove_btn")
         self.verticalLayout_15.addWidget(self.warehouse_item_remove_btn)
+        self.warehouse_update_current_items_btn = QtWidgets.QPushButton(self.frame_7)
+        self.warehouse_update_current_items_btn.setMinimumSize(QtCore.QSize(70, 70))
+        self.warehouse_update_current_items_btn.setStyleSheet("QPushButton{\n"
+"\n"
+"    border-style: solid;    \n"
+"    border-width: 5px;\n"
+"    border-radius:35px;\n"
+"    border-color: rgb(174, 174, 174);\n"
+"\n"
+"    padding: 10px;\n"
+"\n"
+"    \n"
+"    image:url(:/icons/icons/reset-warehouse1.png);\n"
+"    background-color: rgb(255, 255, 255);\n"
+"     \n"
+"\n"
+"    \n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    image:url(:/icons/icons/reset-warehouse2.png);\n"
+"    \n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:pressed{\n"
+"\n"
+"    background-color: rgb(100, 100, 100);\n"
+"    image: url(:/icons/icons/reset-warehouse2.png);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:disabled{\n"
+"    \n"
+"    background-color: rgb(142,142,142);\n"
+"}\n"
+"")
+        self.warehouse_update_current_items_btn.setText("")
+        self.warehouse_update_current_items_btn.setObjectName("warehouse_update_current_items_btn")
+        self.verticalLayout_15.addWidget(self.warehouse_update_current_items_btn)
         self.verticalLayout_37.addWidget(self.frame_7)
         spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_37.addItem(spacerItem9)
@@ -2251,22 +2269,18 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "QPushButton:hover{\n"
-"    border-style:  solid;\n"
-"    border-color: rgb(174, 174, 174);\n"
-"    border-width: 4px;\n"
-"    border-radius: 35px;\n"
-"    padding: 7px;\n"
 "    \n"
 "    image: url(:/icons/icons/export2.png);\n"
 "}\n"
 "QPushButton:pressed{\n"
 "    \n"
-"    border-style:  solid;\n"
-"    border-width: 5px;\n"
-"    border-radius: 35px;\n"
-"    padding: 7px;\n"
 "    background-color: rgb(100, 100, 100);\n"
 "    image: url(:/icons/icons/export2.png);\n"
+"}\n"
+"\n"
+"QPushButton:disabled{\n"
+"    \n"
+"    background-color: rgb(142,142,142);\n"
 "}\n"
 "")
         self.report_export_btn.setText("")
@@ -2736,7 +2750,8 @@ class Ui_MainWindow(object):
         spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_2.addItem(spacerItem18, 2, 1, 1, 1)
         self.frame = QtWidgets.QFrame(self.Main_tab)
-        self.frame.setMinimumSize(QtCore.QSize(600, 100))
+        self.frame.setMinimumSize(QtCore.QSize(600, 120))
+        self.frame.setMaximumSize(QtCore.QSize(600, 120))
         self.frame.setStyleSheet("QFrame{\n"
 "    border-style: solid;\n"
 "    border-width: 10px;\n"
@@ -2955,20 +2970,20 @@ class Ui_MainWindow(object):
         self.exit_btn.setObjectName("exit_btn")
         self.horizontalLayout_8.addWidget(self.exit_btn)
         self.gridLayout_2.addWidget(self.frame, 3, 1, 1, 1, QtCore.Qt.AlignHCenter)
-        self.frame_9 = QtWidgets.QFrame(self.Main_tab)
-        self.frame_9.setMinimumSize(QtCore.QSize(600, 600))
-        self.frame_9.setMaximumSize(QtCore.QSize(600, 600))
-        self.frame_9.setStyleSheet("#frame_9{\n"
+        self.logo_frame = QtWidgets.QFrame(self.Main_tab)
+        self.logo_frame.setMinimumSize(QtCore.QSize(600, 600))
+        self.logo_frame.setMaximumSize(QtCore.QSize(600, 600))
+        self.logo_frame.setStyleSheet("#logo_frame{\n"
 "\n"
-"image: url(:/icons/icons/studyzone-logo.png);\n"
+"    image: url(:/icons/icons/studyzone-logo.png);\n"
 "\n"
 "}")
-        self.frame_9.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_9.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_9.setObjectName("frame_9")
-        self.gridLayout_5 = QtWidgets.QGridLayout(self.frame_9)
+        self.logo_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.logo_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.logo_frame.setObjectName("logo_frame")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.logo_frame)
         self.gridLayout_5.setObjectName("gridLayout_5")
-        self.gridLayout_2.addWidget(self.frame_9, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.logo_frame, 1, 1, 1, 1)
         self.tabWidget.addTab(self.Main_tab, "")
         self.daily_customers_tab = QtWidgets.QWidget()
         self.daily_customers_tab.setObjectName("daily_customers_tab")
@@ -3399,7 +3414,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 100, 500))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 45, 479))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_8.setContentsMargins(0, 0, 25, 0)
@@ -4140,7 +4155,7 @@ class Ui_MainWindow(object):
         self.reports_tableView.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         self.reports_tableView.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.reports_tableView.setAlternatingRowColors(True)
-        self.reports_tableView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectColumns)
+        self.reports_tableView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.reports_tableView.setCornerButtonEnabled(False)
         self.reports_tableView.setObjectName("reports_tableView")
         self.verticalLayout_42.addWidget(self.reports_tableView)
@@ -4556,7 +4571,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 100, 500))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 45, 479))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.verticalLayout_41 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_41.setContentsMargins(0, 0, 25, 0)
@@ -4986,7 +5001,7 @@ class Ui_MainWindow(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollArea_4.setObjectName("scrollArea_4")
         self.scrollAreaWidgetContents_4 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_4.setGeometry(QtCore.QRect(0, 0, 531, 331))
+        self.scrollAreaWidgetContents_4.setGeometry(QtCore.QRect(0, 0, 1399, 971))
         self.scrollAreaWidgetContents_4.setObjectName("scrollAreaWidgetContents_4")
         self.verticalLayout_71 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_4)
         self.verticalLayout_71.setObjectName("verticalLayout_71")
@@ -5109,15 +5124,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_55.addWidget(self.frame_29)
         self.gridLayout.addWidget(self.frame_5, 0, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1480, 23))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(MainWindow)
         self.buttons_stackedWidget.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(7)
-        self.tabWidget.setCurrentIndex(4)
+        self.stackedWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         self.logout_btn.clicked['bool'].connect(self.daily_btn.setDisabled)
         self.logout_btn.clicked['bool'].connect(self.archive_btn.setDisabled)
         self.logout_btn.clicked['bool'].connect(self.settings_btn.setDisabled)
@@ -5164,6 +5175,7 @@ class Ui_MainWindow(object):
         self.monthly_customer_edit_cost_btn.setToolTip(_translate("MainWindow", "Edit monthly price"))
         self.warehouse_item_add_btn2.setToolTip(_translate("MainWindow", "Add item"))
         self.warehouse_item_remove_btn.setToolTip(_translate("MainWindow", "Remove item"))
+        self.warehouse_update_current_items_btn.setToolTip(_translate("MainWindow", "Update current items"))
         self.report_remove_btn.setToolTip(_translate("MainWindow", "Remove report"))
         self.report_export_btn.setToolTip(_translate("MainWindow", "Export"))
         self.report_search_btn.setToolTip(_translate("MainWindow", "Search date"))

@@ -616,6 +616,14 @@ QScrollBar:horizontal {
 	margin: 20px 0px 20px 0px;
 }
 
+QScrollBar:vertical {
+	max-width: 30px;
+	border: 1px transparent black;
+	margin: 20px 0px 20px 0px;
+}
+
+
+
 QScrollBar::handle:horizontal {
 	background: rgb(150,150,150);
 	border-style: solid;
@@ -624,16 +632,6 @@ QScrollBar::handle:horizontal {
 	border-radius: 7px;
 	min-height: 25px;
 }
-QScrollBar::handle:horizontal:hover {
-	background: rgb(244, 154, 32);
-}
-
-QScrollBar:vertical {
-	max-width: 30px;
-	border: 1px transparent black;
-	margin: 20px 0px 20px 0px;
-}
-
 
 QScrollBar::handle:vertical {
 	background: rgb(150,150,150);
@@ -643,59 +641,26 @@ QScrollBar::handle:vertical {
 	border-radius: 7px;
 	min-height: 25px;
 }
+
+
+QScrollBar::handle:horizontal:hover {
+	background: rgb(244, 154, 32);
+}
+
 QScrollBar::handle:vertical:hover {
 	background: rgb(244, 154, 32);
 }
 
 QScrollBar::add-line:horizontal {
-   border: 2px transparent grey;
-   border-top-right-radius: 7px;
-   border-bottom-right-radius: 7px;
-   background: rgba(34, 142, 255, 255);
-   width: 20px;
-   subcontrol-position: right;
-   subcontrol-origin: margin;
-}
-QScrollBar::add-line:horizontal:pressed {
-   border: 2px transparent grey;
-   border-top-right-radius: 7px;
-   border-bottom-right-radius: 7px;
-   background: rgb(181,181,181);
-   width: 20px;
-   subcontrol-position: right;
-   subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:horizontal {
-   border: 2px transparent grey;
-   border-top-left-radius: 7px;
-   border-bottom-left-radius: 7px;
-   background: rgba(34, 142, 255, 255);
-   width: 20px;
-   subcontrol-position: left;
-   subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:horizontal:pressed {
-   border: 2px transparent grey;
-   border-top-left-radius: 7px;
-   border-bottom-left-radius: 7px;
-   background: rgb(181,181,181);
-   width: 20px;
-   subcontrol-position: left;
-   subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:vertical {
-   border: 2px transparent grey;
-   border-top-left-radius: 3px;
+	border: 2px transparent grey;
+  	border-top-left-radius: 3px;
    border-top-right-radius: 3px;
    background: rgb(150,150,150);
    height: 20px;
-   subcontrol-position: top;
+   subcontrol-position: bottom;
    subcontrol-origin: margin;
 }
-QScrollBar::sub-line:vertical:pressed {
+QScrollBar::add-line:horizontal:pressed {
    background: rgb(244, 154, 32);
 }
 
@@ -712,20 +677,50 @@ QScrollBar::add-line:vertical:pressed {
    background: rgb(244, 154, 32);
 }
 
+
+QScrollBar::sub-line:horizontal {
+    border: 2px transparent grey;
+   border-top-left-radius: 3px;
+   border-top-right-radius: 3px;
+   background: rgb(150,150,150);
+   height: 20px;
+   subcontrol-position: top;
+   subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal:pressed {
+   background: rgb(244, 154, 32);
+}
+
+QScrollBar::sub-line:vertical {
+   border: 2px transparent grey;
+   border-top-left-radius: 3px;
+   border-top-right-radius: 3px;
+   background: rgb(150,150,150);
+   height: 20px;
+   subcontrol-position: top;
+   subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical:pressed {
+   background: rgb(244, 154, 32);
+}
+
+
+
 QScrollBar::left-arrow:horizontal {
    border: 1px transparent grey;
    border-top-left-radius: 3px;
-   border-bottom-left-radius: 3px;
-   width: 6px;
-   height: 6px;
+   border-top-right-radius: 3px;
+   width: 8px;
+   height: 8px;
    background: white;
 }
 QScrollBar::right-arrow:horizontal {
    border: 1px transparent grey;
+   border-top-left-radius: 3px;
    border-top-right-radius: 3px;
-   border-bottom-right-radius: 3px;
-   width: 6px;
-   height: 6px;
+   width: 8px;
+   height: 8px;
    background: white;
 }
 QScrollBar::up-arrow:vertical {
@@ -1669,6 +1664,12 @@ QLabel{
        </item>
        <item>
         <widget class="QFrame" name="frame_29">
+         <property name="minimumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -1706,7 +1707,7 @@ QLabel{
              <enum>QFrame::Plain</enum>
             </property>
             <property name="currentIndex">
-             <number>7</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="daily_customers_properties_panel">
              <property name="styleSheet">
@@ -2247,25 +2248,36 @@ QPushButton:disabled{
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton{
+
 	border-style: solid;	
 	border-width: 5px;
 	border-radius:35px;
 	border-color: rgb(174, 174, 174);
+
 	padding: 10px;
+
+	
+	image: url(:/icons/icons/trash-can-with-cover.svg) ;
 	background-color: rgb(255, 255, 255);
-	image:url(:/icons/icons/minus-sign.svg);
+ 	
+
 	
 }
 
 
 QPushButton:hover{
+
+	image: url(:/icons/icons/trash-can-with-cover.svg);
+	background-color: rgb(200, 200, 200);
 	
-	image: url(:/icons/icons/minus-sign2.svg);
 }
+
+
 QPushButton:pressed{
-	
+
 	background-color: rgb(100, 100, 100);
-	image: url(:/icons/icons/minus-sign2.svg);
+	image: url(:/icons/icons/open-trash-can.svg);
+
 }
 
 QPushButton:disabled{
@@ -2674,31 +2686,15 @@ QPushButton:disabled{
 
 
 QPushButton:hover{
-	border-style:  solid;
-	border-color: rgb(174, 174, 174);
-	border-width: 5px;
-	border-radius: 35px;
-	padding: 10px;
-	
 	image: url(:/icons/icons/refresh2.svg)
 }
 QPushButton:pressed{
 	
-	border-style:  solid;
-	border-width: 5px;
-	border-radius: 35px;
-	padding: 10px;
 	background-color: rgb(100, 100, 100);
 	image: url(:/icons/icons/refresh2.svg)
 }
 
 QPushButton:disabled{
-	border-style:  solid;
-	border-color: rgb(174, 174, 174);
-	border-width: 5px;
-	border-radius: 35px;
-	padding: 10px;
-	padding: 10px;
 	background-color: rgb(142,142,142);
 }
 </string>
@@ -2742,30 +2738,16 @@ QPushButton:disabled{
 
 
 QPushButton:hover{
-	border-style:  solid;
-	border-color: rgb(174, 174, 174);
-	border-width: 5px;
-	border-radius: 35px;
-	padding: 10px;
 	
 	image: url(:/icons/icons/loupe2.svg);
 }
 QPushButton:pressed{
 	
-	border-style:  solid;
-	border-width: 5px;
-	border-radius: 35px;
-	padding: 10px;
 	background-color: rgb(100, 100, 100);
 	image: url(:/icons/icons/loupe2.svg);
 }
 QPushButton:disabled{
-	border-style:  solid;
-	border-color: rgb(174, 174, 174);
-	border-width: 5px;
-	border-radius: 35px;
-	padding: 10px;
-	padding: 10px;
+
 	background-color: rgb(142,142,142);
 }</string>
                    </property>
@@ -3084,6 +3066,60 @@ QPushButton:disabled{
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QPushButton" name="warehouse_update_current_items_btn">
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Update current items</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+
+	border-style: solid;	
+	border-width: 5px;
+	border-radius:35px;
+	border-color: rgb(174, 174, 174);
+
+	padding: 10px;
+
+	
+	image:url(:/icons/icons/reset-warehouse1.png);
+	background-color: rgb(255, 255, 255);
+ 	
+
+	
+}
+
+
+QPushButton:hover{
+	image:url(:/icons/icons/reset-warehouse2.png);
+	
+}
+
+
+QPushButton:pressed{
+
+	background-color: rgb(100, 100, 100);
+	image: url(:/icons/icons/reset-warehouse2.png);
+
+}
+
+QPushButton:disabled{
+	
+	background-color: rgb(142,142,142);
+}
+</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -3249,22 +3285,18 @@ QPushButton:disabled{
 
 
 QPushButton:hover{
-	border-style:  solid;
-	border-color: rgb(174, 174, 174);
-	border-width: 4px;
-	border-radius: 35px;
-	padding: 7px;
 	
 	image: url(:/icons/icons/export2.png);
 }
 QPushButton:pressed{
 	
-	border-style:  solid;
-	border-width: 5px;
-	border-radius: 35px;
-	padding: 7px;
 	background-color: rgb(100, 100, 100);
 	image: url(:/icons/icons/export2.png);
+}
+
+QPushButton:disabled{
+	
+	background-color: rgb(142,142,142);
 }
 </string>
                    </property>
@@ -4082,7 +4114,7 @@ QPushButton:disabled{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>4</number>
+             <number>0</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -4150,7 +4182,13 @@ QPushButton:disabled{
                 <property name="minimumSize">
                  <size>
                   <width>600</width>
-                  <height>100</height>
+                  <height>120</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>600</width>
+                  <height>120</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -4469,7 +4507,7 @@ QPushButton:pressed{
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QFrame" name="frame_9">
+               <widget class="QFrame" name="logo_frame">
                 <property name="minimumSize">
                  <size>
                   <width>600</width>
@@ -4483,9 +4521,9 @@ QPushButton:pressed{
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">#frame_9{
+                 <string notr="true">#logo_frame{
 
-image: url(:/icons/icons/studyzone-logo.png);
+	image: url(:/icons/icons/studyzone-logo.png);
 
 }</string>
                 </property>
@@ -7313,7 +7351,7 @@ background-color: rgb(244, 154, 32);
                     <bool>true</bool>
                    </property>
                    <property name="selectionBehavior">
-                    <enum>QAbstractItemView::SelectColumns</enum>
+                    <enum>QAbstractItemView::SelectRows</enum>
                    </property>
                    <property name="cornerButtonEnabled">
                     <bool>false</bool>
@@ -9344,7 +9382,7 @@ background-color: rgb(244, 154, 32);
                    <x>0</x>
                    <y>0</y>
                    <width>1399</width>
-                   <height>948</height>
+                   <height>971</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_71">
@@ -9670,16 +9708,6 @@ color: rgb(255, 255, 255);
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1480</width>
-     <height>23</height>
-    </rect>
-   </property>
   </widget>
  </widget>
  <resources>
