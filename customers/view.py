@@ -1,8 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSql import QSqlRelationalDelegate
 
-from customers.ui.CustomWidget.customOfferFrame import CustomOfferFrame
-from customers.ui.CustomWidget.customOrderFrame import CustomOrderFrame
+from customers.ui.CustomWidget.customAddOfferFrame import CustomAddOfferFrame
+from customers.ui.CustomWidget.customAddOrderFrame import CustomAddOrderFrame
 from customers.ui.OrderDialog.orderDialogMain import OrderDialog
 from customers.ui.LoginDialog.LoginMain import LoginDialog
 from customers.threads import ReportsWorker, Worker
@@ -19,7 +19,7 @@ import openpyxl
 
 
 
-from customers.database import changeSubsCost, checkFeesValue, checkShiftActive, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState, retrieveItemAvailabelQuantity, retrieveItemId,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveOrderType, retrieveEmployeesJobType, retrieveEmployeesNames, startShift, updateReports
+from customers.database import changeSubsCost, checkFeesValue, checkShiftActive, copyData, finishShift, resetCounting, retrieveDailyNames, retrieveDailySubsState, retrieveItemAvailabelQuantity, retrieveItemId,retrieveItemNames, retrieveItemPrice, retrieveItemType, retrieveMonthlyNames, retrieveMonthlySubsState, retrieveMonthlySubsType, retrieveMonthlyid, retrieveOfferPrice, retrieveOrderType, retrieveEmployeesJobType, retrieveEmployeesNames, startShift, updateCurrentItemsQuantities, updateReports
 from customers.model import *
 
 # from PyQt5.uic import loadUiType
@@ -132,9 +132,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """UI changes after run the program"""
         self.showMaximized()
         
-        
         # UI changes in login
-        self.setWindowFlag(Qt.FramelessWindowHint)
+        # self.setWindowFlag(Qt.FramelessWindowHint)
+
         self.tabWidget.tabBar().setVisible(False)
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'Main_tab'))
 
@@ -175,14 +175,17 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.offers_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
         self.offers_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
 
-        # # Add shadow to Logo image
-        # shadow = QtWidgets.QGraphicsDropShadowEffect(blurRadius=50,color=QtGui.QColor(255, 255, 255, 255 * 1), xOffset=5, yOffset=5)
-        # self.frame_9.setGraphicsEffect(shadow)
-        
+
+        # Add shadow to Logo image
+        shadow = QtWidgets.QGraphicsDropShadowEffect(self, blurRadius=200,color=QtGui.QColor(255, 255, 255, 150 * 1), xOffset=3, yOffset=3)
+        self.logo_frame.setGraphicsEffect(shadow)
+
         # Apply Blur on Main_tab frame
-        self.blur = QtWidgets.QGraphicsBlurEffect(None)
-        self.blur.setBlurRadius(0)
+        self.blur = QtWidgets.QGraphicsBlurEffect(self)
+        self.blur.setBlurRadius(1)  # Set blur radius to 1 to prevent the error that comes from Qpainter
         self.Main_tab.setGraphicsEffect(self.blur)
+
+
 
         # Change toolTip
         QtWidgets.QToolTip.setFont(QtGui.QFont("Times", 10, QtGui.QFont.Bold))
@@ -339,7 +342,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.daily_customer_search_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.date_treeview_panel, 300, True))
         self.daily_customer_monthID_txt.textChanged['QString'].connect(self.setDailyName)
         self.daily_customer_name_txt.textChanged['QString'].connect(self.setDailyId)
-        self.daily_customer_name_filter_txt.textChanged['QString'].connect(lambda name: self.daily_customers_sort_model.setCustomerNameFilter(name))
+        self.daily_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name: self.daily_customers_sort_model.setCustomerNameFilter(customer_name.strip()))
         self.daily_customer_subsType_filter_comboBox.currentTextChanged['QString'].connect(lambda sub_state: self.daily_customers_sort_model.setSubsStateFilter(sub_state))
         self.daily_customer_clear_btn.clicked.connect(self.clearDailyFilters)
 
@@ -351,7 +354,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customer_update_btn.clicked.connect(self.updateMonthlyCustomer)
         self.monthly_customer_export_btn.clicked.connect(lambda : self.exportTable(self.monthly_customers_model))
         self.monthly_customer_search_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.date_treeview_panel, 300, True))
-        self.monthly_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name : self.monthly_customers_sort_model.setCustomerNameFilter(customer_name))
+        self.monthly_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name : self.monthly_customers_sort_model.setCustomerNameFilter(customer_name.strip()))
         self.monthly_customer_subsState_filter_comboBox.currentTextChanged['QString'].connect(lambda subs_state : self.monthly_customers_sort_model.setSubsStateFilter(subs_state))
         self.monthly_customer_subsType_filter_comboBox.currentTextChanged['QString'].connect(lambda subs_type : self.monthly_customers_sort_model.setSubsTypeFilter(subs_type))
         self.monthly_customer_clear_btn.clicked.connect(self.clearMonthlyFilters)
@@ -363,7 +366,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.order_export_btn.clicked.connect(lambda : self.exportTable(self.orders_model))
         self.plus_order_btn.clicked.connect(self.plusOrder)
         self.order_search_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.date_treeview_panel, 300, True))
-        self.orders_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name : self.orders_sort_model.setCustomerNameFilter(customer_name))
+        self.orders_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name : self.orders_sort_model.setCustomerNameFilter(customer_name.strip()))
         self.orders_type_filter_comboBox.currentTextChanged['QString'].connect(lambda item_type : self.orders_sort_model.setItemTypeFilter(item_type))
         self.order_clear_btn.clicked.connect(self.clearOrderFitlers)
         self.order_sell_type_comboBox.currentTextChanged['QString'].connect(self.setTotalOrderPrice)
@@ -372,7 +375,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.warehouse_item_add_btn2.clicked.connect(lambda : self.toggleMenuMaxWidth(self.frame_24,500, True))
         self.warehouse_item_add_btn.clicked.connect(self.addItem)
         self.warehouse_item_remove_btn.clicked.connect(self.removeItem)
-        self.warehouse_item_name_filter_txt.textChanged['QString'].connect(lambda item_name : self.warehouse_sort_model.setItemNameFilter(item_name))
+        self.warehouse_update_current_items_btn.clicked.connect(self.updateItemsQauntities)
+        self.warehouse_item_name_filter_txt.textChanged['QString'].connect(lambda item_name : self.warehouse_sort_model.setItemNameFilter(item_name.strip()))
         self.warehouse_item_type_filter_comboBox.currentTextChanged['QString'].connect(lambda item_type : self.warehouse_sort_model.setItemTypeFilter(item_type))
         self.warehouse_clear_btn.clicked.connect(self.clearWarehouseFitlers)
 
@@ -386,7 +390,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.employee_add_btn2.clicked.connect(lambda : self.toggleMenuMaxWidth(self.frame_22,500,True))
         self.employee_add_btn.clicked.connect(self.addEmployees)
         self.employee_remove_btn.clicked.connect(self.removeEmployees)
-        self.employees_employee_name_filter_txt.textChanged['QString'].connect(lambda employee_name : self.employees_sort_model.setEmployeeNameFilter(employee_name))
+        self.employees_employee_name_filter_txt.textChanged['QString'].connect(lambda employee_name : self.employees_sort_model.setEmployeeNameFilter(employee_name.strip()))
         self.employees_job_type_filter_comberoBox.currentTextChanged['QString'].connect(lambda job_type : self.employees_sort_model.setJobTypeFilter(job_type))
         self.employees_clear_btn.clicked.connect(self.clearEmployeesFilters)
 
@@ -412,7 +416,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.offer_add_btn.clicked.connect(self.addOffer)
         self.offer_remove_btn.clicked.connect(self.removeOffer)
         self.plus_item_btn.clicked.connect(self.plusOffer)
-        self.offers_item_name_filter_txt.textChanged['QString'].connect(lambda offer_name : self.offers_sort_model.setItemNameFilter(offer_name))
+        self.offers_item_name_filter_txt.textChanged['QString'].connect(lambda offer_name : self.offers_sort_model.setItemNameFilter(offer_name.strip()))
         self.offers_date_filter_dateEdit1.dateChanged['QDate'].connect(lambda date : self.offers_sort_model.setDateFilter(date))
         self.offers_clear_btn.clicked.connect(self.clearOffersFitlers)
 
@@ -558,7 +562,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.panel_title_lbl.setText('')
 
-        self.blur.setBlurRadius(0)
+        self.blur.setBlurRadius(1)
 
         # Reset the FLAGS
         self._DAILY_TABLES_FLAG = False
@@ -663,6 +667,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # hide shift error frame
         self.slideErrorFrame(0, '', True)
+        
         
         self._SETTINGS_TABLES_FLAG = True
         self.toggleMainButtonsMenu(self.main_buttons_frame, 70, True)
@@ -1229,7 +1234,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Adding new order to orders list"""
         self._order_item_number += 1
         
-        order_frame = CustomOrderFrame(self._order_item_number, self.orders_items_frame)
+        order_frame = CustomAddOrderFrame(self._order_item_number, self.orders_items_frame)
 
         # Add the container frame into parent frame layout
         self.verticalLayout_70.addWidget(order_frame)
@@ -1650,6 +1655,18 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 worker.finished.connect(prog.close)
                 prog.exec()
 
+    def updateItemsQauntities(self):
+        messageBox = QtWidgets.QMessageBox.warning(
+            self,
+            "Updating current available item...alert",
+            "Confirm",
+            QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel,
+            QtWidgets.QMessageBox.Cancel
+        )
+        if (messageBox == QtWidgets.QMessageBox.Ok):
+            updateCurrentItemsQuantities()
+
+
     def initialItemsTypeComboBox(self):
         self.warehouse_item_type_filter_comboBox.clear()
         self.warehouse_item_type_filter_comboBox.addItem('')
@@ -1799,7 +1816,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._item_number += 1
 
         # Create register order panel 
-        offer_frame = CustomOfferFrame(self._item_number, self.offers_items_frame)
+        offer_frame = CustomAddOfferFrame(self._item_number, self.offers_items_frame)
         
         # Add the container frame into parent frame layout
         self.verticalLayout_45.addWidget(offer_frame)
@@ -1894,6 +1911,22 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     ###############
     # Employees #
     ###############
+    # def showEmployees2(self):
+    #     """Show all employees from Supervisors table"""
+    #     emp_detail_frame = CustomEmployeeFrame(self.employees_frame)
+    #     self.gridLayout_12.addWidget(1,1,1,1)
+
+        
+    #     self.setViewModel()
+
+    #     # # If Daily panel is opend then we can make change to date (add, edit, ...)
+    #     if(self._SETTINGS_TABLES_FLAG == True):
+    #         self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'employees_properties_panel'))
+
+    #     self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'tab'))
+    #     self.toggleStackWidget(75, True)
+
+
     def showEmployees(self):
         """Show all employees from Supervisors table"""
         
