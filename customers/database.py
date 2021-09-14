@@ -1164,6 +1164,15 @@ def retrieveItemType(db = None) -> list:
        
     return result
 
+def updateCurrentItemsQuantities(db = None) -> None:
+    STATEMENT = f"""
+        UPDATE Warehouse SET item_current_quantity = item_current_quantity - item_consumed_quantity;
+    """
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT)
+
+    return query
+
 def resetCounting(table = None, column = None, db1 = None , db2 = None):
 
     daily_query = None
@@ -2022,3 +2031,46 @@ def updateDB():
 
 
 
+
+###################
+# General methods #
+###################
+def resetCounting(table = None, column = None, db1 = None , db2 = None):
+
+    daily_query = None
+    archive_query = None
+    
+    if(db1 is not None):
+        daily_query = QSqlQuery(db1)
+    if(db2 is not None):
+        archive_query = QSqlQuery(db2)
+
+    if(archive_query is not None):
+        # Check if all data in Archive is removed
+        # Then reset counting in Daily tables
+        RESET_AUTOINCREMENT_STATEMENTS = \
+            """
+            UPDATE sqlite_sequence SET seq = 0 WHERE name = 'Daily_customers';
+            UPDATE sqlite_sequence SET seq = 0 WHERE name = 'Orders';        
+
+            """
+        archive_query.exec(
+            """
+            SELECT count(*) FROM Daily_customers
+            """
+        )
+        if(archive_query.first()):
+            ret = archive_query.value(0)
+            if(ret==0):
+                for statement in RESET_AUTOINCREMENT_STATEMENTS.split(';'):
+                    daily_query.exec(statement)
+
+
+    if(table is not None and column is not None):
+        daily_query.exec(
+            f"""
+            UPDATE sqlite_sequence SET seq = (SELECT MAX({column}) FROM {table}) WHERE name="{table}"
+
+            """
+        )
+    

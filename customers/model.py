@@ -100,11 +100,14 @@ class DailyCustomersModel(QSqlRelationalTableModel):
 
 
         if(role == Qt.BackgroundColorRole):
-            if(super().data(index, Qt.DisplayRole) in ['Subscribed','Subscribed to another center']):
+            if(super().data(index, Qt.DisplayRole) in ['Subscribed']):
                 return QtGui.QColor(0,255,0,150)
 
             elif(super().data(index, Qt.DisplayRole) in ['Expired','Not Subscribed']):
                 return QtGui.QColor(245,170,0,150)
+            
+            elif(super().data(index, Qt.DisplayRole) in ['Subscribed to another center']):
+                return QtGui.QColor(255,255,0,150)
 
         
         return super().data(index, role)
@@ -283,7 +286,6 @@ class MonthlyCustomersModel(QSqlTableModel):
         if(self.db.databaseName().split('/')[-1] == 'Daily.db'):
             if(self._ADD_FLAG == False):
                 if (col in [ 
-                            self.fieldIndex('monthly_id'),
                             self.fieldIndex('ticket_monthly_cost'),
                             self.fieldIndex('start_date'),
                             self.fieldIndex('end_date'), 
@@ -336,7 +338,7 @@ class MonthlyCustomersSortModel(QtCore.QSortFilterProxyModel):
         
         customer_name_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('monthly_name'), source_parent)
         date_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('start_date'),  source_parent)
-        subs_state_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('subscribtion_state'), source_parent)
+        subs_state_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('subscription_state'), source_parent)
         subs_type_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('subsription_type'), source_parent)
 
         customer_name = self.sourceModel().data(customer_name_index, Qt.DisplayRole)
