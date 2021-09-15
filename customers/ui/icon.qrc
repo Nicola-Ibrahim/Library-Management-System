@@ -18,6 +18,7 @@
     <file>icons/checkbox.png</file>
     <file>icons/checkbox2.png</file>
     <file>icons/checkmark.svg</file>
+    <file>icons/close.png</file>
     <file>icons/customer1.png</file>
     <file>icons/customer2.png</file>
     <file>icons/down_arrow.png</file>
@@ -36,11 +37,14 @@
     <file>icons/filter.svg</file>
     <file>icons/funnel.svg</file>
     <file>icons/handle.png</file>
+    <file>icons/hc.png</file>
     <file>icons/iconmonstr-marketing-34.svg</file>
     <file>icons/id-card.svg</file>
     <file>icons/inbox1.svg</file>
     <file>icons/inbox2.svg</file>
     <file>icons/invisibility.svg</file>
+    <file>icons/j_m.png</file>
+    <file>icons/latin.png</file>
     <file>icons/letter-x1.svg</file>
     <file>icons/letter-x2.svg</file>
     <file>icons/logout1.svg</file>
