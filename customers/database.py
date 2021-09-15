@@ -30,15 +30,15 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Daily_customers (
             daily_id           INTEGER       UNIQUE
-                                            PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
-                                            NOT NULL,
+                                     PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
+                                     NOT NULL,
             daily_name         VARCHAR (255) NOT NULL,
             daily_ticket_cost  REAL (10),
             subscription_state VARCHAR,
             monthly_id         INTEGER       CONSTRAINT fk_monthly_id REFERENCES Monthly_customers (monthly_id) ON DELETE SET NULL
-                                                                                                                ON UPDATE NO ACTION,
+                                                                                                                ON UPDATE CASCADE,
             daily_date         DATE          NOT NULL
-                                            DEFAULT (date('now') ) 
+                                            DEFAULT (date('now') )  
         );
 
         """
@@ -47,10 +47,10 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Orders (
             order_id          INTEGER      PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
-                                        UNIQUE
-                                        NOT NULL,
+                                   UNIQUE
+                                   NOT NULL,
             daily_customer_id INTEGER (10) CONSTRAINT fk_daily_customer_id REFERENCES Daily_customers (daily_id) ON DELETE CASCADE
-                                                                                                                ON UPDATE NO ACTION,
+                                                                                                                ON UPDATE CASCADE,
             order_price       REAL (10)    NOT NULL
                                         CHECK (order_price >= 0) 
                                         DEFAULT (0),
@@ -66,18 +66,18 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Orders_items (
             id       INTEGER      PRIMARY KEY
-                                NOT NULL
-                                UNIQUE,
+                          NOT NULL
+                          UNIQUE,
             order_id INTEGER (10) REFERENCES Orders (order_id) ON DELETE CASCADE
-                                                            ON UPDATE NO ACTION,
+                                                            ON UPDATE CASCADE,
             item_id  INTEGER (10) REFERENCES Warehouse (item_id) ON DELETE SET NULL
-                                                                ON UPDATE NO ACTION,
+                                                                ON UPDATE CASCADE,
             offer_id INTEGER (10) REFERENCES Offers (offer_id) ON DELETE SET NULL
-                                                            ON UPDATE NO ACTION,
+                                                            ON UPDATE CASCADE,
             quantity INTEGER (10) NOT NULL,
             price    REAL (10),
             date     DATE         NOT NULL
-                                DEFAULT (date('now') )  
+                                DEFAULT (date('now') ) 
         );
 
         """
@@ -127,9 +127,9 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Shifts_employees (
             shift_id    INTEGER (10) REFERENCES Shifts (shift_id) ON DELETE CASCADE
-                                                                ON UPDATE NO ACTION,
+                                                          ON UPDATE CASCADE,
             employee_id INTEGER      REFERENCES Employees (employee_id) ON DELETE CASCADE
-                                                                        ON UPDATE NO ACTION,
+                                                                        ON UPDATE CASCADE,
             date        DATE         DEFAULT (date('now') ) 
                                     NOT NULL
         );
@@ -241,16 +241,16 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Offers_items (
             item_offer_id INTEGER      PRIMARY KEY
-                                    UNIQUE
-                                    NOT NULL,
+                               UNIQUE
+                               NOT NULL,
             offer_id      INTEGER      REFERENCES Offers (offer_id) ON DELETE CASCADE
-                                                                    ON UPDATE NO ACTION,
+                                                                    ON UPDATE CASCADE,
             item_id       INTEGER (10) REFERENCES Warehouse (item_id) ON DELETE CASCADE
-                                                                    ON UPDATE NO ACTION,
+                                                                    ON UPDATE CASCADE,
             quantity      INTEGER      NOT NULL
                                     DEFAULT (1),
             date          DATE         NOT NULL
-                                    DEFAULT (date('now') )
+                                    DEFAULT (date('now') ) 
         );
     
         """
@@ -1165,11 +1165,15 @@ def retrieveItemType(db = None) -> list:
     return result
 
 def updateCurrentItemsQuantities(db = None) -> None:
-    STATEMENT = f"""
+    STATEMENT1 = f"""
         UPDATE Warehouse SET item_current_quantity = item_current_quantity - item_consumed_quantity;
     """
+    STATEMENT2 = f"""
+        UPDATE Warehouse SET item_consumed_quantity = 0;
+    """
     query = QSqlQuery(db = db)
-    query.exec(STATEMENT)
+    query.exec(STATEMENT1)
+    query.exec(STATEMENT2)
 
     return query
 

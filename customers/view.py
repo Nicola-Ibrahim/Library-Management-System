@@ -1,3 +1,4 @@
+from textwrap import indent
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSql import QSqlRelationalDelegate
 
@@ -132,7 +133,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """UI changes after run the program"""
         self.showMaximized()
         
-        # UI changes in login
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("customers/ui/icons/studyzone-logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.setWindowIcon(icon)
+
         # self.setWindowFlag(Qt.FramelessWindowHint)
 
         self.tabWidget.tabBar().setVisible(False)
@@ -212,9 +216,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Arabic names regular expression
         validator = QtGui.QRegularExpressionValidator(QtCore.QRegularExpression("[\s|ء-ي]+"))
         self.daily_customer_name_txt.setValidator(validator)
-        self.daily_customer_name_filter_txt.setValidator(validator)
+        self.daily_customers_name_filter_txt.setValidator(validator)
         self.monthly_customer_name_txt.setValidator(validator)
-        self.monthly_customer_name_filter_txt.setValidator(validator)
+        self.monthly_customers_name_filter_txt.setValidator(validator)
         self.customer_name_txt2.setValidator(validator)
         self.orders_customer_name_filter_txt.setValidator(validator)
         self.employee_name_txt.setValidator(validator)
@@ -236,17 +240,17 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # self.order_quantity_txt.setValidator(validator)
     
     def initialComboBoxs(self, db):
-        self.daily_customer_subsType_filter_comboBox.clear()
-        self.daily_customer_subsType_filter_comboBox.addItems(['']+ retrieveDailySubsState(db))
-        self.daily_customer_subsType_filter_comboBox.setCurrentIndex(0)
+        self.daily_customers_subsType_filter_comboBox.clear()
+        self.daily_customers_subsType_filter_comboBox.addItems(['']+ retrieveDailySubsState(db))
+        self.daily_customers_subsType_filter_comboBox.setCurrentIndex(0)
 
-        self.monthly_customer_subsType_filter_comboBox.clear()
-        self.monthly_customer_subsType_filter_comboBox.addItems(['']+ retrieveMonthlySubsType(db))
-        self.monthly_customer_subsType_filter_comboBox.setCurrentIndex(0)
+        self.monthly_customers_subsType_filter_comboBox.clear()
+        self.monthly_customers_subsType_filter_comboBox.addItems(['']+ retrieveMonthlySubsType(db))
+        self.monthly_customers_subsType_filter_comboBox.setCurrentIndex(0)
 
-        self.monthly_customer_subsState_filter_comboBox.clear()
-        self.monthly_customer_subsState_filter_comboBox.addItems(['']+ retrieveMonthlySubsState(db))
-        self.monthly_customer_subsState_filter_comboBox.setCurrentIndex(0)
+        self.monthly_customers_subsState_filter_comboBox.clear()
+        self.monthly_customers_subsState_filter_comboBox.addItems(['']+ retrieveMonthlySubsState(db))
+        self.monthly_customers_subsState_filter_comboBox.setCurrentIndex(0)
         
         self.orders_type_filter_comboBox.clear()
         self.orders_type_filter_comboBox.addItems(['']+ retrieveOrderType(db))
@@ -259,12 +263,23 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.employees_job_type_filter_comberoBox.clear()
         self.employees_job_type_filter_comberoBox.addItems(['']+ retrieveEmployeesJobType(self.daily_conn))
 
-    def setCurrentDate(self):
-        self.shifts_date_filter_dateEdit1.setDate(QtCore.QDate.currentDate())
-        self.offers_date_filter_dateEdit1.setDate(QtCore.QDate.currentDate())
+    def setDailyCurrentDate(self):
+        """Set current date in DateEdits boxes"""
+        self.daily_customers_date_filter_dateEdit.setDate(QtCore.QDate.currentDate())
+        self.monthly_customers_date_filter_dateEdit.setDate(QtCore.QDate.currentDate())
+        self.orders_date_filter_dateEdit.setDate(QtCore.QDate.currentDate())
 
-        self.shifts_sort_model.setDateFilter(self.shifts_date_filter_dateEdit1.date())
-        self.shifts_sort_model.setDateFilter(self.offers_date_filter_dateEdit1.date())
+        self.daily_customers_sort_model.setDateFilter(self.monthly_customers_date_filter_dateEdit.date())
+        self.monthly_customers_sort_model.setDateFilter(self.monthly_customers_date_filter_dateEdit.date())
+        self.orders_sort_model.setDateFilter(self.monthly_customers_date_filter_dateEdit.date())
+
+    def setSettingsCurrentDate(self):
+        """Set current date in DateEdits boxes"""
+        self.shifts_date_filter_dateEdit.setDate(QtCore.QDate.currentDate())
+        self.offers_date_filter_dateEdit.setDate(QtCore.QDate.currentDate())
+
+        self.shifts_sort_model.setDateFilter(self.shifts_date_filter_dateEdit.date())
+        self.shifts_sort_model.setDateFilter(self.offers_date_filter_dateEdit.date())
 
     def Completers(self):
         """Add completer to some UI elements"""
@@ -342,9 +357,11 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.daily_customer_search_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.date_treeview_panel, 300, True))
         self.daily_customer_monthID_txt.textChanged['QString'].connect(self.setDailyName)
         self.daily_customer_name_txt.textChanged['QString'].connect(self.setDailyId)
-        self.daily_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name: self.daily_customers_sort_model.setCustomerNameFilter(customer_name.strip()))
-        self.daily_customer_subsType_filter_comboBox.currentTextChanged['QString'].connect(lambda sub_state: self.daily_customers_sort_model.setSubsStateFilter(sub_state))
+        self.daily_customers_name_filter_txt.textChanged['QString'].connect(lambda customer_name: self.daily_customers_sort_model.setCustomerNameFilter(customer_name.strip()))
+        self.daily_customers_subsType_filter_comboBox.currentTextChanged['QString'].connect(lambda sub_state: self.daily_customers_sort_model.setSubsStateFilter(sub_state))
+        self.daily_customers_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.daily_customers_sort_model.setDateFilter(date))
         self.daily_customer_clear_btn.clicked.connect(self.clearDailyFilters)
+
 
         
         # Monthly customers tab buttons
@@ -354,9 +371,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.monthly_customer_update_btn.clicked.connect(self.updateMonthlyCustomer)
         self.monthly_customer_export_btn.clicked.connect(lambda : self.exportTable(self.monthly_customers_model))
         self.monthly_customer_search_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.date_treeview_panel, 300, True))
-        self.monthly_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name : self.monthly_customers_sort_model.setCustomerNameFilter(customer_name.strip()))
-        self.monthly_customer_subsState_filter_comboBox.currentTextChanged['QString'].connect(lambda subs_state : self.monthly_customers_sort_model.setSubsStateFilter(subs_state))
-        self.monthly_customer_subsType_filter_comboBox.currentTextChanged['QString'].connect(lambda subs_type : self.monthly_customers_sort_model.setSubsTypeFilter(subs_type))
+        self.monthly_customers_name_filter_txt.textChanged['QString'].connect(lambda customer_name : self.monthly_customers_sort_model.setCustomerNameFilter(customer_name.strip()))
+        self.monthly_customers_subsState_filter_comboBox.currentTextChanged['QString'].connect(lambda subs_state : self.monthly_customers_sort_model.setSubsStateFilter(subs_state))
+        self.monthly_customers_subsType_filter_comboBox.currentTextChanged['QString'].connect(lambda subs_type : self.monthly_customers_sort_model.setSubsTypeFilter(subs_type))
+        self.monthly_customers_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.monthly_customers_sort_model.setDateFilter(date))
         self.monthly_customer_clear_btn.clicked.connect(self.clearMonthlyFilters)
 
         # Orders tab buttons
@@ -368,8 +386,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.order_search_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.date_treeview_panel, 300, True))
         self.orders_customer_name_filter_txt.textChanged['QString'].connect(lambda customer_name : self.orders_sort_model.setCustomerNameFilter(customer_name.strip()))
         self.orders_type_filter_comboBox.currentTextChanged['QString'].connect(lambda item_type : self.orders_sort_model.setItemTypeFilter(item_type))
-        self.order_clear_btn.clicked.connect(self.clearOrderFitlers)
+        self.orders_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.orders_sort_model.setDateFilter(date))
         self.order_sell_type_comboBox.currentTextChanged['QString'].connect(self.setTotalOrderPrice)
+        self.order_clear_btn.clicked.connect(self.clearOrderFitlers)
 
         # Warehouse tab buttons
         self.warehouse_item_add_btn2.clicked.connect(lambda : self.toggleMenuMaxWidth(self.frame_24,500, True))
@@ -401,7 +420,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.shift_remove_btn.clicked.connect(self.removeShifts)
         self.shift_start_btn.clicked.connect(self.startShift)
         self.shift_stop_btn.clicked.connect(self.finishShift)
-        self.shifts_date_filter_dateEdit1.dateChanged['QDate'].connect(lambda date : self.shifts_sort_model.setDateFilter(date))
+        self.shifts_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.shifts_sort_model.setDateFilter(date))
         self.shifts_clear_btn.clicked.connect(self.clearShiftsFitlers)
 
         # Reports tab buttons
@@ -417,7 +436,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.offer_remove_btn.clicked.connect(self.removeOffer)
         self.plus_item_btn.clicked.connect(self.plusOffer)
         self.offers_item_name_filter_txt.textChanged['QString'].connect(lambda offer_name : self.offers_sort_model.setItemNameFilter(offer_name.strip()))
-        self.offers_date_filter_dateEdit1.dateChanged['QDate'].connect(lambda date : self.offers_sort_model.setDateFilter(date))
+        self.offers_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.offers_sort_model.setDateFilter(date))
         self.offers_clear_btn.clicked.connect(self.clearOffersFitlers)
 
         # Copy button
@@ -619,7 +638,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.buttons_stackedWidget.setCurrentWidget(self.buttons_stackedWidget.findChild(QtWidgets.QWidget, 'dailyAndarchive_buttons_tab'))
         
         # Reinitialize model objects by daily models
-        self.setViewModel()
+        self.initialModels()
 
         # Reinitialize comboBox
         self.initialComboBoxs(self.daily_conn)
@@ -657,7 +676,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
         # Reinitialize model objects by daily models
-        self.setViewModel()
+        self.initialModels()
     
         # Reinitialize comboBox
         self.initialComboBoxs(self.archive_conn)
@@ -683,13 +702,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
         # Reinitialize model objects by daily models
-        self.setViewModel()
+        self.initialModels()
 
         # Reinitialize comboBox
         self.initialSettingsComboBoxs()
 
-    def setViewModel(self):
-        
+    def initialModels(self):
+        """Initial models"""
         if(self._DAILY_TABLES_FLAG == True):
             self.daily_customers_model = DailyCustomersModel(self.daily_conn, self)
             self.monthly_customers_model = MonthlyCustomersModel(self.daily_conn)
@@ -699,6 +718,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.monthly_customers_sort_model = MonthlyCustomersSortModel(self.monthly_customers_model)
             self.orders_sort_model = OrdersSortModel(self.orders_model)
 
+            self.setDailyCurrentDate()
+
         elif(self._ARCHIVE_TABLES_FLAG == True):
             self.daily_customers_model = DailyCustomersModel(self.archive_conn)
             self.monthly_customers_model = MonthlyCustomersModel(self.archive_conn)
@@ -707,6 +728,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.daily_customers_sort_model = DailyCustomersSortModel(self.daily_customers_model)
             self.monthly_customers_sort_model = MonthlyCustomersSortModel(self.monthly_customers_model)
             self.orders_sort_model = OrdersSortModel(self.orders_model)
+
+            self.setDailyCurrentDate()
 
         elif(self._SETTINGS_TABLES_FLAG == True):
             self.warehouse_model = WarehouseModel(self.daily_conn)
@@ -721,15 +744,17 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.offers_sort_model = OffersSortModel(self.offers_model)
             self.reports_sort_model = ReportsSortModel(self.reports_model)
 
-            self.setCurrentDate()
+            self.setSettingsCurrentDate()
 
     def disableMainButton(self):
+        """Disable main buttons after navigate to menu buttons"""
         self.archive_btn.setEnabled(False)
         self.daily_btn.setEnabled(False)
         self.settings_btn.setEnabled(False)
         self.exit_btn.setEnabled(False)
     
     def isAnyShiftActive(self, exit_event=False):
+        """Check if there is any active shift"""
         ret = checkShiftActive(db = self.daily_conn)
         if(ret == 1):
             if(exit_event == False):
@@ -757,7 +782,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # mapper.addMapping(self.daily_customer_monthID_txt, 2)
         # mapper.toFirst()
 
-        self.setViewModel()
+        self.initialModels()
 
         if(self._ARCHIVE_TABLES_FLAG):
             self.showYMDs(self.archive_conn, 'Daily_customers', 'daily_date')
@@ -772,7 +797,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.toggleStackWidget(75, True)
 
         self.daily_customers_tableView.selectionModel().selectionChanged.connect(lambda : self.daily_customers_count_lbl.setText(str(len(self.daily_customers_tableView.selectionModel().selectedRows()))))
-        
+
+        self.daily_customers_tableView.model().rowsInserted.connect(self.dailyCustomersScrollToRow)
+
     def addDailyCustomer(self):
         """Add new daily customer to daily table"""
 
@@ -791,15 +818,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         ret = self.daily_customers_model.addDailyCustomer(data)
 
         if(ret):
-            # # scroll to inserted row
-            # flags = QtCore.QItemSelectionModel.ClearAndSelect | QtCore.QItemSelectionModel.Rows
-            # print(self.daily_customers_model.query().lastInsertId())
-            # print(type(self.daily_customers_model.query().lastInsertId)())
-            # index = self.daily_customers_tableView.model().index(self.daily_customers_model.query().lastInsertId(), 0)       
-            # self.daily_customers_tableView.scrollTo(index)
-            # # self.daily_customers_tableView.scrollToBottom()
-            # self.daily_customers_tableView.selectionModel().select(index, flags)
-
+            
             # Reset texts
             self.daily_customer_name_txt.setText('')
             self.daily_customer_monthID_txt.setText('')
@@ -824,7 +843,14 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "Record exists...!",
             QtWidgets.QMessageBox.Ok ,
             )
-            
+
+    def dailyCustomersScrollToRow(self, index, start, last):
+        # scroll to inserted row
+        index = self.daily_customers_tableView.model().index(start, 1) 
+        flags = QtCore.QItemSelectionModel.ClearAndSelect | QtCore.QItemSelectionModel.Rows
+        self.daily_customers_tableView.selectionModel().select(index, flags)
+        self.daily_customers_tableView.scrollTo(index)
+
     def removeDailyCustomer(self):
         """Remove customer from table"""
         # row = self.daily_customers_tableView.currentIndex().row()
@@ -924,8 +950,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # self.daily_customer_monthID_txt.setText(retrievMonthlyid(name = self.daily_customer_name_txt.text()))
 
     def clearDailyFilters(self):
-        self.daily_customer_name_filter_txt.setText('')
-        self.daily_customer_subsType_filter_comboBox.setCurrentText('')
+        self.daily_customers_name_filter_txt.setText('')
+        self.daily_customers_subsType_filter_comboBox.setCurrentText('')
         self.daily_customers_sort_model.setDateFilter('')
 
 
@@ -934,7 +960,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     #####################
     def showMonthlyCustomers(self):
         """Show all monthly customers from Monthly table"""
-        self.setViewModel()
+        self.initialModels()
 
         if(self._ARCHIVE_TABLES_FLAG):
             self.showYMDs(self.archive_conn, 'Monthly_customers', 'start_date')
@@ -1074,10 +1100,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def clearMonthlyFilters(self):
 
-        self.monthly_customer_name_filter_txt.setText('')
-        self.monthly_customer_subsState_filter_comboBox.setCurrentText('')
-        self.monthly_customer_subsType_filter_comboBox.setCurrentText('')
-
+        self.monthly_customers_name_filter_txt.setText('')
+        self.monthly_customers_subsState_filter_comboBox.setCurrentText('')
+        self.monthly_customers_subsType_filter_comboBox.setCurrentText('')
         self.monthly_customers_sort_model.setDateFilter('')
 
 
@@ -1086,7 +1111,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     ##########
     def showOrders(self):
         """Show all Orders from Orders table"""  
-        self.setViewModel()
+        self.initialModels()
 
         if(self._ARCHIVE_TABLES_FLAG):
             self.showYMDs(self.archive_conn, 'Orders', 'order_date')
@@ -1144,7 +1169,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Iterate to add customer's orders_model
         items_data = [(order_comboBox.currentText(), quantity_txt.text()) for order_comboBox, quantity_txt in zip(order_comboBox_lst, order_quantity_txt_lst)]
         
-        data = [(self.customer_name_txt2.text(), self.order_sell_type_comboBox.currentText(), self.offer_id), items_data, int(self.total_price_lbl.text())]
+        data = [(self.customer_name_txt2.text().strip(), self.order_sell_type_comboBox.currentText(), self.offer_id), items_data, int(self.total_price_lbl.text())]
 
         ret = self.orders_model.addOrder(data)
 
@@ -1535,6 +1560,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     #############
     def showWarehouse(self):        
         """Show all items from Warehouse table"""
+        self.initialModels()
 
         # If Daily panel is opend then we can make change to date (add, edit, ...)
         if(self._SETTINGS_TABLES_FLAG == True):
@@ -1664,8 +1690,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             QtWidgets.QMessageBox.Cancel
         )
         if (messageBox == QtWidgets.QMessageBox.Ok):
-            updateCurrentItemsQuantities()
+            updateCurrentItemsQuantities(db = self.daily_conn)
 
+            self.showWarehouse()
 
     def initialItemsTypeComboBox(self):
         self.warehouse_item_type_filter_comboBox.clear()
@@ -1917,7 +1944,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     #     self.gridLayout_12.addWidget(1,1,1,1)
 
         
-    #     self.setViewModel()
+    #     self.initialModels()
 
     #     # # If Daily panel is opend then we can make change to date (add, edit, ...)
     #     if(self._SETTINGS_TABLES_FLAG == True):
@@ -1930,7 +1957,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def showEmployees(self):
         """Show all employees from Supervisors table"""
         
-        self.setViewModel()
+        self.initialModels()
 
         # # If Daily panel is opend then we can make change to date (add, edit, ...)
         if(self._SETTINGS_TABLES_FLAG == True):
@@ -2052,7 +2079,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def showShifts(self):
         """Show all shifts from shifts table"""
         
-        self.setViewModel()
+        self.initialModels()
 
         if(self._SETTINGS_TABLES_FLAG == True):
             self.stackedWidget.setCurrentWidget(self.stackedWidget.findChild(QtWidgets.QWidget, 'shifts_properties_panel'))

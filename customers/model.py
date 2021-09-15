@@ -156,9 +156,15 @@ class DailyCustomersSortModel(QtCore.QSortFilterProxyModel):
             
         self.invalidateFilter()
 
-    def setDateFilter(self, string):
-        """Set regex pattern for date type"""   
-        self._date_pattern.setPattern(string)
+    def setDateFilter(self, date):
+        """Set regex pattern for date type""" 
+        if(date == ''):
+            self._date_pattern.setPattern('')
+            
+        else:
+            date = QLocale(QLocale.English, QLocale.UnitedStates).toString(date, "yyyy-MM-dd")
+            self._date_pattern.setPattern(date)
+
         self.invalidateFilter()
     
     def filterAcceptsRow(self, row_num: int, source_parent: QtCore.QModelIndex):
@@ -191,7 +197,7 @@ class MonthlyCustomersModel(QSqlTableModel):
         self.db = db
         self._ADD_FLAG = False    
         self.showMonthlyCustomers()
-    
+        
     def showMonthlyCustomers(self):
         # Update monthly subscribtion state before SELECT  
         updateSubsState(db = self.db)
@@ -264,7 +270,7 @@ class MonthlyCustomersModel(QSqlTableModel):
             return ret
         
         return False
-       
+
     def data(self, index: QtCore.QModelIndex, role: int):
         
         if(role == Qt.TextAlignmentRole):
@@ -329,9 +335,15 @@ class MonthlyCustomersSortModel(QtCore.QSortFilterProxyModel):
             
         self.invalidateFilter()
 
-    def setDateFilter(self, string):
-        """Set regex pattern for date type"""   
-        self._date_pattern.setPattern(string)
+    def setDateFilter(self, date):
+        """Set regex pattern for date type""" 
+        if(date == ''):
+            self._date_pattern.setPattern('')
+            
+        else:
+            date = QLocale(QLocale.English, QLocale.UnitedStates).toString(date, "yyyy-MM-dd")
+            self._date_pattern.setPattern(date)
+
         self.invalidateFilter()
     
     def filterAcceptsRow(self, row_num: int, source_parent: QtCore.QModelIndex) -> bool:
@@ -340,11 +352,15 @@ class MonthlyCustomersSortModel(QtCore.QSortFilterProxyModel):
         date_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('start_date'),  source_parent)
         subs_state_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('subscription_state'), source_parent)
         subs_type_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('subsription_type'), source_parent)
+        date_index = self.sourceModel().index(row_num, self.sourceModel().fieldIndex('start_date'),  source_parent)
 
         customer_name = self.sourceModel().data(customer_name_index, Qt.DisplayRole)
         date = self.sourceModel().data(date_index, Qt.DisplayRole)
         subs_state = self.sourceModel().data(subs_state_index, Qt.DisplayRole)
         subs_type = self.sourceModel().data(subs_type_index, Qt.DisplayRole)
+        date = self.sourceModel().data(date_index, Qt.DisplayRole)
+
+
 
         tests =  [
             self._customer_name_pattern.match(customer_name).hasMatch(),
@@ -500,11 +516,14 @@ class OrdersSortModel(QtCore.QSortFilterProxyModel):
             
         self.invalidateFilter()
     
-    def setDateFilter(self, string):
-        """Set regex pattern for subscription type"""
-        self._date_pattern.setPattern(string)
+    def setDateFilter(self, date):
+        """Set regex pattern for date type""" 
+        if(date == ''):
+            self._date_pattern.setPattern('')
             
-        self.invalidateFilter()
+        else:
+            date = QLocale(QLocale.English, QLocale.UnitedStates).toString(date, "yyyy-MM-dd")
+            self._date_pattern.setPattern(date)
 
     def filterAcceptsRow(self, row_num: int, source_parent: QtCore.QModelIndex) -> bool:
         
@@ -609,6 +628,7 @@ class WarehouseModel(QSqlTableModel):
                 return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
 
         return super().flags(index)
+
 class WarehouseSortModel(QtCore.QSortFilterProxyModel):
     """ Warehouse sorting model"""
     def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
