@@ -390,7 +390,6 @@ class OrdersModel(QSqlRelationalTableModel):
         self.setTable("Orders")
         self.setEditStrategy(self.OnFieldChange)
         
-        # headers = ('رقم الطلب','اسم الزبون','اسم المادة','الكمية','الاجمالي','النوع','التاريخ')
         headers = ('Id','Customer name','Total','Type','Date')
         for ind, header in enumerate(headers):
             self.setHeaderData(ind, Qt.Horizontal,header)
@@ -524,6 +523,9 @@ class OrdersSortModel(QtCore.QSortFilterProxyModel):
         else:
             date = QLocale(QLocale.English, QLocale.UnitedStates).toString(date, "yyyy-MM-dd")
             self._date_pattern.setPattern(date)
+        
+        self.invalidateFilter()
+
 
     def filterAcceptsRow(self, row_num: int, source_parent: QtCore.QModelIndex) -> bool:
         
@@ -1035,6 +1037,55 @@ class HierarcicalShiftsSupervisorsModel(QtGui.QStandardItemModel):
 
             
             self.appendRow(date)
+
+    def fill_model_from_json(self, parent, d):
+        if isinstance(d, dict):
+            for key, value in d.items():
+                it = QtGui.QStandardItem(str(key))
+                if isinstance(value, dict):
+                    parent.appendRow(it)
+                    self.fill_model_from_json(it, value)
+                else:
+                    it2 = QtGui.QStandardItem(str(value))
+                    parent.appendRow([it, it2])
+                    
+class HierarcicalShiftsSupervisorsSortModel(QtCore.QSortFilterProxyModel):
+    """ Reports sorting model"""
+    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+        super().__init__(parent=parent)
+
+        # Create private regex for filtering
+        self._date_pattern = QRegularExpression()
+        
+        self.filterKeyColumn = 1
+        self.setRecursiveFilteringEnabled = True
+        
+        # Set source model
+        self.setSourceModel(source_model)
+    
+    def setDateFilter(self, date):
+        """Set regex pattern for date type""" 
+        if(date == ''):
+            self._date_pattern.setPattern('')
+            
+        else:
+            date = QLocale(QLocale.English, QLocale.UnitedStates).toString(date, "yyyy-MM-dd")
+            self._date_pattern.setPattern(date)
+
+        self.invalidateFilter()
+
+
+    def filterAcceptsRow(self, row_num: int, source_parent: QtCore.QModelIndex) -> bool:
+        
+        date_index = self.sourceModel().index(row_num, 0,  source_parent)
+
+        date = self.sourceModel().data(date_index, Qt.DisplayRole)
+
+        tests =  [
+            self._date_pattern.match(date).hasMatch()
+        ]
+        
+        return (not False in tests)
 
 
 

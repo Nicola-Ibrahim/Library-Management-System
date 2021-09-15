@@ -128,9 +128,15 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             event.accept()
         else:
             event.ignore()
- 
+    
+    def mousePressEvent(self, event):
+        if(self.tabWidget.currentWidget().objectName() == 'about_us_tab'):
+            self.BackToMain()
+        
     def uiCahnges(self):
         """UI changes after run the program"""
+
+
         self.showMaximized()
         
         icon = QtGui.QIcon()
@@ -330,8 +336,10 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.archive_btn.clicked.connect(self.archivePanel)
         self.daily_btn.clicked.connect(self.dailyPanel)
         self.settings_btn.clicked.connect(self.settingsPanel)
+        self.about_us_btn.clicked.connect(lambda: self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'about_us_tab')))
 
-        self.logout_btn.clicked.connect(self.BackToMain)
+
+        self.back_to_main_btn.clicked.connect(self.BackToMain)
         self.exit_btn.clicked.connect(self.close)
 
         self.menu_btn.clicked.connect(lambda : self.toggleMainButtonsMenu(self.main_buttons_frame,300,True))
@@ -421,12 +429,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.shift_start_btn.clicked.connect(self.startShift)
         self.shift_stop_btn.clicked.connect(self.finishShift)
         self.shifts_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.shifts_sort_model.setDateFilter(date))
+        self.shifts_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.shifts_supervisors_sort_model.setDateFilter(date))
         self.shifts_clear_btn.clicked.connect(self.clearShiftsFitlers)
 
         # Reports tab buttons
         self.report_export_btn.clicked.connect(lambda : self.exportTable(self.reports_model))
         self.report_search_btn.clicked.connect(lambda : self.toggleMenuMaxWidth(self.date_treeview_panel, 300, True))
-        self.report_search_type_comboBox.currentTextChanged['QString'].connect(self.reportType)
+        self.reports_search_type_comboBox.currentTextChanged['QString'].connect(self.reportType)
         self.report_remove_btn.clicked.connect(self.removeReport)
         self.report_clear_btn.clicked.connect(self.clearReportsFitlers)
 
@@ -583,7 +592,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.blur.setBlurRadius(1)
 
-        # Reset the FLAGS
+        # Reset the main fLAGS
         self._DAILY_TABLES_FLAG = False
         self._ARCHIVE_TABLES_FLAG = False
         self._SETTINGS_TABLES_FLAG = False
@@ -607,7 +616,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     ##########
     def dailyPanel(self):
         """Open daily panel"""
-        
+       
+
         # Check if any shift is started or not
         if(not self.isAnyShiftActive()):
             return
@@ -737,12 +747,14 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.shifts_model = ShiftsModel(self.daily_conn)
             self.offers_model = OffersModel(self.daily_conn)
             self.reports_model = ReportsModel(self.daily_conn)
+            self.shifts_supervisors_model = HierarcicalShiftsSupervisorsModel(self.daily_conn)
 
             self.warehouse_sort_model = WarehouseSortModel(self.warehouse_model)
             self.employees_sort_model = EmployeesSortModel(self.employees_model)
             self.shifts_sort_model = ShiftsSortModel(self.shifts_model)
             self.offers_sort_model = OffersSortModel(self.offers_model)
             self.reports_sort_model = ReportsSortModel(self.reports_model)
+            self.shifts_supervisors_sort_model = HierarcicalShiftsSupervisorsSortModel(self.shifts_supervisors_model)
 
             self.setSettingsCurrentDate()
 
@@ -1546,14 +1558,15 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         order_id = index.sibling(index.row(), self.orders_model.fieldIndex('order_id')).data()
         customer_name = index.sibling(index.row(), self.orders_model.fieldIndex('daily_name')).data()
         order_type = index.sibling(index.row(), self.orders_model.fieldIndex('order_type')).data()
-
+        
+        # If there is no selected order
         if (order_id == None):
             QtWidgets.QToolTip.showText(self.order_show_btn.mapToGlobal(QtCore.QPoint(0,30)),"Select order")
         
         else:
-                order_diag = OrderDialog(order_id, customer_name, order_type, db = self.daily_conn)
-                if(order_diag.exec() == QtWidgets.QDialog.Accepted):
-                    pass  
+            order_diag = OrderDialog(order_id, customer_name, order_type, db = self.daily_conn)
+            if(order_diag.exec() == QtWidgets.QDialog.Accepted):
+                pass  
     
     #############
     # Warehouse #
@@ -2094,9 +2107,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def showShiftsEmployees(self):
         """Display available shifts and related employees"""
 
-        self.shifts_supervisors_model = HierarcicalShiftsSupervisorsModel(self.daily_conn)
+        # self.shifts_supervisors_model = HierarcicalShiftsSupervisorsModel(self.daily_conn)
         self.shifts_supervisors_treeView.setHeaderHidden(True)
-        self.shifts_supervisors_treeView.setModel(self.shifts_supervisors_model) 
+        self.shifts_supervisors_treeView.setModel(self.shifts_supervisors_sort_model) 
         self.shifts_supervisors_treeView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         
         # selection_model = self.shifts_supervisors_treeView.selectionModel()
