@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Study Zone</string>
+   <string>Study Zone app</string>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -1707,7 +1707,7 @@ QLabel{
              <enum>QFrame::Plain</enum>
             </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="daily_customers_properties_panel">
              <property name="styleSheet">
@@ -2361,24 +2361,24 @@ QPushButton:disabled{
 	border-radius:35px;
 	border-color: rgb(174, 174, 174);
 
-	padding: 10px;
+	padding: 6px;
 	
 	background-color: rgb(255, 255, 255);
 
-	image: url(:/icons/icons/loupe1.svg);
+	image: url(:/icons/icons/open-order1.png);
 	
 }
 
 
 QPushButton:hover{
 	
-	image: url(:/icons/icons/loupe2.svg);
+	image:url(:/icons/icons/open-order2.png);
 }
 QPushButton:pressed{
 	
 
 	background-color: rgb(100, 100, 100);
-	image: url(:/icons/icons/loupe2.svg);
+	image:url(:/icons/icons/open-order2.png);
 }
 QPushButton:disabled{
 
@@ -4114,7 +4114,7 @@ QPushButton:disabled{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -4954,7 +4954,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                       </property>
                       <property name="text">
-                       <string>Search and Filter</string>
+                       <string>Search and Filter by</string>
                       </property>
                      </widget>
                     </item>
@@ -4986,7 +4986,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Customer Name</string>
+                            <string>Customer Name</string>
                            </property>
                           </widget>
                          </item>
@@ -4996,7 +4996,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QLineEdit" name="daily_customer_name_filter_txt">
+                            <widget class="QLineEdit" name="daily_customers_name_filter_txt">
                              <property name="minimumSize">
                               <size>
                                <width>300</width>
@@ -5031,7 +5031,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Subscribtion Type</string>
+                            <string>Subscription Type</string>
                            </property>
                           </widget>
                          </item>
@@ -5041,7 +5041,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QComboBox" name="daily_customer_subsType_filter_comboBox">
+                            <widget class="QComboBox" name="daily_customers_subsType_filter_comboBox">
                              <property name="minimumSize">
                               <size>
                                <width>300</width>
@@ -5085,7 +5085,52 @@ background-color: rgb(244, 154, 32);
                          </item>
                         </layout>
                        </item>
-                       <item alignment="Qt::AlignBottom">
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_79">
+                         <property name="spacing">
+                          <number>7</number>
+                         </property>
+                         <item>
+                          <widget class="QLabel" name="label_74">
+                           <property name="styleSheet">
+                            <string notr="true">QLabel{
+	color: rgb(200, 200, 200);
+}</string>
+                           </property>
+                           <property name="text">
+                            <string>Date</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_54">
+                           <property name="spacing">
+                            <number>4</number>
+                           </property>
+                           <item>
+                            <widget class="QDateEdit" name="daily_customers_date_filter_dateEdit">
+                             <property name="enabled">
+                              <bool>true</bool>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>240</width>
+                               <height>40</height>
+                              </size>
+                             </property>
+                             <property name="showGroupSeparator" stdset="0">
+                              <bool>false</bool>
+                             </property>
+                             <property name="calendarPopup">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
                         <widget class="QPushButton" name="daily_customer_clear_btn">
                          <property name="minimumSize">
                           <size>
@@ -5743,7 +5788,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                       </property>
                       <property name="text">
-                       <string>Search and Filter</string>
+                       <string>Search and Filter by</string>
                       </property>
                      </widget>
                     </item>
@@ -5781,7 +5826,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Customer Name</string>
+                            <string>Customer Name</string>
                            </property>
                           </widget>
                          </item>
@@ -5826,7 +5871,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Order Type</string>
+                            <string>Order Type</string>
                            </property>
                           </widget>
                          </item>
@@ -5870,7 +5915,52 @@ background-color: rgb(244, 154, 32);
                          </item>
                         </layout>
                        </item>
-                       <item alignment="Qt::AlignBottom">
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_78">
+                         <property name="spacing">
+                          <number>7</number>
+                         </property>
+                         <item>
+                          <widget class="QLabel" name="label_73">
+                           <property name="styleSheet">
+                            <string notr="true">QLabel{
+	color: rgb(200, 200, 200);
+}</string>
+                           </property>
+                           <property name="text">
+                            <string>Date</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_53">
+                           <property name="spacing">
+                            <number>4</number>
+                           </property>
+                           <item>
+                            <widget class="QDateEdit" name="orders_date_filter_dateEdit">
+                             <property name="enabled">
+                              <bool>true</bool>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>240</width>
+                               <height>40</height>
+                              </size>
+                             </property>
+                             <property name="showGroupSeparator" stdset="0">
+                              <bool>false</bool>
+                             </property>
+                             <property name="calendarPopup">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
                         <widget class="QPushButton" name="order_clear_btn">
                          <property name="minimumSize">
                           <size>
@@ -6057,7 +6147,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                       </property>
                       <property name="text">
-                       <string>Search and Filter</string>
+                       <string>Search and Filter by</string>
                       </property>
                      </widget>
                     </item>
@@ -6095,7 +6185,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Customer</string>
+                            <string>Customer Name</string>
                            </property>
                           </widget>
                          </item>
@@ -6105,7 +6195,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QLineEdit" name="monthly_customer_name_filter_txt">
+                            <widget class="QLineEdit" name="monthly_customers_name_filter_txt">
                              <property name="minimumSize">
                               <size>
                                <width>300</width>
@@ -6140,7 +6230,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Subscribtion State</string>
+                            <string>Subscription State</string>
                            </property>
                           </widget>
                          </item>
@@ -6150,7 +6240,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QComboBox" name="monthly_customer_subsState_filter_comboBox">
+                            <widget class="QComboBox" name="monthly_customers_subsState_filter_comboBox">
                              <property name="minimumSize">
                               <size>
                                <width>300</width>
@@ -6182,7 +6272,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Subscribtion Type</string>
+                            <string>Subscription Type</string>
                            </property>
                           </widget>
                          </item>
@@ -6192,7 +6282,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QComboBox" name="monthly_customer_subsType_filter_comboBox">
+                            <widget class="QComboBox" name="monthly_customers_subsType_filter_comboBox">
                              <property name="minimumSize">
                               <size>
                                <width>300</width>
@@ -6204,6 +6294,51 @@ background-color: rgb(244, 154, 32);
                                <width>300</width>
                                <height>16777215</height>
                               </size>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_77">
+                         <property name="spacing">
+                          <number>7</number>
+                         </property>
+                         <item>
+                          <widget class="QLabel" name="label_72">
+                           <property name="styleSheet">
+                            <string notr="true">QLabel{
+	color: rgb(200, 200, 200);
+}</string>
+                           </property>
+                           <property name="text">
+                            <string>Date</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_50">
+                           <property name="spacing">
+                            <number>4</number>
+                           </property>
+                           <item>
+                            <widget class="QDateEdit" name="monthly_customers_date_filter_dateEdit">
+                             <property name="enabled">
+                              <bool>true</bool>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>240</width>
+                               <height>40</height>
+                              </size>
+                             </property>
+                             <property name="showGroupSeparator" stdset="0">
+                              <bool>false</bool>
+                             </property>
+                             <property name="calendarPopup">
+                              <bool>true</bool>
                              </property>
                             </widget>
                            </item>
@@ -6683,7 +6818,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                       </property>
                       <property name="text">
-                       <string>Search and Filter</string>
+                       <string>Search and Filter by</string>
                       </property>
                      </widget>
                     </item>
@@ -6715,7 +6850,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>Search By Item</string>
+                            <string>Item Name</string>
                            </property>
                           </widget>
                          </item>
@@ -6753,7 +6888,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>Search By Item Type</string>
+                            <string>Item Type</string>
                            </property>
                           </widget>
                          </item>
@@ -7233,7 +7368,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                       </property>
                       <property name="text">
-                       <string>Search and Filter</string>
+                       <string>Search and Filter by</string>
                       </property>
                      </widget>
                     </item>
@@ -7265,7 +7400,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>Search By Report type</string>
+                            <string>Report type</string>
                            </property>
                           </widget>
                          </item>
@@ -7276,6 +7411,12 @@ background-color: rgb(244, 154, 32);
                            </property>
                            <item>
                             <widget class="QComboBox" name="report_search_type_comboBox">
+                             <property name="minimumSize">
+                              <size>
+                               <width>300</width>
+                               <height>40</height>
+                              </size>
+                             </property>
                              <item>
                               <property name="text">
                                <string/>
@@ -7829,7 +7970,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                       </property>
                       <property name="text">
-                       <string>Search and Filter</string>
+                       <string>Search and Filter by</string>
                       </property>
                      </widget>
                     </item>
@@ -7861,7 +8002,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Employee Name</string>
+                            <string>Employee Name</string>
                            </property>
                           </widget>
                          </item>
@@ -7906,7 +8047,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Job Type</string>
+                            <string>Job Type</string>
                            </property>
                           </widget>
                          </item>
@@ -8587,7 +8728,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                       </property>
                       <property name="text">
-                       <string>Search and Filter</string>
+                       <string>Search and Filter by</string>
                       </property>
                      </widget>
                     </item>
@@ -8619,7 +8760,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Offer Name</string>
+                            <string>Offer Name</string>
                            </property>
                           </widget>
                          </item>
@@ -8658,7 +8799,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                            </property>
                            <property name="text">
-                            <string>By Date</string>
+                            <string>Date</string>
                            </property>
                           </widget>
                          </item>
@@ -8668,7 +8809,7 @@ background-color: rgb(244, 154, 32);
                             <number>4</number>
                            </property>
                            <item>
-                            <widget class="QDateEdit" name="offers_date_filter_dateEdit1">
+                            <widget class="QDateEdit" name="offers_date_filter_dateEdit">
                              <property name="minimumSize">
                               <size>
                                <width>240</width>
@@ -9158,7 +9299,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                          </property>
                          <property name="text">
-                          <string>Search and Filter</string>
+                          <string>Search and Filter by</string>
                          </property>
                         </widget>
                        </item>
@@ -9190,7 +9331,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                               </property>
                               <property name="text">
-                               <string>By Date</string>
+                               <string>Date</string>
                               </property>
                              </widget>
                             </item>
@@ -9200,7 +9341,7 @@ background-color: rgb(244, 154, 32);
                                <number>4</number>
                               </property>
                               <item>
-                               <widget class="QDateEdit" name="shifts_date_filter_dateEdit1">
+                               <widget class="QDateEdit" name="shifts_date_filter_dateEdit">
                                 <property name="minimumSize">
                                  <size>
                                   <width>240</width>
