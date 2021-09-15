@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/loginDialogUImAvJjs.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/loginDialogUIAHmfZm.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -27,6 +27,7 @@ class Ui_Dialog(object):
 "    \n"
 "    background-color: rgb(47, 113, 255);\n"
 "}")
+        Dialog.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         Dialog.setSizeGripEnabled(False)
         Dialog.setModal(False)
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
@@ -37,15 +38,14 @@ class Ui_Dialog(object):
         self.frame.setStyleSheet("#frame{\n"
 "\n"
 "    border: 2px solid transparent;\n"
-"    border-radius: 15px;\n"
+"    border-radius: 20px;\n"
 "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0.107955 rgba(0, 31, 98, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "\n"
 "}\n"
 "\n"
 "\n"
 "QLineEdit {\n"
-"background-color: rgba(197, 197, 197,30);\n"
-"    \n"
+"    background-color: rgba(197, 197, 197,30);\n"
 "    border-style: solid;\n"
 "    font-size: 25px;\n"
 "}\n"
@@ -94,7 +94,52 @@ class Ui_Dialog(object):
         self.frame.setObjectName("frame")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.navigation_frame = QtWidgets.QFrame(self.frame)
+        self.navigation_frame.setMinimumSize(QtCore.QSize(0, 40))
+        self.navigation_frame.setStyleSheet("#navigation_frame{\n"
+"    background-color: rgb(245, 154, 34);\n"
+"    border: 2px solid transparent;\n"
+"    border-top-left-radius: 15px;\n"
+"    border-top-right-radius: 15px;\n"
+"\n"
+"}")
+        self.navigation_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.navigation_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.navigation_frame.setObjectName("navigation_frame")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.navigation_frame)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.header_frame = QtWidgets.QFrame(self.navigation_frame)
+        self.header_frame.setMinimumSize(QtCore.QSize(450, 0))
+        self.header_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.header_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.header_frame.setObjectName("header_frame")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.header_frame)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.horizontalLayout_2.addWidget(self.header_frame)
+        self.exit_btn = QtWidgets.QPushButton(self.navigation_frame)
+        self.exit_btn.setMinimumSize(QtCore.QSize(30, 30))
+        self.exit_btn.setStyleSheet("QPushButton{\n"
+"    border-style: solid;    \n"
+"    border-radius:2px;\n"
+"    padding:2px;\n"
+"    image: url(:/icons/icons/close.png);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    \n"
+"    background-color: rgb(0, 92, 157);\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.exit_btn.setText("")
+        self.exit_btn.setObjectName("exit_btn")
+        self.horizontalLayout_2.addWidget(self.exit_btn, 0, QtCore.Qt.AlignRight)
+        self.verticalLayout_2.addWidget(self.navigation_frame)
         self.logo_frame = QtWidgets.QFrame(self.frame)
         self.logo_frame.setMinimumSize(QtCore.QSize(400, 500))
         self.logo_frame.setMaximumSize(QtCore.QSize(16777215, 16777215))
@@ -104,6 +149,7 @@ class Ui_Dialog(object):
 "    image: url(:/icons/icons/studyzone-logo.png) ;\n"
 "}\n"
 "")
+        self.logo_frame.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         self.logo_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.logo_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.logo_frame.setObjectName("logo_frame")

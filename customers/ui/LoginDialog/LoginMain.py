@@ -29,6 +29,16 @@ class LoginDialog(QtWidgets.QDialog, Ui_Dialog):
         else:
             event.ignore()
 
+    def mousePressEvent(self, event):
+        self.clickPosition = event.globalPos()
+
+    def moveWindow(self, event):
+        if (self.isMaximized() == False):
+            if(event.buttons() == QtCore.Qt.LeftButton):
+                self.move(self.pos() + event.globalPos() - self.clickPosition)
+                self.clickPosition = event.globalPos()
+                event.accept
+
     def uiChanges(self):
         r = self.geometry()
         r.moveCenter(QtWidgets.QApplication.desktop().availableGeometry().center()) 
@@ -58,6 +68,8 @@ class LoginDialog(QtWidgets.QDialog, Ui_Dialog):
         # self.login_showPssword_btn.pressed.connect(lambda : self.account_pass_txt.setEchoMode(QtWidgets.QLineEdit.Normal))
         # self.login_showPssword_btn.released.connect(lambda : self.account_pass_txt.setEchoMode(QtWidgets.QLineEdit.Password))
         self.login_showPssword_btn.toggled.connect(self.toggleShowPsswordBtn)
+        self.exit_btn.clicked.connect(self.close)
+        self.navigation_frame.mouseMoveEvent = self.moveWindow
 
     @QtCore.pyqtSlot(bool)
     def toggleShowPsswordBtn(self, checked):
