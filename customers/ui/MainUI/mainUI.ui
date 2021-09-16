@@ -4139,23 +4139,34 @@ QPushButton:disabled{
               <property name="horizontalSpacing">
                <number>0</number>
               </property>
-              <item row="4" column="1">
-               <widget class="QLabel" name="label_17">
+              <item row="1" column="1" alignment="Qt::AlignHCenter">
+               <widget class="QFrame" name="logo_frame">
+                <property name="minimumSize">
+                 <size>
+                  <width>600</width>
+                  <height>600</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>600</width>
+                  <height>600</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
-                 <string notr="true">QLabel{
-	color:rgb(244, 154, 32);
-	
-	font: 100 italic 13pt &quot;Segoe UI&quot;;
-	padding:5px;
-	background-color: rgba(255, 255, 255, 40);
+                 <string notr="true">#logo_frame{
+
+	image: url(:/icons/icons/studyzone-logo.png);
+
 }</string>
                 </property>
-                <property name="text">
-                 <string>Created by Eng. Nicola Ibrahim</string>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
                 </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
                 </property>
+                <layout class="QGridLayout" name="gridLayout_5"/>
                </widget>
               </item>
               <item row="2" column="1">
@@ -4171,7 +4182,26 @@ QPushButton:disabled{
                 </property>
                </spacer>
               </item>
-              <item row="3" column="1" alignment="Qt::AlignHCenter">
+              <item row="5" column="1">
+               <widget class="QLabel" name="label_17">
+                <property name="styleSheet">
+                 <string notr="true">QLabel{
+	color:rgb(244, 154, 32);
+	
+	font: 100 italic 13pt &quot;Segoe UI&quot;;
+	padding:5px;
+	background-color: rgba(255, 255, 255, 40);
+}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
                <widget class="QFrame" name="frame">
                 <property name="minimumSize">
                  <size>
@@ -4490,36 +4520,6 @@ QPushButton:hover{
                   </widget>
                  </item>
                 </layout>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QFrame" name="logo_frame">
-                <property name="minimumSize">
-                 <size>
-                  <width>600</width>
-                  <height>600</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>600</width>
-                  <height>600</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">#logo_frame{
-
-	image: url(:/icons/icons/studyzone-logo.png);
-
-}</string>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_5"/>
                </widget>
               </item>
              </layout>
@@ -9557,7 +9557,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                    </property>
                    <property name="text">
-                    <string>About Us</string>
+                    <string>About</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -9609,6 +9609,9 @@ background-color: rgb(244, 154, 32);
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_80">
+                    <property name="spacing">
+                     <number>15</number>
+                    </property>
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -9623,12 +9626,6 @@ background-color: rgb(244, 154, 32);
                     </property>
                     <item>
                      <widget class="QLabel" name="label_46">
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>50</height>
-                       </size>
-                      </property>
                       <property name="styleSheet">
                        <string notr="true">QLabel{
 	
@@ -9637,7 +9634,7 @@ background-color: rgb(244, 154, 32);
 }</string>
                       </property>
                       <property name="text">
-                       <string>An app created with sponsering of Hope Center Organization</string>
+                       <string>Study Zone application for Automating and Organizing the daily routine works</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -9646,14 +9643,15 @@ background-color: rgb(244, 154, 32);
                     </item>
                     <item>
                      <widget class="QLabel" name="label_51">
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>50</height>
-                       </size>
+                      <property name="styleSheet">
+                       <string notr="true">QLabel{
+	
+	font: 100 18pt &quot;Segoe UI&quot;;
+	background-color: transparent;
+}</string>
                       </property>
                       <property name="text">
-                       <string>For Automating and Organizing daily routine works</string>
+                       <string>Main tasks are Customers subscribtion, Orders, Warehouse, Employees shifts, and Reports</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -9681,12 +9679,12 @@ background-color: rgb(244, 154, 32);
                    <property name="minimumSize">
                     <size>
                      <width>210</width>
-                     <height>210</height>
+                     <height>240</height>
                     </size>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">#frame_9{
-	border-radius: 105px;	
+	border-radius: 115px;	
 	background-color: rgb(244, 154, 32);
 padding:15px;
 }</string>
@@ -9711,7 +9709,7 @@ padding:15px;
                      <number>0</number>
                     </property>
                     <property name="bottomMargin">
-                     <number>0</number>
+                     <number>33</number>
                     </property>
                     <item>
                      <widget class="QLabel" name="label_76">
@@ -9789,7 +9787,7 @@ padding:15px;
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_81">
                     <property name="spacing">
-                     <number>0</number>
+                     <number>20</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -9820,7 +9818,7 @@ padding:15px;
 }</string>
                       </property>
                       <property name="text">
-                       <string>Sponsered By</string>
+                       <string>Sponsored By</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>

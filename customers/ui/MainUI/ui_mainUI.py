@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIaeREIk.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUITMpAol.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -2734,6 +2734,22 @@ class Ui_MainWindow(object):
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_2.setHorizontalSpacing(0)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        self.logo_frame = QtWidgets.QFrame(self.Main_tab)
+        self.logo_frame.setMinimumSize(QtCore.QSize(600, 600))
+        self.logo_frame.setMaximumSize(QtCore.QSize(600, 600))
+        self.logo_frame.setStyleSheet("#logo_frame{\n"
+"\n"
+"    image: url(:/icons/icons/studyzone-logo.png);\n"
+"\n"
+"}")
+        self.logo_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.logo_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.logo_frame.setObjectName("logo_frame")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.logo_frame)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.gridLayout_2.addWidget(self.logo_frame, 1, 1, 1, 1, QtCore.Qt.AlignHCenter)
+        spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem18, 2, 1, 1, 1)
         self.label_17 = QtWidgets.QLabel(self.Main_tab)
         self.label_17.setStyleSheet("QLabel{\n"
 "    color:rgb(244, 154, 32);\n"
@@ -2742,11 +2758,10 @@ class Ui_MainWindow(object):
 "    padding:5px;\n"
 "    background-color: rgba(255, 255, 255, 40);\n"
 "}")
+        self.label_17.setText("")
         self.label_17.setAlignment(QtCore.Qt.AlignCenter)
         self.label_17.setObjectName("label_17")
-        self.gridLayout_2.addWidget(self.label_17, 4, 1, 1, 1)
-        spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_2.addItem(spacerItem18, 2, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.label_17, 5, 1, 1, 1)
         self.frame = QtWidgets.QFrame(self.Main_tab)
         self.frame.setMinimumSize(QtCore.QSize(700, 120))
         self.frame.setMaximumSize(QtCore.QSize(700, 120))
@@ -2941,21 +2956,7 @@ class Ui_MainWindow(object):
 "")
         self.about_us_btn.setObjectName("about_us_btn")
         self.horizontalLayout_8.addWidget(self.about_us_btn)
-        self.gridLayout_2.addWidget(self.frame, 3, 1, 1, 1, QtCore.Qt.AlignHCenter)
-        self.logo_frame = QtWidgets.QFrame(self.Main_tab)
-        self.logo_frame.setMinimumSize(QtCore.QSize(600, 600))
-        self.logo_frame.setMaximumSize(QtCore.QSize(600, 600))
-        self.logo_frame.setStyleSheet("#logo_frame{\n"
-"\n"
-"    image: url(:/icons/icons/studyzone-logo.png);\n"
-"\n"
-"}")
-        self.logo_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.logo_frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.logo_frame.setObjectName("logo_frame")
-        self.gridLayout_5 = QtWidgets.QGridLayout(self.logo_frame)
-        self.gridLayout_5.setObjectName("gridLayout_5")
-        self.gridLayout_2.addWidget(self.logo_frame, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.frame, 4, 1, 1, 1)
         self.tabWidget.addTab(self.Main_tab, "")
         self.daily_customers_tab = QtWidgets.QWidget()
         self.daily_customers_tab.setObjectName("daily_customers_tab")
@@ -5075,9 +5076,9 @@ class Ui_MainWindow(object):
         self.frame_6.setObjectName("frame_6")
         self.verticalLayout_80 = QtWidgets.QVBoxLayout(self.frame_6)
         self.verticalLayout_80.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_80.setSpacing(15)
         self.verticalLayout_80.setObjectName("verticalLayout_80")
         self.label_46 = QtWidgets.QLabel(self.frame_6)
-        self.label_46.setMaximumSize(QtCore.QSize(16777215, 50))
         self.label_46.setStyleSheet("QLabel{\n"
 "    \n"
 "    font: 100 25pt \"Segoe UI\";\n"
@@ -5087,7 +5088,11 @@ class Ui_MainWindow(object):
         self.label_46.setObjectName("label_46")
         self.verticalLayout_80.addWidget(self.label_46)
         self.label_51 = QtWidgets.QLabel(self.frame_6)
-        self.label_51.setMaximumSize(QtCore.QSize(16777215, 50))
+        self.label_51.setStyleSheet("QLabel{\n"
+"    \n"
+"    font: 100 18pt \"Segoe UI\";\n"
+"    background-color: transparent;\n"
+"}")
         self.label_51.setAlignment(QtCore.Qt.AlignCenter)
         self.label_51.setObjectName("label_51")
         self.verticalLayout_80.addWidget(self.label_51)
@@ -5095,9 +5100,9 @@ class Ui_MainWindow(object):
         spacerItem44 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_84.addItem(spacerItem44)
         self.frame_9 = QtWidgets.QFrame(self.about_us_frame)
-        self.frame_9.setMinimumSize(QtCore.QSize(210, 210))
+        self.frame_9.setMinimumSize(QtCore.QSize(210, 240))
         self.frame_9.setStyleSheet("#frame_9{\n"
-"    border-radius: 105px;    \n"
+"    border-radius: 115px;    \n"
 "    background-color: rgb(244, 154, 32);\n"
 "padding:15px;\n"
 "}")
@@ -5105,7 +5110,7 @@ class Ui_MainWindow(object):
         self.frame_9.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_9.setObjectName("frame_9")
         self.verticalLayout_83 = QtWidgets.QVBoxLayout(self.frame_9)
-        self.verticalLayout_83.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_83.setContentsMargins(0, 0, 0, 33)
         self.verticalLayout_83.setSpacing(0)
         self.verticalLayout_83.setObjectName("verticalLayout_83")
         self.label_76 = QtWidgets.QLabel(self.frame_9)
@@ -5145,7 +5150,7 @@ class Ui_MainWindow(object):
         self.frame_25.setObjectName("frame_25")
         self.verticalLayout_81 = QtWidgets.QVBoxLayout(self.frame_25)
         self.verticalLayout_81.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_81.setSpacing(0)
+        self.verticalLayout_81.setSpacing(20)
         self.verticalLayout_81.setObjectName("verticalLayout_81")
         self.label_80 = QtWidgets.QLabel(self.frame_25)
         self.label_80.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -5392,7 +5397,6 @@ class Ui_MainWindow(object):
         self.shift_start_btn.setToolTip(_translate("MainWindow", "Start shift"))
         self.offer_add_btn2.setToolTip(_translate("MainWindow", "Add shift"))
         self.offer_remove_btn.setToolTip(_translate("MainWindow", "Remove shift"))
-        self.label_17.setText(_translate("MainWindow", "Created by Eng. Nicola Ibrahim"))
         self.daily_btn.setToolTip(_translate("MainWindow", "Daily"))
         self.archive_btn.setToolTip(_translate("MainWindow", "Archive"))
         self.settings_btn.setToolTip(_translate("MainWindow", "Settings"))
@@ -5526,12 +5530,12 @@ class Ui_MainWindow(object):
         self.shifts_clear_btn.setText(_translate("MainWindow", "Clear"))
         self.label_68.setText(_translate("MainWindow", "SHIFT EMPLOYEES"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.shifts_tab), _translate("MainWindow", "Shifts"))
-        self.label_75.setText(_translate("MainWindow", "About Us"))
-        self.label_46.setText(_translate("MainWindow", "An app created with sponsering of Hope Center Organization"))
-        self.label_51.setText(_translate("MainWindow", "For Automating and Organizing daily routine works"))
+        self.label_75.setText(_translate("MainWindow", "About"))
+        self.label_46.setText(_translate("MainWindow", "Study Zone application for Automating and Organizing the daily routine works"))
+        self.label_51.setText(_translate("MainWindow", "Main tasks are Customers subscribtion, Orders, Warehouse, Employees shifts, and Reports"))
         self.label_76.setText(_translate("MainWindow", "Created By"))
         self.label_77.setText(_translate("MainWindow", "Eng. Nicola Ibrahim"))
-        self.label_80.setText(_translate("MainWindow", "Sponsered By"))
+        self.label_80.setText(_translate("MainWindow", "Sponsored By"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.about_us_tab), _translate("MainWindow", "About Us"))
         self.employee_name_lbl.setText(_translate("MainWindow", "Nicola Ibrahim"))
         self.employee_job_type_lbl.setText(_translate("MainWindow", "Employee"))
