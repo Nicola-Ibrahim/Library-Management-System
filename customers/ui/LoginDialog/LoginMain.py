@@ -49,10 +49,10 @@ class LoginDialog(QtWidgets.QDialog, Ui_Dialog):
 
         # Add shadow to login panel
         # creating a QGraphicsDropShadowEffect object
-        shadow = QtWidgets.QGraphicsDropShadowEffect(blurRadius=200,color=QtGui.QColor(255, 255, 255, 255 * 1), xOffset=3, yOffset=3)
+        # shadow = QtWidgets.QGraphicsDropShadowEffect(blurRadius=200,color=QtGui.QColor(255, 255, 255, 255 * 1), xOffset=3, yOffset=3)
         
-        # adding shadow to the label
-        self.logo_frame.setGraphicsEffect(shadow)
+        # # adding shadow to the label
+        # self.logo_frame.setGraphicsEffect(shadow)
 
     def regexValidation(self):
         """Apply regular expression to some UI elements"""

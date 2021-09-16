@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/loginDialogUIAHmfZm.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/loginDialogUINyOycA.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -11,8 +11,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(500, 750)
-        Dialog.setMinimumSize(QtCore.QSize(500, 750))
+        Dialog.resize(450, 620)
+        Dialog.setMinimumSize(QtCore.QSize(450, 620))
+        Dialog.setMaximumSize(QtCore.QSize(493, 620))
         Dialog.setStyleSheet("QMessageBox {\n"
 "    background-color: rgb(100, 100, 100);\n"
 "    color: rgb(255,255,255);\n"
@@ -45,18 +46,18 @@ class Ui_Dialog(object):
 "\n"
 "\n"
 "QLineEdit {\n"
-"    background-color: rgba(197, 197, 197,30);\n"
+"    background-color: transparent;\n"
 "    border-style: solid;\n"
 "    font-size: 25px;\n"
 "}\n"
 "QLineEdit:hover{\n"
-"    background-color: rgba(197, 197, 197,30);\n"
+"    background-color: transparent;\n"
 "    font-size: 30px;\n"
 "    selection-background-color: darkgray;\n"
 "}\n"
 "\n"
 "QLineEdit:focus{\n"
-"    background-color: rgba(197, 197, 197,30);\n"
+"    background-color: transparent;\n"
 "    font-size: 30px;\n"
 "    selection-background-color: darkgray;\n"
 "}\n"
@@ -94,22 +95,26 @@ class Ui_Dialog(object):
         self.frame.setObjectName("frame")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setSpacing(30)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.navigation_frame = QtWidgets.QFrame(self.frame)
         self.navigation_frame.setMinimumSize(QtCore.QSize(0, 40))
         self.navigation_frame.setStyleSheet("#navigation_frame{\n"
+"    background-color: transparent;\n"
+"    border-top-left-radius: 17px;\n"
+"    border-top-right-radius: 17px;\n"
+"\n"
+"}\n"
+"#navigation_frame:hover{\n"
 "    background-color: rgb(245, 154, 34);\n"
-"    border: 2px solid transparent;\n"
-"    border-top-left-radius: 15px;\n"
-"    border-top-right-radius: 15px;\n"
 "\n"
 "}")
         self.navigation_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.navigation_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.navigation_frame.setObjectName("navigation_frame")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.navigation_frame)
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 4, 0)
+        self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.header_frame = QtWidgets.QFrame(self.navigation_frame)
         self.header_frame.setMinimumSize(QtCore.QSize(450, 0))
@@ -117,13 +122,14 @@ class Ui_Dialog(object):
         self.header_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.header_frame.setObjectName("header_frame")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.header_frame)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.horizontalLayout_2.addWidget(self.header_frame)
         self.exit_btn = QtWidgets.QPushButton(self.navigation_frame)
-        self.exit_btn.setMinimumSize(QtCore.QSize(30, 30))
+        self.exit_btn.setMinimumSize(QtCore.QSize(35, 35))
         self.exit_btn.setStyleSheet("QPushButton{\n"
-"    border-style: solid;    \n"
-"    border-radius:2px;\n"
+"    border-radius:5px;\n"
 "    padding:2px;\n"
 "    image: url(:/icons/icons/close.png);\n"
 "}\n"
@@ -133,6 +139,9 @@ class Ui_Dialog(object):
 "    \n"
 "    background-color: rgb(0, 92, 157);\n"
 "}\n"
+"QPushButton:pressed{\n"
+"        padding:4px;\n"
+"}\n"
 "\n"
 "\n"
 "")
@@ -141,12 +150,21 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.addWidget(self.exit_btn, 0, QtCore.Qt.AlignRight)
         self.verticalLayout_2.addWidget(self.navigation_frame)
         self.logo_frame = QtWidgets.QFrame(self.frame)
-        self.logo_frame.setMinimumSize(QtCore.QSize(400, 500))
+        self.logo_frame.setMinimumSize(QtCore.QSize(250, 250))
         self.logo_frame.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.logo_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.logo_frame.setStyleSheet("\n"
 "QFrame{\n"
-"    image: url(:/icons/icons/studyzone-logo.png) ;\n"
+"    image: url(:/icons/icons/user1.png);\n"
+"    padding:25px;\n"
+"    border: 4px solid;\n"
+"    border-radius: 120px;\n"
+"    border-color:rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QFrame:hover{\n"
+"    image: url(:/icons/icons/user2.png);\n"
+"    border-color:rgb(245, 154, 34);\n"
 "}\n"
 "")
         self.logo_frame.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
@@ -157,23 +175,12 @@ class Ui_Dialog(object):
         self.gridLayout_12.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_12.setSpacing(0)
         self.gridLayout_12.setObjectName("gridLayout_12")
-        self.verticalLayout_2.addWidget(self.logo_frame)
+        self.verticalLayout_2.addWidget(self.logo_frame, 0, QtCore.Qt.AlignHCenter)
         self.login_frame = QtWidgets.QFrame(self.frame)
         self.login_frame.setMinimumSize(QtCore.QSize(400, 0))
         self.login_frame.setMaximumSize(QtCore.QSize(400, 16777215))
         self.login_frame.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.login_frame.setStyleSheet("/*\n"
-"QFrame{\n"
-"    border: 5px solid;\n"
-"      padding-top: 30px;\n"
-"      border-radius: 16px;\n"
-"    \n"
-"    border-color: rgb(244, 154, 32);\n"
-"    \n"
-"    background-color: rgb(197, 197, 197);\n"
-"    \n"
-"}\n"
-"*/")
+        self.login_frame.setStyleSheet("")
         self.login_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.login_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.login_frame.setObjectName("login_frame")
@@ -183,7 +190,7 @@ class Ui_Dialog(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.username_frame = QtWidgets.QFrame(self.login_frame)
         self.username_frame.setStyleSheet("#username_frame {\n"
-"background-color: rgba(197, 197, 197,30);\n"
+"    background-color: none;\n"
 "    border-bottom-width: 4px; \n"
 "    \n"
 "    border-style: solid;\n"
@@ -237,7 +244,7 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.username_frame)
         self.password_frame = QtWidgets.QFrame(self.login_frame)
         self.password_frame.setStyleSheet("#password_frame {\n"
-"background-color: rgba(197, 197, 197,30);\n"
+"    background-color:  none;\n"
 "    border-bottom-width: 4px; \n"
 "    \n"
 "    border-style: solid;\n"
@@ -306,6 +313,8 @@ class Ui_Dialog(object):
         self.login_showPssword_btn.setObjectName("login_showPssword_btn")
         self.horizontalLayout.addWidget(self.login_showPssword_btn)
         self.verticalLayout.addWidget(self.password_frame)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
         self.enter_btn = QtWidgets.QPushButton(self.login_frame)
         self.enter_btn.setMinimumSize(QtCore.QSize(0, 50))
         self.enter_btn.setStyleSheet("QPushButton{\n"
