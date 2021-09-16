@@ -404,7 +404,7 @@ class OrdersModel(QSqlRelationalTableModel):
         self._ADD_FLAG = True
 
         order_data = data[0]
-        offer_id = order_data[2]
+        offer_name = order_data[2]
         customer_id = retrieveDailyId(order_data[0], db = self.db)
         order_type = order_data[1]
         order_price = data[2]
@@ -459,7 +459,7 @@ class OrdersModel(QSqlRelationalTableModel):
         # Link order with its items
         order_id = self.query().lastInsertId()
         for item_name, quantity in items_data:
-            linkOrderItems(order_id, item_name, quantity, offer_id, db=self.db)
+            linkOrderItems(order_id, item_name, quantity, offer_name, db=self.db)
         
         self.select()
 
@@ -689,7 +689,7 @@ class OffersModel(QSqlTableModel):
         for ind, header in enumerate(headers):
             self.setHeaderData(ind, Qt.Horizontal,header)
                 
-        self.setSort(self.fieldIndex("offer_id"), Qt.AscendingOrder)
+        self.setSort(self.fieldIndex("offer_name"), Qt.AscendingOrder)
         self.select()
         
     def addOffer(self, data : list):
@@ -712,9 +712,9 @@ class OffersModel(QSqlTableModel):
         ret = self.submitAll()
 
         # Link offer with related items
-        offer_id = self.query().lastInsertId()
+        offer_name = self.query().lastInsertId()
         for item_name, quantity in items_quantities:
-            linkOfferItems(offer_id, item_name, quantity, db = self.db)
+            linkOfferItems(offer_name, item_name, quantity, db = self.db)
 
         self.select()
 
@@ -1105,14 +1105,15 @@ class HierarcicalOffersItemsModel(QtGui.QStandardItemModel):
         dates = list(map(lambda x : QtGui.QStandardItem(x), ret.keys()))
 
         for date in dates:
-            offers_ids = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()]))
+            offers_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()]))
 
-            for offer_id in offers_ids:
-                employees_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][offer_id.text()]))
+            for offer_name in offers_names:
+                items_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][offer_name.text()]))
 
-                offer_id.appendRows(employees_names)
+                
+                offer_name.appendRows(items_names)
 
-                date.appendRow(offer_id)
+                date.appendRow(offer_name)
 
             
             self.appendRow(date)

@@ -206,18 +206,20 @@ def _createCustomersTables(db_1, db_2):
         """
         CREATE TABLE IF NOT EXISTS Shifts (
             shift_id       INTEGER       PRIMARY KEY
-                                        UNIQUE
-                                        NOT NULL,
+                                 UNIQUE
+                                 NOT NULL,
             shift_name     VARCHAR (255),
             start_shift    TIME,
             finish_shift   TIME,
             shift_duration TIME,
-            shift_income   INTEGER,
+            shift_income   INTEGER       NOT NULL
+                                        DEFAULT (0) 
+                                        CHECK (shift_income >= 0),
             shift_state    VARCHAR (255) NOT NULL
                                         DEFAULT Inactive
                                         CHECK (shift_state IN ('Active', 'Inactive', 'Finished') ),
             shift_date     DATE          NOT NULL
-                                        DEFAULT (date('now') ) 
+                                        DEFAULT (date('now') )  
         );
 
         """
@@ -522,6 +524,7 @@ def _createCustomersTables(db_1, db_2):
 
         """
 
+
     # Reports update total_income after update of any income
     TRIGGER1_REPORTS_STATEMENT = \
         """
@@ -533,7 +536,7 @@ def _createCustomersTables(db_1, db_2):
                     ON Reports
         BEGIN
             UPDATE Reports
-            SET total_income = daily_subscribtion_income + monthly_subscribtion_income + food_total_income + drinks_total_income
+            SET total_income = daily_subscribtion_income + monthly_subscribtion_income + food_total_income + drinks_total_income + offers_total_income
             WHERE Reports.date = date('now');
         END;
 
@@ -543,7 +546,7 @@ def _createCustomersTables(db_1, db_2):
     # Reports update average_numbers_of_customers after update of numbers of customers
     TRIGGER2_REPORTS_STATEMENT = \
         """
-        CREATE TRIGGER IF `NOT EXISTS `update_avg_number_of_customers
+        CREATE TRIGGER IF NOT EXISTS update_avg_number_of_customers
                 AFTER UPDATE OF numbers_of_daily_customers
                     ON Reports
         BEGIN
@@ -659,16 +662,27 @@ def _createCustomersTables(db_1, db_2):
                 WHEN new.shift_state = 'Finished'
         BEGIN
             UPDATE Shifts
-            SET shift_income = abs( (
-                                        SELECT sum(shift_income) 
-                                            FROM Shifts
-                                    )
-        -                              (
-                                        SELECT sum(price) 
-                                            FROM Orders_items
-                                            WHERE date = date('now') 
-                                    )
-                ) 
+            SET shift_income = abs( (CASE WHEN (
+                                            SELECT total_income
+                                                FROM Reports
+                                                WHERE date = date('now') 
+                                        )
+                                        ISNULL THEN 0 ELSE (
+                                            SELECT total_income
+                                                FROM Reports
+                                                WHERE date = date('now') 
+                                        )
+                                    END) - (CASE WHEN (
+                                                    SELECT sum(shift_income) 
+                                                        FROM Shifts
+                                                    WHERE shift_date = date('now') 
+                                                )
+                                                ISNULL THEN 0 ELSE (
+                                                    SELECT sum(shift_income) 
+                                                        FROM Shifts
+                                                    WHERE shift_date = date('now') 
+                                                )
+                                            END) ) 
             WHERE shift_id = old.shift_id;
         END;
 
@@ -1165,14 +1179,14 @@ def retrieveItemType(db = None) -> list:
     return result
 
 def updateCurrentItemsQuantities(db = None) -> None:
-    STATEMENT1 = f"""
+    CALCULATE_OFFERS_TOTAL_PRICE_STATEMENT = f"""
         UPDATE Warehouse SET item_current_quantity = item_current_quantity - item_consumed_quantity;
     """
     STATEMENT2 = f"""
         UPDATE Warehouse SET item_consumed_quantity = 0;
     """
     query = QSqlQuery(db = db)
-    query.exec(STATEMENT1)
+    query.exec(CALCULATE_OFFERS_TOTAL_PRICE_STATEMENT)
     query.exec(STATEMENT2)
 
     return query
@@ -1361,16 +1375,16 @@ def retrieveOfferNames(id, db = None):
 
     return names
 
-def retrieveOffersItems(with_date = True, with_quantity = False, db = None):
+def retrieveOffersItems(with_date = True, with_quantity = True, db = None):
     
     indices_tree = []
 
-    if(with_date ==True and with_quantity == False):
+    if(with_date ==True and with_quantity == True):
 
         # Get available dates
         STATEMENT = \
             """
-            SELECT date, offer_id, item_id FROM Offers_items
+            SELECT date, offer_id, item_id, quantity FROM Offers_items
             """
 
         query = QSqlQuery(db)
@@ -1380,8 +1394,10 @@ def retrieveOffersItems(with_date = True, with_quantity = False, db = None):
             date = str(query.value(query.record().indexOf('date'))).strip()
             offer_id = int(str(query.value(query.record().indexOf('offer_id'))).strip())
             item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
+            quantity = int(str(query.value(query.record().indexOf('quantity'))).strip())
             offer_name = retrieveOfferNames(offer_id, db=db)[0]
-            item_name = retrieveItemNames(item_id, db=db)[0]
+            item_name = retrieveItemNames(item_id, db=db)[0] + f' / {quantity}'
+            
             indices_tree.append([date, offer_name, item_name])
 
         
@@ -1515,7 +1531,7 @@ def retrieveShiftsEmployees(db = None):
     return dic
 
 def startShift(id, db = None):
-    STATEMENT1 = \
+    CALCULATE_OFFERS_TOTAL_PRICE_STATEMENT = \
         """
         UPDATE Shifts SET shift_state = 'Finished' WHERE shift_state = 'Active' AND shift_date = date('now');
         """
@@ -1527,7 +1543,7 @@ def startShift(id, db = None):
         """
 
     query = QSqlQuery(db)
-    for statement in [STATEMENT1, STATEMENT2]:
+    for statement in [CALCULATE_OFFERS_TOTAL_PRICE_STATEMENT, STATEMENT2]:
         query.exec(statement)
 
     return query
@@ -1537,7 +1553,7 @@ def finishShift(id, db = None):
 
     STATEMENT = \
         f"""
-        UPDATE Shifts SET shift_state = 'Finished' WHERE shift_id = {id} AND shift_date = date('now') AND shift_state = 'Active';
+        UPDATE Shifts SET shift_state = 'Finished' WHERE shift_id = {id} AND shift_state = 'Active';
 
         """
 
@@ -1567,6 +1583,20 @@ def checkShiftActive(db = None):
 ###########
 def updateReports(db = None):
     
+    CALCULATE_OFFERS_TOTAL_PRICE_STATEMENT = \
+        """
+            DROP TABLE IF EXISTS "temp".TEMP_TABLE1;
+
+            CREATE TEMPORARY TABLE TEMP_TABLE1 AS SELECT * FROM Offers INNER JOIN Orders_items ON Orders_items.offer_id = Offers.offer_id 
+            GROUP BY Orders_items.order_id HAVING Orders_items.date = date('now');
+
+        """
+
+    query = QSqlQuery(db = db)
+    for state in CALCULATE_OFFERS_TOTAL_PRICE_STATEMENT.split(';'):
+        query.exec(state)
+
+
     STATEMENT= \
         """
         UPDATE Reports SET 
@@ -1588,8 +1618,8 @@ def updateReports(db = None):
         END,
 
         offers_total_income = CASE 
-        WHEN (SELECT sum(Offers.offer_price) FROM Orders_items INNER JOIN Offers ON Orders_items.offer_id = Offers.offer_id GROUP BY Orders_items.offer_id HAVING date = date('now')) NOTNULL 
-        THEN (SELECT sum(Offers.offer_price) FROM Orders_items INNER JOIN Offers ON Orders_items.offer_id = Offers.offer_id GROUP BY Orders_items.offer_id HAVING date = date('now')) 
+        WHEN (SELECT sum(offer_price) FROM "temp".TEMP_TABLE1) NOTNULL 
+        THEN (SELECT sum(offer_price) FROM "temp".TEMP_TABLE1) 
         ELSE 0 
         END,
 

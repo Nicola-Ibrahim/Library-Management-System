@@ -1292,7 +1292,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         
         # pass on delete buttons to connect it with its frame.
-        order_frame.delete_btn.clicked.connect(self.checkOfferAvailable)
         order_frame.delete_btn.clicked.connect(lambda : self.deleteOrderFrame(order_frame))
 
     def changeComboItems(self, order_item_comboBox):
@@ -1437,10 +1436,14 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             
             # get offer's items quantities
             quan = [item for sublist in list(items_key.values()) for item in sublist]
-
+            print(quan)
+            print(sorted(selected_items_ids))
             if(list(items_key.keys()) == sorted(selected_items_ids)):
                 if(quan == entered_quantities):
                     self.offer_id = offer_key
+
+                    
+                    print(self.offer_id)
                         
                     for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
                         item.setStyleSheet(
@@ -1453,6 +1456,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         )
                     
             else:
+                print('no')
                 self.offer_id = None
                 for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
                     item.setStyleSheet(
@@ -1463,6 +1467,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     "border-color: rgb(255, 170, 0);\n"
                     "}"
                     )
+            print(self.offer_id)
+            print('-'*40)
 
             # Change the total price
             self.setTotalOrderPrice(self.offer_id)
@@ -2402,7 +2408,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.reports_tableView.setModel(self.reports_sort_model)
 
-        self.report_search_type_comboBox.setCurrentText('')
+        self.reports_search_type_comboBox.setCurrentText('')
 
         self.tabWidget.setCurrentWidget(self.tabWidget.findChild(QtWidgets.QWidget, 'reports_tab'))
 
@@ -2434,7 +2440,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
                 worker.finished.connect(worker.deleteLater)
                 worker.finished.connect(lambda : self.report_remove_btn.setEnabled(True))
-                worker.finished.connect(lambda : self.reportType(self.report_search_type_comboBox.currentText()))
+                worker.finished.connect(lambda : self.reportType(self.reports_search_type_comboBox.currentText()))
                 worker.finished.connect(lambda : updateReports(db= self.daily_conn))
                 
                 
@@ -2454,7 +2460,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # def drawGraphReport(self):
         
-        # if(self.report_search_type_comboBox.currentText() !=''):
+        # if(self.reports_search_type_comboBox.currentText() !=''):
         #     date, total = [], []
         #     for row in range(self.reports_model.rowCount()):
         #         date.append(self.reports_model.data(self.reports_model.index(row,0), Qt.DisplayRole))
@@ -2538,7 +2544,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.orders_sort_model.setDateFilter(date)
 
         elif(self._SETTINGS_TABLES_FLAG):
-            if(self.report_search_type_comboBox.currentText() in ['شهري','معدل الزبائن']):
+            if(self.reports_search_type_comboBox.currentText() in ['شهري','معدل الزبائن']):
                 self.reports_sort_model.setDateFilter(date.split('-')[-1])
             else:
                 self.reports_sort_model.setDateFilter(date)
