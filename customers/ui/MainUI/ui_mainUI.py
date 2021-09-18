@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUITMpAol.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIYLyFKY.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1480, 1177)
+        MainWindow.resize(1473, 1177)
         MainWindow.setWindowOpacity(1.0)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet("/*\n"
@@ -2718,7 +2718,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName("verticalLayout_31")
         self.date_treeView = QtWidgets.QTreeView(self.date_treeview_panel)
-        self.date_treeView.setMinimumSize(QtCore.QSize(200, 0))
+        self.date_treeView.setMinimumSize(QtCore.QSize(300, 0))
+        self.date_treeView.setMaximumSize(QtCore.QSize(300, 16777215))
         self.date_treeView.setObjectName("date_treeView")
         self.verticalLayout_31.addWidget(self.date_treeView)
         self.horizontalLayout_33.addWidget(self.date_treeview_panel)
@@ -4635,7 +4636,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_46.addWidget(self.offer_add_btn)
         self.gridLayout_6.addWidget(self.frame_33, 0, 0, 1, 1)
         self.frame_40 = QtWidgets.QFrame(self.offers_tab)
-        self.frame_40.setMaximumSize(QtCore.QSize(400, 16777215))
+        self.frame_40.setMinimumSize(QtCore.QSize(350, 0))
+        self.frame_40.setMaximumSize(QtCore.QSize(350, 16777215))
         self.frame_40.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_40.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_40.setObjectName("frame_40")
@@ -5002,6 +5004,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_56.addWidget(self.frame_51)
         self.gridLayout_7.addWidget(self.frame_50, 0, 1, 2, 1)
         self.frame_72 = QtWidgets.QFrame(self.shifts_tab)
+        self.frame_72.setMinimumSize(QtCore.QSize(400, 0))
         self.frame_72.setMaximumSize(QtCore.QSize(400, 16777215))
         self.frame_72.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_72.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -5212,7 +5215,7 @@ class Ui_MainWindow(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollArea_4.setObjectName("scrollArea_4")
         self.scrollAreaWidgetContents_4 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_4.setGeometry(QtCore.QRect(0, 0, 1399, 1021))
+        self.scrollAreaWidgetContents_4.setGeometry(QtCore.QRect(0, 0, 1392, 1021))
         self.scrollAreaWidgetContents_4.setObjectName("scrollAreaWidgetContents_4")
         self.verticalLayout_71 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_4)
         self.verticalLayout_71.setObjectName("verticalLayout_71")
@@ -5339,7 +5342,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.buttons_stackedWidget.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(0)
-        self.tabWidget.setCurrentIndex(9)
+        self.tabWidget.setCurrentIndex(7)
         self.back_to_main_btn.clicked['bool'].connect(self.daily_btn.setDisabled)
         self.back_to_main_btn.clicked['bool'].connect(self.archive_btn.setDisabled)
         self.back_to_main_btn.clicked['bool'].connect(self.settings_btn.setDisabled)

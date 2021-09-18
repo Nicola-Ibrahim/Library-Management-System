@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1480</width>
+    <width>1473</width>
     <height>1177</height>
    </rect>
   </property>
@@ -4093,8 +4093,14 @@ QPushButton:disabled{
               <widget class="QTreeView" name="date_treeView">
                <property name="minimumSize">
                 <size>
-                 <width>200</width>
+                 <width>300</width>
                  <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
                 </size>
                </property>
               </widget>
@@ -4108,7 +4114,7 @@ QPushButton:disabled{
              <locale language="English" country="UnitedStates"/>
             </property>
             <property name="currentIndex">
-             <number>9</number>
+             <number>7</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -8559,9 +8565,15 @@ QPushButton:pressed{
               </item>
               <item row="0" column="2" rowspan="2">
                <widget class="QFrame" name="frame_40">
+                <property name="minimumSize">
+                 <size>
+                  <width>350</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
-                  <width>400</width>
+                  <width>350</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -9420,6 +9432,12 @@ background-color: rgb(244, 154, 32);
               </item>
               <item row="0" column="2" rowspan="2">
                <widget class="QFrame" name="frame_72">
+                <property name="minimumSize">
+                 <size>
+                  <width>400</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>400</width>
@@ -9941,7 +9959,7 @@ padding:15px;
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1399</width>
+                   <width>1392</width>
                    <height>1021</height>
                   </rect>
                  </property>
