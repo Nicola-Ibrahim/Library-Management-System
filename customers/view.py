@@ -180,10 +180,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.shifts_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.shifts_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
         self.shifts_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
+        self.shifts_supervisors_treeView.header().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
            
         self.offers_tableView.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.offers_tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter)
         self.offers_tableView.verticalHeader().setDefaultAlignment(Qt.AlignHCenter)
+        self.offers_items_treeView.header().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+
 
 
         # Add shadow to Logo image
@@ -429,7 +432,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.shift_start_btn.clicked.connect(self.startShift)
         self.shift_stop_btn.clicked.connect(self.finishShift)
         self.shifts_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.shifts_sort_model.setDateFilter(date))
-        self.shifts_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.shifts_supervisors_sort_model.setDateFilter(date))
+        self.shifts_date_filter_dateEdit.dateChanged['QDate'].connect(lambda date : self.shifts_employees_sort_model.setDateFilter(date))
         self.shifts_clear_btn.clicked.connect(self.clearShiftsFitlers)
 
         # Reports tab buttons
@@ -747,14 +750,16 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.shifts_model = ShiftsModel(self.daily_conn)
             self.offers_model = OffersModel(self.daily_conn)
             self.reports_model = ReportsModel(self.daily_conn)
-            self.shifts_supervisors_model = HierarcicalShiftsSupervisorsModel(self.daily_conn)
+            self.offers_items_model = HierarcicalOffersItemsModel(self.daily_conn)
+            self.shifts_employees_model = HierarcicalShiftsEmployeessModel(self.daily_conn)
 
             self.warehouse_sort_model = WarehouseSortModel(self.warehouse_model)
             self.employees_sort_model = EmployeesSortModel(self.employees_model)
             self.shifts_sort_model = ShiftsSortModel(self.shifts_model)
             self.offers_sort_model = OffersSortModel(self.offers_model)
             self.reports_sort_model = ReportsSortModel(self.reports_model)
-            self.shifts_supervisors_sort_model = HierarcicalShiftsSupervisorsSortModel(self.shifts_supervisors_model)
+            self.offers_items_sort_model = HierarcicalOffersItemsSortModel(self.offers_items_model)
+            self.shifts_employees_sort_model = HierarcicalShiftsEmployeesSortModel(self.shifts_employees_model)
 
             self.setSettingsCurrentDate()
 
@@ -1431,19 +1436,16 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         entered_quantities = [quantities[i].text() for i in range(len(quantities)) if (i%2 != 0)]
         entered_quantities = [int(quantity) for quantity in entered_quantities if(quantity.isdigit())]
 
-        offers_items = retrieveOffersItems(with_date= False, with_quantity=True, db = self.daily_conn).items()
+        offers_items = retrieveOffersItems(with_date= False, with_quantity=True, with_names = False, db = self.daily_conn).items()
         for offer_key, items_key in offers_items:
-            
+           
             # get offer's items quantities
-            quan = [item for sublist in list(items_key.values()) for item in sublist]
-            print(quan)
-            print(sorted(selected_items_ids))
-            if(list(items_key.keys()) == sorted(selected_items_ids)):
-                if(quan == entered_quantities):
+            actual_quan = list(items_key.values())
+            # print('actual items:' , sorted(list(items_key.keys())), 'actual quan->', actual_quan)
+            # print('inserted items:' , sorted(selected_items_ids), 'inserted quan->',entered_quantities)
+            if(sorted(list(items_key.keys())) == sorted(selected_items_ids)):
+                if(actual_quan == entered_quantities):
                     self.offer_id = offer_key
-
-                    
-                    print(self.offer_id)
                         
                     for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
                         item.setStyleSheet(
@@ -1454,9 +1456,9 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         "border-color: rgb(0, 255, 0);\n"
                         "}"
                         )
-                    
+
+                    break   
             else:
-                print('no')
                 self.offer_id = None
                 for item in self.orders_items_frame.findChildren(QtWidgets.QComboBox):
                     item.setStyleSheet(
@@ -1467,12 +1469,13 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     "border-color: rgb(255, 170, 0);\n"
                     "}"
                     )
-            print(self.offer_id)
-            print('-'*40)
+            
+        # print(self.offer_id)
 
-            # Change the total price
-            self.setTotalOrderPrice(self.offer_id)
+        # Change the total price
+        self.setTotalOrderPrice(self.offer_id)
 
+        # print('-'*40)
 
         if(not offers_items):
             self.setTotalOrderPrice(self.offer_id)
@@ -1745,8 +1748,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def showOffersItems(self):
         """Display available offers and their items"""
 
-        self.offers_items_model = HierarcicalOffersItemsModel(self.daily_conn)
-        self.offers_items_treeView.setHeaderHidden(True)
+        # self.offers_items_treeView.setHeaderHidden(True)
         self.offers_items_treeView.setModel(self.offers_items_model) 
         self.offers_items_treeView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         
@@ -2113,9 +2115,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def showShiftsEmployees(self):
         """Display available shifts and related employees"""
 
-        # self.shifts_supervisors_model = HierarcicalShiftsSupervisorsModel(self.daily_conn)
-        self.shifts_supervisors_treeView.setHeaderHidden(True)
-        self.shifts_supervisors_treeView.setModel(self.shifts_supervisors_sort_model) 
+        self.shifts_supervisors_treeView.setModel(self.shifts_employees_sort_model) 
+        # self.shifts_supervisors_treeView.setHeaderHidden(True)
         self.shifts_supervisors_treeView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         
         # selection_model = self.shifts_supervisors_treeView.selectionModel()
@@ -2503,7 +2504,8 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.date_model = HierarcicalDateModel(db, table, field)
         self.date_treeView.setModel(self.date_model) 
-        self.date_treeView.setHeaderHidden(True)
+        
+        # self.date_treeView.setHeaderHidden(True)
         self.date_treeView.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         
         self.date_treeView.selectionModel().selectionChanged.connect(self.selectionChangedSlot)
@@ -2517,7 +2519,7 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # find out the hierarchy level of the selected item
         # hierarchyLevel = 1
         # seekRoot = index
-        # while (seekRoot.parent() !== QtCore.QModelIndex()):
+        # while (seekRoot.parent() != QtCore.QModelIndex()):
         #     seekRoot = seekRoot.parent()
         #     hierarchyLevel += 1
         
@@ -2525,7 +2527,6 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         date = [index.parent().parent().data(Qt.DisplayRole), index.parent().data(Qt.DisplayRole), selectedText]
         date = '-'.join([d for d in date if d != None])
-
         self.filterByDate(date)
 
     @QtCore.pyqtSlot(str)
@@ -2549,6 +2550,17 @@ class CustomersMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 self.reports_sort_model.setDateFilter(date)
 
+    # def find_hierarchicla_level(self, item):
+    #     lst = []
+    #     if(item.parent().data(Qt.DisplayRole) != None):
+    #         lst.insert(lst.index(item), item.parent().data(Qt.DisplayRole) )
+    #         self.find_hierarchicla_level(item.parent())
+
+    #     elif(item.child(item.row(), item.column()).data() != None):
+    #         lst.append(item.child(item.row(), item.column()).data(Qt.DisplayRole) )
+    #         self.find_hierarchicla_level(item.child)
+
+    #     print(lst)
 
     #################################
     # Exports tables to Excel files #

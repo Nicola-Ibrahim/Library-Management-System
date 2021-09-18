@@ -1,6 +1,6 @@
 import typing
 from PyQt5 import QtCore, QtGui
-from customers.database import linkOfferItems, linkOrderItems, linkShiftEmployees, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveOffersItems, retrieveShiftsEmployees, updateSubsState
+from customers.database import linkOfferItems, linkOrderItems, linkShiftEmployees, retrieveArchiveDates, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveOffersItems, retrieveShiftsEmployees, updateSubsState
 from PyQt5.QtSql import  QSqlDatabase, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
 from PyQt5.QtCore import QAbstractTableModel, QLocale, QRegularExpression, Qt
 
@@ -1013,43 +1013,35 @@ class  ShiftsSortModel(QtCore.QSortFilterProxyModel):
 ######################
 # Shifts-Employees #
 ######################
-class HierarcicalShiftsSupervisorsModel(QtGui.QStandardItemModel):
+class HierarcicalShiftsEmployeessModel(QtGui.QStandardItemModel):
 
     def __init__(self, db, parent: typing.Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
         self.db = db
         self.showShiftsSupervisors()
+        self.setHorizontalHeaderLabels(["Shifts", "Employees"])
 
     def showShiftsSupervisors(self):
         
-        ret = retrieveShiftsEmployees(db = self.db)
-        dates = list(map(lambda x : QtGui.QStandardItem(x), ret.keys()))
+        tree = retrieveShiftsEmployees(db = self.db)
 
-        for date in dates:
-            shift_ids = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()]))
+        fill_model_from_dict(self, tree)
+        # dates = list(map(lambda x : QtGui.QStandardItem(x), ret.keys()))
 
-            for shift_id in shift_ids:
-                employees_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][shift_id.text()]))
+        # for date in dates:
+        #     shift_ids = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()]))
 
-                shift_id.appendRows(employees_names)
+        #     for shift_id in shift_ids:
+        #         employees_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][shift_id.text()]))
 
-                date.appendRow(shift_id)
+        #         shift_id.appendRows(employees_names)
+
+        #         date.appendRow(shift_id)
 
             
-            self.appendRow(date)
-
-    def fill_model_from_json(self, parent, d):
-        if isinstance(d, dict):
-            for key, value in d.items():
-                it = QtGui.QStandardItem(str(key))
-                if isinstance(value, dict):
-                    parent.appendRow(it)
-                    self.fill_model_from_json(it, value)
-                else:
-                    it2 = QtGui.QStandardItem(str(value))
-                    parent.appendRow([it, it2])
-                    
-class HierarcicalShiftsSupervisorsSortModel(QtCore.QSortFilterProxyModel):
+        #     self.appendRow(date)
+                  
+class HierarcicalShiftsEmployeesSortModel(QtCore.QSortFilterProxyModel):
     """ Reports sorting model"""
     def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
@@ -1098,26 +1090,53 @@ class HierarcicalOffersItemsModel(QtGui.QStandardItemModel):
         super().__init__(parent=parent)
         self.db = db
         self.showOffersItems()
+        self.setHorizontalHeaderLabels(["Offer-items", "Counts"])
+
 
     def showOffersItems(self):
+        tree = retrieveOffersItems(with_date = False, with_quantity = True, with_names = True, db = self.db)
+        fill_model_from_dict(self, tree)
+
+class HierarcicalOffersItemsSortModel(QtCore.QSortFilterProxyModel):
+    """ Reports sorting model"""
+    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+        super().__init__(parent=parent)
+
+        # Create private regex for filtering
+        self._date_pattern = QRegularExpression()
         
-        ret = retrieveOffersItems(db = self.db)
-        dates = list(map(lambda x : QtGui.QStandardItem(x), ret.keys()))
-
-        for date in dates:
-            offers_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()]))
-
-            for offer_name in offers_names:
-                items_names = list(map(lambda x : QtGui.QStandardItem(x), ret[date.text()][offer_name.text()]))
-
-                
-                offer_name.appendRows(items_names)
-
-                date.appendRow(offer_name)
-
+        self.filterKeyColumn = 1
+        self.setRecursiveFilteringEnabled = True
+        
+        # Set source model
+        self.setSourceModel(source_model)
+    
+    def setDateFilter(self, date):
+        """Set regex pattern for date type""" 
+        if(date == ''):
+            self._date_pattern.setPattern('')
             
-            self.appendRow(date)
+        else:
+            date = QLocale(QLocale.English, QLocale.UnitedStates).toString(date, "yyyy-MM-dd")
+            self._date_pattern.setPattern(date)
 
+        self.invalidateFilter()
+
+
+    def filterAcceptsRow(self, row_num: int, source_parent: QtCore.QModelIndex) -> bool:
+        
+        date_index = self.sourceModel().index(row_num, 0,  source_parent)
+
+        date = self.sourceModel().data(date_index, Qt.DisplayRole)
+
+        tests =  [
+            self._date_pattern.match(date).hasMatch()
+        ]
+        
+        return (not False in tests)
+
+
+    
 
 
 ###########
@@ -1140,8 +1159,7 @@ class ReportsModel(QSqlQueryModel):
             return
 
         elif(filter == 'يومي'):
-            # headers = ('اليوم','زبون يومي','اشتراكات يومية','مشترك شهري','اشتراكات شهرية','إيراد المشروب','إيراد الطعام','الاجمالي')
-            headers = ('Day','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue', 'Total', 'Offers total income')
+            headers = ('Day','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue', 'Offers total income', 'Total')
           
             STATEMENT = \
                 """
@@ -1149,8 +1167,7 @@ class ReportsModel(QSqlQueryModel):
                 """
 
         elif (filter == 'شهري'):
-            # headers = ('الشهر','زبون يومي','اشتراكات يومية','مشترك شهري','اشتراكات شهرية','إيراد المشروب','إيراد الطعام','الاجمالي')
-            headers = ('Month','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue','Total', 'Offers total income')
+            headers = ('Month','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue','Offers total income', 'Total')
     
             STATEMENT = \
                 """
@@ -1166,8 +1183,7 @@ class ReportsModel(QSqlQueryModel):
                 """
         
         elif (filter == 'سنوي'):
-            # headers = ('السنة','زبون يومي','اشتراكات يومية','مشترك شهري','اشتراكات شهرية','إيراد المشروب','إيراد الطعام','الاجمالي')
-            headers = ('Year','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue','Total', 'Offers total income')
+            headers = ('Year','#Daily customers','Daily fees','#Monthly customers','Monthly fees','Beverage revenue','Food revenue', 'Offers total income', 'Total')
 
             STATEMENT = \
                 """
@@ -1184,7 +1200,6 @@ class ReportsModel(QSqlQueryModel):
                 """
 
         elif (filter == 'معدل الزبائن'):
-            # headers = ('الشهر','زبون يومي','زبون شهري','عدد الزبائن الكلي','مشترك شهري','معدل الزبائن اليوميين')
             headers = ('Month','#Daily customers','#Monthly customers','#All customers','Monthly subscribers','Average daily customers')
 
             STATEMENT = \
@@ -1271,12 +1286,15 @@ class HierarcicalDateModel(QtGui.QStandardItemModel):
         self.db = db
         self.table = table
         self.field = field
+        self.setHorizontalHeaderLabels(["Dates"]),
+
         self.showYMDs()
-
-
+        
     def showYMDs(self):
         
         # Get available years for the selected table
+        dates_tree = retrieveArchiveDates(table = self.table, field = self.field, db = self.db)
+
         years = retrieveArchiveYears(db = self.db, table = self.table, field = self.field)
         years = list(map(lambda x : QtGui.QStandardItem(x), years))
 
@@ -1300,3 +1318,19 @@ class HierarcicalDateModel(QtGui.QStandardItemModel):
             self.appendRow(y_item)
 
 
+def fill_model_from_dict(parent, d):
+    if isinstance(d, dict):
+        for key, value in d.items():
+            it = QtGui.QStandardItem(str(key))
+
+            if isinstance(value, dict):
+                parent.appendRow(it)
+                fill_model_from_dict(it, value)
+            
+            # elif isinstance(value, list):
+            #     it2 = list(map(QtGui.QStandardItem, value))
+            #     parent.appendRows(it2)
+
+            else:
+                it2 = QtGui.QStandardItem(str(value))
+                parent.appendRow([it, it2])

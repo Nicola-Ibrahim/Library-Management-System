@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 
-def _createCustomersTables(db_1, db_2):
+def _createCustomersTables(db_1, db_2, database1_path):
     """Create database tables if they don't exist"""
 
     # Updated DateBase
@@ -711,13 +711,13 @@ def _createCustomersTables(db_1, db_2):
     
     INSERT1_META_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Meta (key, value) VALUES ('current version', '0.1.2')
+        INSERT OR IGNORE INTO Meta (key, value) VALUES ('current version', '0.1.3')
 
         """
     
     INSERT2_META_STATEMENT = \
         """
-        INSERT OR IGNORE INTO Meta (key, value) VALUES ('last version', '0.1.1')
+        INSERT OR IGNORE INTO Meta (key, value) VALUES ('last version', '0.1.2')
         """
         
     INSERT3_META_STATEMENT = \
@@ -737,9 +737,10 @@ def _createCustomersTables(db_1, db_2):
     while query.next():
         ret = query.value(query.record().indexOf('value'))
     
-    if(ret == '0.1.2'):
-        for statement in UPDATE_STATEMNET.split(';'):
-            query.exec(statement)
+    if(ret < '0.1.3'):
+        updateDB(database1_path)
+    
+    
 
     # Daily DataBase Tables
     sql_statements = (
@@ -763,6 +764,9 @@ def _createCustomersTables(db_1, db_2):
         TRIGGER4_DAILYCUSTOMERS_STATEMENT,
         TRIGGER5_DAILYCUSTOMERS_STATEMENT,
 
+        TRIGGER1_MONTHLY_STATEMENT,
+        TRIGGER2_MONTHLY_STATEMENT,
+
         TRIGGER1_ORDERS_ITEMS_STATEMENT,
         TRIGGER2_ORDERS_ITEMS_STATEMENT,
         TRIGGER3_ORDERS_ITEMS_STATEMENT,
@@ -772,8 +776,6 @@ def _createCustomersTables(db_1, db_2):
         TRIGGER1_REPORTS_STATEMENT,
         TRIGGER2_REPORTS_STATEMENT,
 
-        TRIGGER1_MONTHLY_STATEMENT,
-        TRIGGER2_MONTHLY_STATEMENT,
 
         TRIGGER1_SHIFTS_STATEMENT,
         TRIGGER2_SHIFTS_STATEMENT,
@@ -817,14 +819,14 @@ def _createCustomersTables(db_1, db_2):
 
     return query
 
-def createConnection(databaseName1, databaseName2) -> bool:
+def createConnection(database1_path, database2_path) -> bool:
     """Connect to SQLite database"""
 
     daily_connection = QSqlDatabase.addDatabase("QSQLITE", 'daily_connection')
-    daily_connection.setDatabaseName(databaseName1)
+    daily_connection.setDatabaseName(database1_path)
     
     archive_connection = QSqlDatabase.addDatabase("QSQLITE", 'archive_connection')
-    archive_connection.setDatabaseName(databaseName2)
+    archive_connection.setDatabaseName(database2_path)
     
     if not (daily_connection.open() and archive_connection.open()):
         QMessageBox.warning(
@@ -844,7 +846,7 @@ def createConnection(databaseName1, databaseName2) -> bool:
     query.exec("PRAGMA foreign_keys = ON;")
 
     # Create DB tables
-    _createCustomersTables(daily_connection, archive_connection)
+    _createCustomersTables(daily_connection, archive_connection, database1_path)
     
     return (daily_connection, archive_connection)
 
@@ -1375,11 +1377,11 @@ def retrieveOfferNames(id, db = None):
 
     return names
 
-def retrieveOffersItems(with_date = True, with_quantity = True, db = None):
+def retrieveOffersItems(with_date = True, with_quantity = True, with_names = False, db = None):
     
     indices_tree = []
 
-    if(with_date ==True and with_quantity == True):
+    if(with_date ==True and with_quantity == True and with_names == True):
 
         # Get available dates
         STATEMENT = \
@@ -1396,14 +1398,14 @@ def retrieveOffersItems(with_date = True, with_quantity = True, db = None):
             item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
             quantity = int(str(query.value(query.record().indexOf('quantity'))).strip())
             offer_name = retrieveOfferNames(offer_id, db=db)[0]
-            item_name = retrieveItemNames(item_id, db=db)[0] + f' / {quantity}'
+            item_name = retrieveItemNames(item_id, db=db)[0]
             
-            indices_tree.append([date, offer_name, item_name])
+            indices_tree.append([date, offer_name, item_name, quantity])
 
         
-        dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
+        dic = {key: {key2 : {key3: [val for _,_,_,val in values3 ][0] for key3,values3 in groupby(values2, itemgetter(2))} for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
 
-    elif(with_date == False and with_quantity == False):
+    elif(with_date == False and with_quantity == False and with_names == False):
 
         # Get available dates
         STATEMENT = \
@@ -1423,7 +1425,7 @@ def retrieveOffersItems(with_date = True, with_quantity = True, db = None):
         
         dic = {key: [val for _,val in values]  for key, values in groupby(indices_tree, itemgetter(0))}
 
-    elif(with_date == False and with_quantity == True):
+    elif(with_date == False and with_quantity == True and with_names == False):
         # Get available dates
         STATEMENT = \
             """
@@ -1440,7 +1442,29 @@ def retrieveOffersItems(with_date = True, with_quantity = True, db = None):
             indices_tree.append([offer_id, item_id, quantity])
 
         
-        dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
+        dic = {key: {key2 : [val for _,_,val in values2][0] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
+    
+    elif(with_date == False and with_quantity == True and with_names == True):
+        # Get available dates
+        STATEMENT = \
+            """
+            SELECT offer_id, item_id, quantity FROM Offers_items
+            """
+
+        query = QSqlQuery(db)
+        query.exec(STATEMENT)
+
+        while(query.next()):
+            offer_id = int(str(query.value(query.record().indexOf('offer_id'))).strip())
+            item_id = int(str(query.value(query.record().indexOf('item_id'))).strip())
+            offer_name = retrieveOfferNames(offer_id, db=db)[0]
+            item_name = retrieveItemNames(item_id, db=db)[0]
+            quantity = int(str(query.value(query.record().indexOf('quantity'))).strip())
+            indices_tree.append([offer_name, item_name, quantity])
+
+        
+        dic = {key: {key2 : [val for _,_,val in values2][0] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(indices_tree, itemgetter(0))}
+
 
     return dic
 
@@ -1769,9 +1793,9 @@ def copyData(src_db_1, dest_db_2):
     
     
 
-#####################################
-# Available Years, Months, and days #
-#####################################
+##############################################################
+# Retrieve Available Years, Months, and days  for any tables #
+##############################################################
 def retrieveArchiveYears(db, table, field):
 
     """Get the years from daily customers table in Archive DataBase"""
@@ -1826,6 +1850,30 @@ def retrieveArchiveDays(month, db, table, field):
         
     return days
 
+def retrieveArchiveDates(table, field, db = None):
+    """Get the days from daily customers table in Archive DataBase"""
+    
+    STATEMENT_DAYS = \
+        f"""            
+            SELECT (strftime('%Y', {field})) AS years, (strftime('%m',{field})) AS months, (strftime('%d', {field})) AS days FROM {table};
+        """
+
+    
+    dates = []
+
+    query = QSqlQuery(db = db)
+    query.exec(STATEMENT_DAYS)
+    while (query.next()):
+        year = str(query.value(query.record().indexOf('years'))).strip()
+        month = str(query.value(query.record().indexOf('months'))).strip()
+        day = str(query.value(query.record().indexOf('days'))).strip()
+        dates.append([year, month, day])
+
+    dic = {key: {key2 : [val for _,_,val in values2] for key2, values2 in groupby(values, itemgetter(1))} for key, values in groupby(dates, itemgetter(0))}
+
+    return dic
+
+
 
 ###############################
 # Available id for any table #
@@ -1862,205 +1910,26 @@ def retrieveAvailableId(id_column, table_name, db = None):
     
     return None
 
-def updateDB():
+
+
+
+
+def updateDB(database1_path):
     import sqlite3
-    con = sqlite3.connect('./Database/Daily.db')
+    con = sqlite3.connect(database1_path)
     cur = con.cursor()
 
-    script1 = \
+    script = \
         """
-        PRAGMA foreign_keys = 0;
-
-        CREATE TABLE sqlitestudio_temp_table AS SELECT *
-                                                FROM Daily_customers;
-
-        DROP TABLE Daily_customers;
-
-        CREATE TABLE Daily_customers (
-            daily_id           INTEGER       UNIQUE
-                                            PRIMARY KEY ASC ON CONFLICT ABORT AUTOINCREMENT
-                                            NOT NULL,
-            daily_name         VARCHAR (255) NOT NULL,
-            daily_ticket_cost  REAL (10),
-            subscription_state VARCHAR,
-            monthly_id         INTEGER       CONSTRAINT fk_monthly_id REFERENCES Monthly_customers (monthly_id) ON DELETE SET NULL
-                                                                                                                ON UPDATE NO ACTION,
-            daily_date         DATE          NOT NULL
-                                            DEFAULT (date('now') ) 
-        );
-
-        INSERT INTO Daily_customers SELECT * FROM sqlitestudio_temp_table;
-
-        DROP TABLE sqlitestudio_temp_table;
-
-        CREATE TRIGGER update_daily_subs_state1
-                AFTER INSERT
-                    ON Daily_customers
-        BEGIN
-            UPDATE Daily_customers
-            SET subscription_state = CASE WHEN new.monthly_id ISNULL THEN CASE WHEN new.subscription_state = '' THEN 'Not Subscribed' WHEN new.subscription_state NOTNULL THEN 'Subscribed to another center' END WHEN new.monthly_id NOTNULL THEN (
-                        SELECT Monthly_customers.subscription_state
-                            FROM Monthly_customers
-                            WHERE Monthly_customers.monthly_id = NEW.monthly_id
-                    )
-                END
-            WHERE Daily_customers.daily_id = NEW.daily_id;
-        END;
-
-        CREATE TRIGGER update_daily_subs_state2
-                AFTER UPDATE OF monthly_id
-                    ON Daily_customers
-        BEGIN
-            UPDATE Daily_customers
-            SET subscription_state = CASE WHEN new.monthly_id ISNULL THEN 'Not Subscribed' ELSE (
-                        SELECT Monthly_customers.subscription_state
-                            FROM Monthly_customers
-                            WHERE Monthly_customers.monthly_id = NEW.monthly_id
-                    )
-                END
-            WHERE Daily_customers.daily_id = NEW.daily_id;
-        END;
-
-        CREATE TRIGGER update_daily_ticket_cost
-                AFTER UPDATE OF subscription_state
-                    ON Daily_customers
-        BEGIN
-            UPDATE Daily_customers
-            SET daily_ticket_cost = CASE WHEN new.subscription_state IN ('Not Subscribed', 'Expired') THEN (
-                        SELECT fee_value
-                            FROM Fees
-                            WHERE fee_name = 'Daily fee'
-                    )
-                WHEN new.subscription_state IN ('Subscribed', 'Subscribed to another center') THEN 0 END
-            WHERE Daily_customers.daily_id = NEW.daily_id;
-        END;
-
-        CREATE TRIGGER insert_new_report
-                AFTER INSERT
-                    ON Daily_customers
-        BEGIN
-            INSERT OR IGNORE INTO Reports (
-                                            date
-                                        )
-                                        VALUES (
-                                            date('now') 
-                                        );
-        END;
-
-        CREATE TRIGGER update_monthly_id
-                AFTER UPDATE OF daily_name
-                    ON Daily_customers
-        BEGIN
-            UPDATE Daily_customers
-            SET monthly_id = (
-                    SELECT monthly_id
-                        FROM Monthly_customers
-                        WHERE monthly_name = daily_name
-                );
-        END;
-
-        PRAGMA foreign_keys = 1;
+        PRAGMA writable_schema = 1;
+        delete from sqlite_master where type in ('table', 'index', 'trigger');
+        PRAGMA writable_schema = 0;
+        VACUUM;
+        PRAGMA INTEGRITY_CHECK;
 
         """
 
-    script2 = \
-        """
-        PRAGMA foreign_keys = 0;
-
-        CREATE TABLE sqlitestudio_temp_table AS SELECT *
-                                                FROM Reports;
-
-        DROP TABLE Reports;
-
-        CREATE TABLE Reports (
-            id                                 INTEGER      PRIMARY KEY AUTOINCREMENT
-                                                            UNIQUE
-                                                            NOT NULL,
-            date                               DATE         DEFAULT (DATE('now') ) 
-                                                            NOT NULL
-                                                            UNIQUE,
-            daily_subscribtion_income          REAL (10)    NOT NULL
-                                                            DEFAULT (0),
-            monthly_subscribtion_income        REAL (10)    DEFAULT (0) 
-                                                            NOT NULL,
-            drinks_total_income                REAL (10)    NOT NULL
-                                                            DEFAULT (0),
-            food_total_income                  REAL (10)    NOT NULL
-                                                            DEFAULT (0),
-            total_income                       REAL (10)    NOT NULL
-                                                            DEFAULT (0),
-            numbers_of_daily_customers         INTEGER (10) DEFAULT (0) 
-                                                            NOT NULL,
-            numbers_of_dailyMonthly_customers  INTEGER (10) NOT NULL
-                                                            DEFAULT (0),
-            numbers_of_total_customers         INTEGER (10) NOT NULL
-                                                            DEFAULT (0),
-            numbers_of_monthly_customers       INTEGER (10) NOT NULL
-                                                            DEFAULT (0),
-            average_numbers_of_daily_customers INTEGER (10) NOT NULL
-                                                            DEFAULT (0) 
-        );
-
-        INSERT INTO Reports (
-                                id,
-                                date,
-                                daily_subscribtion_income,
-                                monthly_subscribtion_income,
-                                drinks_total_income,
-                                food_total_income,
-                                total_income,
-                                numbers_of_daily_customers,
-                                numbers_of_total_customers,
-                                numbers_of_monthly_customers,
-                                average_numbers_of_daily_customers
-                            )
-                            SELECT id,
-                                date,
-                                daily_subscribtion_income,
-                                monthly_subscribtion_income,
-                                drinks_total_income,
-                                food_total_income,
-                                total_income,
-                                numbers_of_daily_customers,
-                                numbers_of_total_customers,
-                                numbers_of_monthly_customers,
-                                average_numbers_of_daily_customers
-                            FROM sqlitestudio_temp_table;
-
-        DROP TABLE sqlitestudio_temp_table;
-
-        CREATE TRIGGER update_total_income
-                AFTER UPDATE OF daily_subscribtion_income,
-                                monthly_subscribtion_income,
-                                drinks_total_income,
-                                food_total_income
-                    ON Reports
-        BEGIN
-            UPDATE Reports
-            SET total_income = daily_subscribtion_income + monthly_subscribtion_income + food_total_income + drinks_total_income
-            WHERE Reports.date = date('now');
-        END;
-
-        CREATE TRIGGER update_avg_number_of_customers
-                AFTER UPDATE OF numbers_of_daily_customers
-                    ON Reports
-        BEGIN
-            UPDATE Reports
-            SET average_numbers_of_daily_customers = (
-                    SELECT sum(numbers_of_daily_customers) / count(Reports.date) 
-                        FROM Reports
-                        WHERE strftime('%m', Reports.date) = strftime('%m', new.date) 
-                )
-            WHERE strftime('%m', Reports.date) = strftime('%m', new.date);
-        END;
-
-        PRAGMA foreign_keys = 1;
-
-
-        """
-
-    cur.executescript(script1) 
-    cur.executescript(script2) 
+    cur.executescript(script) 
     con.close()
 
 
