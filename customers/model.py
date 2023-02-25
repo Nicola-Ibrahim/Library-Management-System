@@ -1,10 +1,9 @@
-import typing
 from PyQt5 import QtCore, QtGui
-from customers.database import linkOfferItems, linkOrderItems, linkShiftEmployees, retrieveArchiveDates, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveOffersItems, retrieveShiftsEmployees, updateSubsState
-from PyQt5.QtSql import  QSqlDatabase, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
+from customers.database import isRecordFound, linkOfferItems, linkOrderItems, linkShiftEmployees, retrieveArchiveDates, retrieveArchiveDays, retrieveArchiveMonths, retrieveArchiveYears, retrieveAvailableId, retrieveDailyId, retrieveOffersItems, retrieveShiftsEmployees, updateSubsState
+from PyQt5.QtSql import  QSqlDatabase, QSqlError, QSqlQuery, QSqlTableModel, QSqlQueryModel, QSqlRelationalTableModel, QSqlRelation
 from PyQt5.QtCore import QAbstractTableModel, QLocale, QRegularExpression, Qt
 
-
+from typing import Optional
 
 ###############################################################
 ############################ Daily ############################
@@ -13,10 +12,12 @@ from PyQt5.QtCore import QAbstractTableModel, QLocale, QRegularExpression, Qt
 ###################
 # Daily customers #
 ###################
+
 class DailyCustomersModel(QSqlRelationalTableModel):
     """ Daily customers model for controlling all transctions"""
-        
-    def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject]= None):
+    
+
+    def __init__(self, db: QSqlDatabase, parent: Optional[QtCore.QObject]= None):
         super().__init__(parent=parent, db=db)
         self.db = db
         self._ADD_FLAG = False
@@ -26,67 +27,65 @@ class DailyCustomersModel(QSqlRelationalTableModel):
 
         self.setTable("Daily_customers")
         self.setEditStrategy(QSqlTableModel.OnFieldChange)   
-        
-        headers = ('Id','Name','Fee','Subscription state','Ending subscription','Date')
-        for ind, header in enumerate(headers):
-            self.setHeaderData(ind, Qt.Horizontal,header)
-        
         self.setJoinMode(self.LeftJoin)
         self.setRelation(self.fieldIndex("monthly_id"), QSqlRelation("Monthly_customers", "monthly_id", "end_date"))
         self.setSort(self.fieldIndex("daily_id"), Qt.AscendingOrder)
         self.select()
 
-    def addDailyCustomer(self, data : list) -> bool:
+    def addDailyCustomer(self, name: str, type: str, monthly_id: int) -> bool:
+        
+        data = [name, type, monthly_id]
         
         self._ADD_FLAG = True
 
         # Check if the the customer exists previously
-        result = None
-        STATEMENT = f"""
-            SELECT count(*) FROM Daily_customers WHERE daily_name='{data[0]}' AND daily_date = date('now')
-        """
+        result = isRecordFound(name, 'daily_name', 'daily_date', 'Daily_customers', self.db)
 
-        query = QSqlQuery(db= self.db)
-        query.exec(STATEMENT)
-       
-        # Take the last recorde
-        if(query.first() == True):
-            result = query.value(0)
-
-        # If the record doesn't exist then insert it
-        if(result == 0):
-            
-            
-            available_id = retrieveAvailableId('daily_id', 'Daily_customers', self.db)
-
-            # Take only the colums that suitable for data list length
-            if(available_id !=None):
-                columns = ['daily_id', 'daily_name','subscription_state', 'end_date']
-                data = [available_id] + data
-
-            elif(available_id == None):
-                columns = ['daily_name','subscription_state', 'end_date']
-
-            # Insert new row
-            row = self.rowCount()
-            self.insertRows(row, 1)
-
-            
-            for col_ind, field in enumerate(data):
-                col = self.fieldIndex(columns[col_ind])
-                self.setData(self.index(row, col), field, Qt.EditRole)            
-
-                
-            # Submit all changes
-            ret = self.submitAll()
-            self.select()
-
-            self._ADD_FLAG = False
-
-            return ret
+        if(result):
+            self.setLastError(QSqlError(driverText="Record found!"))
+            return False
         
-        return False
-   
+        # Get availble id to give it to the new record
+        available_id = retrieveAvailableId('daily_id', 'daily_date', 'Daily_customers',  self.db)
+        print(available_id)
+        
+        # Take only the rows that suitable for data list length
+        if(available_id != None):
+            columns = ['daily_id', 'daily_name','subscription_state', 'end_date']
+            data = [available_id] + data
+
+        elif(available_id == None):
+            columns = ['daily_name','subscription_state', 'end_date']
+
+        # Insert new row
+        row = self.rowCount()
+        self.insertRows(row, 1)
+
+        # Take only the colums that suitable for data list length
+        for col_ind, field in enumerate(data):
+            col = self.fieldIndex(columns[col_ind])
+            self.setData(self.index(row, col), field, Qt.EditRole)            
+            
+        # # Submit all changes
+        ret = self.submitAll()
+        self.select()
+
+        self._ADD_FLAG = False
+
+        print(ret)
+        return ret
+        
+    def headerData(self, section: int, orientation: QtCore.Qt.Orientation, role: int = ...):
+
+        headers = ('Id','Name','Fee','Subscription state','Ending subscription','Date')
+
+        if(role == Qt.DisplayRole):
+            if(orientation == Qt.Horizontal):
+                return headers[section]
+
+            elif(orientation == Qt.Vertical):
+                return section 
+
     def data(self, index, role) -> None:
         
         if not index.isValid():
@@ -94,20 +93,41 @@ class DailyCustomersModel(QSqlRelationalTableModel):
 
         # if(role == Qt.FontRole):
         #     return QtGui.QFont("Times", 10, QtGui.QFont.Bold)
+
+        # if (role == QtCore.Qt.ToolTipRole):
+        #     row = index.row()
+        #     return "Hex code: " + str(super().data(index, Qt.DisplayRole))
         
+        if (role == QtCore.Qt.DecorationRole):
+            col = index.column()
+            if(col == self.fieldIndex('subscription_state')):
+                pixmap = QtGui.QPixmap(26, 26) 
+                
+                if(super().data(index, Qt.DisplayRole) in ['Subscribed']):
+                    pixmap.fill(QtGui.QColor(0,255,0,150))
+
+                elif(super().data(index, Qt.DisplayRole) in ['Expired','Not Subscribed']):
+                    pixmap.fill(QtGui.QColor(245,170,0,150))
+                     
+                
+                elif(super().data(index, Qt.DisplayRole) in ['Subscribed to another center']):
+                    pixmap.fill(QtGui.QColor(0,255,100,150))
+                     
+                return pixmap
+
         if(role == Qt.TextAlignmentRole):
             return Qt.AlignHCenter
 
 
-        if(role == Qt.BackgroundColorRole):
-            if(super().data(index, Qt.DisplayRole) in ['Subscribed']):
-                return QtGui.QColor(0,255,0,150)
+        # if(role == Qt.BackgroundColorRole):
+        #     if(super().data(index, Qt.DisplayRole) in ['Subscribed']):
+        #         return QtGui.QColor(0,255,0,150)
 
-            elif(super().data(index, Qt.DisplayRole) in ['Expired','Not Subscribed']):
-                return QtGui.QColor(245,170,0,150)
+        #     elif(super().data(index, Qt.DisplayRole) in ['Expired','Not Subscribed']):
+        #         return QtGui.QColor(245,170,0,150)
             
-            elif(super().data(index, Qt.DisplayRole) in ['Subscribed to another center']):
-                return QtGui.QColor(255,255,0,150)
+        #     elif(super().data(index, Qt.DisplayRole) in ['Subscribed to another center']):
+        #         return QtGui.QColor(255,255,0,150)
 
         
         return super().data(index, role)
@@ -128,10 +148,11 @@ class DailyCustomersModel(QSqlRelationalTableModel):
             return  Qt.ItemIsSelectable | Qt.ItemIsEnabled
     
         return super().flags(index)
+
     
 class DailyCustomersSortModel(QtCore.QSortFilterProxyModel):
     """ Daily customers sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -192,7 +213,7 @@ class DailyCustomersSortModel(QtCore.QSortFilterProxyModel):
 class MonthlyCustomersModel(QSqlTableModel):
     """ Monthly customers model for controlling all transctions"""
 
-    def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, db: QSqlDatabase, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent, db=db)
         self.db = db
         self._ADD_FLAG = False    
@@ -205,7 +226,6 @@ class MonthlyCustomersModel(QSqlTableModel):
         self.setTable("Monthly_customers")
         self.setEditStrategy(self.OnFieldChange)
         
-        # headers = ('رقم الزبون','اسم الزبون','قيمة الاشتراك','البدء','الانتهاء','الحالة','النوع')
         headers = ('Id','Name','Subscription fee','Starting','Ending','State','Type')
         for ind, header in enumerate(headers):
             self.setHeaderData(ind, Qt.Horizontal,header)
@@ -213,63 +233,56 @@ class MonthlyCustomersModel(QSqlTableModel):
         self.setSort(self.fieldIndex("monthly_id"), Qt.AscendingOrder)
         self.select()
         
-    def addMonthlyCustomer(self, data : str):
+    def addMonthlyCustomer(self, name: str, subs_type: str):
         
+        data = [name, subs_type]
         
-        # Check if the the customer exists previously
-        result = None
-        STATEMENT = f"""
-            SELECT count(*) FROM Monthly_customers WHERE monthly_name='{data[0]}'
-        """
+        self._ADD_FLAG = True
 
-        query = QSqlQuery(db= self.db)
-        query.exec(STATEMENT)
-       
-        # Take the last recorde
-        if(query.first() == True):
-            result = query.value(0)
+       # Check if the the customer exists previously
+        result = isRecordFound(name, 'monthly_name', None, 'Monthly_customers', self.db)
 
-        # If the record doesn't exist then insert it
-        if(result == 0):
-
-            self._ADD_FLAG = True
-
-            # Get Available ids for inserting
-            available_id = retrieveAvailableId('monthly_id', 'Monthly_customers', self.db)
-
-            # Take only the colums that suitable for data list length
-            if(available_id !=None):
-                columns = ['monthly_id', 'monthly_name' , 'subsription_type']
-                data = [available_id] + data
-
-            elif(available_id == None):
-                columns = ['monthly_name' , 'subsription_type']
-
-            # Insert new row
-            row = self.rowCount()
-            self.insertRows(row, 1)
-
-            for col_ind, field in enumerate(data):
-                col = self.fieldIndex(columns[col_ind])
-                self.setData(self.index(row, col), field, Qt.EditRole)    
-
-            # record = self.record()
-
-            # # Take only the colums that suitable for data list length
-            # for col_ind, field in enumerate(data):
-            #     col = record.indexOf(columns[col_ind])
-            #     record.setValue(col, field)
-
-            # self.insertRecord(-1,record)
-
-            # Submit all changes
-            ret = self.submitAll()
-            self.select()
-
-            self._ADD_FLAG = False
-            return ret
+        if(result):
+            self.setLastError(QSqlError(driverText="Record found!"))
+            return False
         
-        return False
+     
+        # Get Available ids for inserting
+        available_id = retrieveAvailableId('monthly_id', None, 'Monthly_customers', self.db)
+
+        # Take only the colums that suitable for data list length
+        if(available_id != None):
+            columns = ['monthly_id', 'monthly_name' , 'subsription_type']
+            data = [available_id] + data
+
+        elif(available_id == None):
+            columns = ['monthly_name' , 'subsription_type']
+
+        # Insert new row
+        row = self.rowCount()
+        self.insertRows(row, 1)
+
+        for col_ind, field in enumerate(data):
+            col = self.fieldIndex(columns[col_ind])
+            self.setData(self.index(row, col), field, Qt.EditRole)    
+
+        # record = self.record()
+
+        # # Take only the colums that suitable for data list length
+        # for col_ind, field in enumerate(data):
+        #     col = record.indexOf(columns[col_ind])
+        #     record.setValue(col, field)
+
+        # self.insertRecord(-1,record)
+
+        # Submit all changes
+        ret = self.submitAll()
+        self.select()
+
+        self._ADD_FLAG = False
+        
+        return ret
+        
 
     def data(self, index: QtCore.QModelIndex, role: int):
         
@@ -306,7 +319,7 @@ class MonthlyCustomersModel(QSqlTableModel):
 
 class MonthlyCustomersSortModel(QtCore.QSortFilterProxyModel):
     """ Monthly customers sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -379,7 +392,7 @@ class OrdersModel(QSqlRelationalTableModel):
 
     """ Orders model for controlling all transctions"""
 
-    def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, db: QSqlDatabase, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent, db=db)
         self.db = db
         self._ADD_FLAG = False
@@ -433,7 +446,7 @@ class OrdersModel(QSqlRelationalTableModel):
 
 
         # Get Available ids for inserting
-        available_id = retrieveAvailableId('order_id', 'Orders', self.db)
+        available_id = retrieveAvailableId('order_id', 'Orders', 'order_date', self.db)
 
         # Take only the colums that suitable for data list length
         if(available_id !=None):
@@ -492,7 +505,7 @@ class OrdersModel(QSqlRelationalTableModel):
 
 class OrdersSortModel(QtCore.QSortFilterProxyModel):
     """ Orders sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -554,7 +567,7 @@ class OrdersSortModel(QtCore.QSortFilterProxyModel):
 #############
 class WarehouseModel(QSqlTableModel):
     """ Warehouse model for controlling all transctions"""
-    def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None) -> None:
+    def __init__(self, db: QSqlDatabase, parent: Optional[QtCore.QObject] = None) -> None:
         super().__init__(parent=parent, db=db)
         self.db = db
         self.showItems()
@@ -633,7 +646,7 @@ class WarehouseModel(QSqlTableModel):
 
 class WarehouseSortModel(QtCore.QSortFilterProxyModel):
     """ Warehouse sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -676,7 +689,7 @@ class WarehouseSortModel(QtCore.QSortFilterProxyModel):
 ##########
 class OffersModel(QSqlTableModel):
     """ Offers model for controlling all transctions"""
-    def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None) -> None:
+    def __init__(self, db: QSqlDatabase, parent: Optional[QtCore.QObject] = None) -> None:
         super().__init__(parent=parent, db=db)
         self.db = db
         self.showOffers()
@@ -729,7 +742,7 @@ class OffersModel(QSqlTableModel):
 class OffersSortModel(QtCore.QSortFilterProxyModel):
     """ Offers sorting model"""
     
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -780,7 +793,7 @@ class OffersSortModel(QtCore.QSortFilterProxyModel):
 ###############
 class EmployeesModel(QSqlTableModel):
     """ Employyes model for controlling all transctions"""
-    def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, db: QSqlDatabase, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent, db=db)
         self.db = db
         self.showEmployees()
@@ -853,7 +866,7 @@ class EmployeesModel(QSqlTableModel):
 
 class  EmployeesSortModel(QtCore.QSortFilterProxyModel):
     """ Daily customers sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -897,7 +910,7 @@ class  EmployeesSortModel(QtCore.QSortFilterProxyModel):
 class ShiftsModel(QSqlTableModel):
     """Shifts model for controlling all transctions"""
 
-    def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, db: QSqlDatabase, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent, db=db)
         self.db = db
         self._ADD_FLAG = False
@@ -981,7 +994,7 @@ class ShiftsModel(QSqlTableModel):
 
 class  ShiftsSortModel(QtCore.QSortFilterProxyModel):
     """ Daily customers sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -1015,7 +1028,7 @@ class  ShiftsSortModel(QtCore.QSortFilterProxyModel):
 ######################
 class HierarcicalShiftsEmployeessModel(QtGui.QStandardItemModel):
 
-    def __init__(self, db, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, db, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
         self.db = db
         self.showShiftsSupervisors()
@@ -1043,7 +1056,7 @@ class HierarcicalShiftsEmployeessModel(QtGui.QStandardItemModel):
                   
 class HierarcicalShiftsEmployeesSortModel(QtCore.QSortFilterProxyModel):
     """ Reports sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -1086,7 +1099,7 @@ class HierarcicalShiftsEmployeesSortModel(QtCore.QSortFilterProxyModel):
 ######################
 class HierarcicalOffersItemsModel(QtGui.QStandardItemModel):
 
-    def __init__(self, db, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, db, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
         self.db = db
         self.showOffersItems()
@@ -1099,7 +1112,7 @@ class HierarcicalOffersItemsModel(QtGui.QStandardItemModel):
 
 class HierarcicalOffersItemsSortModel(QtCore.QSortFilterProxyModel):
     """ Reports sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -1145,7 +1158,7 @@ class HierarcicalOffersItemsSortModel(QtCore.QSortFilterProxyModel):
 class ReportsModel(QSqlQueryModel):
     """ Reports model for controlling all transctions"""
     
-    def __init__(self, db: QSqlDatabase, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, db: QSqlDatabase, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
         self.db = db
         self.showReports()
@@ -1252,7 +1265,7 @@ class ReportsModel(QSqlQueryModel):
 
 class ReportsSortModel(QtCore.QSortFilterProxyModel):
     """ Reports sorting model"""
-    def __init__(self, source_model, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, source_model, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
 
         # Create private regex for filtering
@@ -1281,7 +1294,7 @@ class ReportsSortModel(QtCore.QSortFilterProxyModel):
 
 class HierarcicalDateModel(QtGui.QStandardItemModel):
 
-    def __init__(self, db, table, field, parent: typing.Optional[QtCore.QObject] = None):
+    def __init__(self, db, table, field, parent: Optional[QtCore.QObject] = None):
         super().__init__(parent=parent)
         self.db = db
         self.table = table

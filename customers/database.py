@@ -2,7 +2,7 @@
 
 from itertools import groupby
 from operator import itemgetter
-from PyQt5 import QtGui
+from typing import Any
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
@@ -737,7 +737,7 @@ def _createCustomersTables(db_1, db_2, database1_path):
     while query.next():
         ret = query.value(query.record().indexOf('value'))
     
-    if(ret < '0.1.3'):
+    if(ret and ret < '0.1.3'):
         updateDB(database1_path)
     
     
@@ -1733,64 +1733,7 @@ def retrieveJobType(username, db = None):
     
     return None
 
-#############
-# Backup DB #
-#############
-def backUpDB(backup_DBname):
-    """Make a backup from entire main DataBase to another one"""
-    import sqlite3
-    def progress(status, remaining, total):
-        print(f'Copied {total-remaining} of {total} pages...')
 
-    conn = sqlite3.connect('Daily.db')
-    back = sqlite3.connect(f'{backup_DBname}.db')
-
-    conn.backup(back, pages=0, progress=progress)
-    print('Backup performed successfully.')
-    print('Saved as customers-backup.sql')
-    back.close()
-    conn.close()
-
-def copyData(src_db_1, dest_db_2):
-    """Copy daily customers, monthly customers, and orders data to Archive DataBase"""
-
-    COPY_STATEMETNS = \
-        f"""
-        ATTACH DATABASE '{src_db_1.databaseName()}' AS daily;
-        INSERT INTO Monthly_customers SELECT * FROM daily.Monthly_customers;
-        INSERT OR IGNORE INTO Warehouse SELECT * FROM daily.Warehouse;
-        INSERT INTO Daily_customers SELECT * FROM daily.Daily_customers;
-        INSERT INTO Orders SELECT * FROM daily.Orders;
-        """
-    
-
-    UPDATE_WAREHOUSE = \
-        """
-        UPDATE Warehouse SET item_current_quantity = item_current_quantity - item_consumed_quantity;                     
-        """
-    
-    DELETE_STATEMENTS = \
-        """
-        DELETE FROM Daily_customers WHERE 1;
-        DELETE FROM Orders WHERE 1;
-        """
-
-    
-
-    archive_query = QSqlQuery(dest_db_2)
-    for statement in COPY_STATEMETNS.splitlines():
-        if(statement != ''):
-            archive_query.exec(statement)
-
-
-    daily_query = QSqlQuery(src_db_1)
-    for statement in UPDATE_WAREHOUSE.split(';'):
-        daily_query.exec(statement)
-
-    for statement in DELETE_STATEMENTS.split(';'):
-        daily_query.exec(statement)
-    
-    
     
 
 ##############################################################
@@ -1875,45 +1818,132 @@ def retrieveArchiveDates(table, field, db = None):
 
 
 
-###############################
-# Available id for any table #
-###############################
-def retrieveAvailableId(id_column, table_name, db = None):
+#####################
+# Supportin methods #
+#####################
+def retrieveAvailableId(id_column: str, date_column: str, table_name: str, db = None) -> int:
 
     # Get Available ids for inserting
     table_ids = []
 
+    # The data is given
+    if(isinstance(date_column, str)):
+        STATEMENT = f"""
+            SELECT {id_column} FROM {table_name} WHERE {date_column} = date('now')
+        """
+    # The data is not given
+    else:
+        STATEMENT = f"""
+            SELECT {id_column} FROM {table_name}
+        """
 
-    STATEMENT = f"""
-        SELECT {id_column} FROM {table_name}
-    """
-
+    # Get available ids 
     query = QSqlQuery(db = db)
     query.exec(STATEMENT)
     while (query.next()):
         table_ids.append(query.value(0))
     
+
+    # If the list length is 1 then return 1
     if(len(table_ids) == 1):
         if(table_ids[0] > 1):
             return 1
 
+    # If the list length is greater or equal 2 then
     elif(len(table_ids) >= 2):
-        table_ids = set(table_ids) # ids in the monthly table
-        ids = set(list(range(min(table_ids),max(table_ids)+1))) # range from min to max ids
+        table_ids = set(table_ids) # elemenate repeated ids
+        ids = set(list(range(min(table_ids),max(table_ids)+1))) # get range from min to max ids
 
         # Take the difference between two sets to get available ids to use
         available_ids = list(ids.difference(table_ids))
 
-
+        
         if(len(available_ids) > 0):
             return str(available_ids[0])
     
     return None
 
+def isRecordFound(value: Any, name_column: str, date_column: str, table_name: str, db = None):
+
+    result = None
+
+    if(isinstance(date_column, str)):
+        STATEMENT = f"""
+            SELECT count(*) FROM {table_name} WHERE {name_column} = '{value}' AND {date_column} = date('now')
+        """
+    else:
+        STATEMENT = f"""
+            SELECT count(*) FROM {table_name} WHERE {name_column} = '{value}'
+        """
+
+    query = QSqlQuery(db= db)
+    query.exec(STATEMENT)
+    
+    # Take the last recorde
+    if(query.first() == True):
+        result = query.value(0)
+    
+    return result
 
 
+#############
+# Backup DB #
+#############
+def backUpDB(database1_path, database2_path):
+    """Make a backup from entire main DataBase to another one"""
+    import sqlite3
+    def progress(status, remaining, total):
+        print(f'Copied {total-remaining} of {total} pages...')
+
+    conn = sqlite3.connect(database1_path)
+    # back = sqlite3.connect(f'{database1_path[:-3]}-backup.db')
+    back = sqlite3.connect(database2_path)
+
+    conn.backup(back, pages=0)
+    # print('Backup performed successfully.')
+    # print('Saved as customers-backup.sql')
+    back.close()
+    conn.close()
+
+def copyData(src_db_1, dest_db_2):
+    """Copy daily customers, monthly customers, and orders data to Archive DataBase"""
+
+    COPY_STATEMETNS = \
+        f"""
+        ATTACH DATABASE '{src_db_1.databaseName()}' AS daily;
+        INSERT INTO Monthly_customers SELECT * FROM daily.Monthly_customers;
+        INSERT OR IGNORE INTO Warehouse SELECT * FROM daily.Warehouse;
+        INSERT INTO Daily_customers SELECT * FROM daily.Daily_customers;
+        INSERT INTO Orders SELECT * FROM daily.Orders;
+        """
+    
+
+    UPDATE_WAREHOUSE = \
+        """
+        UPDATE Warehouse SET item_current_quantity = item_current_quantity - item_consumed_quantity;                     
+        """
+    
+    DELETE_STATEMENTS = \
+        """
+        DELETE FROM Daily_customers WHERE 1;
+        DELETE FROM Orders WHERE 1;
+        """
+
+    
+
+    archive_query = QSqlQuery(dest_db_2)
+    for statement in COPY_STATEMETNS.splitlines():
+        if(statement != ''):
+            archive_query.exec(statement)
 
 
+    daily_query = QSqlQuery(src_db_1)
+    for statement in UPDATE_WAREHOUSE.split(';'):
+        daily_query.exec(statement)
+
+    for statement in DELETE_STATEMENTS.split(';'):
+        daily_query.exec(statement)
+    
 def updateDB(database1_path):
     import sqlite3
     con = sqlite3.connect(database1_path)

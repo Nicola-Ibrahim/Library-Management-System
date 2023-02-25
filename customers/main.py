@@ -1,9 +1,8 @@
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5 import QtCore, QtWidgets
 
-from customers.view import CustomersMainWindow
-from customers.ui.LoginDialog.LoginMain import LoginDialog
-from customers.database import updateDB
+from customers.controller import MainApp
+from customers.views.LoginDialog.view import LoginView
 
 from .database import createConnection
 import sys
@@ -69,19 +68,17 @@ def main():
     
 
     # Create the main window if the connection succeeded
-    login_win = LoginDialog(daily_con)
+    login_win = LoginView(daily_con)
 
     # if(login_win.exec_() == QDialog.Accepted):    
     
-    #     main_win = CustomersMainWindow(daily_con, archive_con, login_win.getSupervisorJobType())
-    #     main_win.show()
+    #     main_win = MainApp(daily_con, archive_con, login_win.getSupervisorJobType())
 
    
     # else:
     #     QtCore.QTimer.singleShot(0, lambda : app.exit(1))
     
-    main_win = CustomersMainWindow(daily_con, archive_con, login_win.getSupervisorJobType())
-    main_win.show()
+    main_win = MainApp(daily_con, archive_con, login_win.getSupervisorJobType())
 
 
     # Run the event loop
