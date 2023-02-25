@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "library-management-system"
+version = "0.1.0"
+description = ""
+authors = ["Nicola Ibrahim <nicolaibrahim969@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "library_management_system"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
