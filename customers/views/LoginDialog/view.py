@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from . Ui_loginDialogUI import Ui_Dialog
 from ...database import *
 
-class LoginDialog(QtWidgets.QDialog, Ui_Dialog):
+class LoginView(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self, db, parent=None):
         QtWidgets.QDialog.__init__(self,parent)
         

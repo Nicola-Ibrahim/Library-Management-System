@@ -1,9 +1,9 @@
 from PyQt5 import QtCore, QtWidgets
 from customers.database import *
 
-from customers.ui.PriceDialog.ui_priceDialogUI import Ui_Dialog
+from customers.views.PriceDialog.ui_priceDialogUI import Ui_Dialog
 
-class PriceDialog(QtWidgets.QDialog, Ui_Dialog):
+class PriceDialogView(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self, db, parent=None):
         QtWidgets.QDialog.__init__(self,parent)
         self.db = db

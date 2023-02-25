@@ -1,10 +1,10 @@
-from customers.ui.CustomWidget.customAddOrderFrame import CustomAddOrderFrame
+from customers.views.CustomWidget.customAddOrderFrame import CustomAddOrderFrame
 from PyQt5 import QtCore, QtWidgets, sip
 from customers.database import *
 
-from customers.ui.OrderDialog.ui_orderDialogUI import Ui_Dialog
+from customers.views.OrderDialog.ui_orderDialogUI import Ui_Dialog
 
-class OrderDialog(QtWidgets.QDialog, Ui_Dialog):
+class OrderDialogView(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self, order_id, customer_name, order_type, db, parent=None):
         QtWidgets.QDialog.__init__(self,parent)
         self.order_id = order_id

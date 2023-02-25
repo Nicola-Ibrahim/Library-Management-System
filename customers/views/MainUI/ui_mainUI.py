@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIYLyFKY.ui'
+# Form implementation generated from reading ui file 'C:/Users/nicola/AppData/Local/Temp/mainUIbPVxrr.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -323,31 +323,14 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QPushButton:hover{\n"
-"    border-style:  solid;\n"
-"    border-width: 0px;\n"
-"    border-radius: 5px;\n"
-"    padding: 3px;\n"
-"\n"
-"    color: rgb(255,255,255);\n"
 "    background-color: rgb(150,150,150);\n"
 "}\n"
 "QPushButton:pressed{\n"
-"    border-style:  solid;\n"
-"    \n"
-"    border-width: 0px;\n"
-"    border-radius: 5px;\n"
-"    padding: 3px;\n"
-"    color: rgb(255,255,255);\n"
 "    background-color: rgb(174,174,174);\n"
 "}\n"
 "\n"
 "QPushButton:disabled{\n"
-"    border-style:  solid;\n"
-"    border-color: rgb(174, 174, 174);\n"
-"    border-width: 5px;\n"
-"    border-radius: 35px;\n"
-"    padding: 10px;\n"
-"    padding: 10px;\n"
+"\n"
 "    background-color: rgb(142,142,142);\n"
 "}\n"
 "\n"
@@ -2820,6 +2803,7 @@ class Ui_MainWindow(object):
         self.line.setObjectName("line")
         self.horizontalLayout_8.addWidget(self.line)
         self.archive_btn = QtWidgets.QPushButton(self.frame)
+        self.archive_btn.setEnabled(False)
         self.archive_btn.setMinimumSize(QtCore.QSize(100, 100))
         self.archive_btn.setMaximumSize(QtCore.QSize(200, 16777215))
         self.archive_btn.setStyleSheet("QPushButton{\n"
@@ -2849,6 +2833,11 @@ class Ui_MainWindow(object):
 "    background-color:  rgba(230, 230, 230,0);\n"
 "\n"
 "    image: url(:/icons/icons/inbox2.svg);\n"
+"}\n"
+"\n"
+"QPushButton:disabled{\n"
+"\n"
+"    background-color: rgb(142,142,142);\n"
 "}\n"
 "")
         self.archive_btn.setText("")
@@ -5342,7 +5331,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.buttons_stackedWidget.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(0)
-        self.tabWidget.setCurrentIndex(7)
+        self.tabWidget.setCurrentIndex(0)
         self.back_to_main_btn.clicked['bool'].connect(self.daily_btn.setDisabled)
         self.back_to_main_btn.clicked['bool'].connect(self.archive_btn.setDisabled)
         self.back_to_main_btn.clicked['bool'].connect(self.settings_btn.setDisabled)

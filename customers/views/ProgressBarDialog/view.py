@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtWidgets
-from customers.ui.ProgressBarDialog.ui_progressBarDialogUI import Ui_Dialog
+from customers.views.ProgressBarDialog.ui_progressBarDialogUI import Ui_Dialog
 
-class PorgressBarDialog(QtWidgets.QDialog, Ui_Dialog):
+class DeletingPorgressBarView(QtWidgets.QDialog, Ui_Dialog):
     
     def __init__(self, parent = None):
         QtWidgets.QDialog.__init__(self, parent=parent)
