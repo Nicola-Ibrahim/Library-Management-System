@@ -75,7 +75,4 @@ venv/
 .vscode
 
 # Custom
-*.zip
-*.iss
-*.bat
-*.ico
+/bin
