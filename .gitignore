@@ -1,4 +1,4 @@
-# Django
+# PyQt
 *.log
 *.pot
 *.pyc
@@ -73,3 +73,9 @@ venv/
 .DS_Store
 .idea
 .vscode
+
+# Custom
+*.zip
+*.iss
+*.bat
+*.ico
